@@ -19,6 +19,10 @@ public class Users {
 		Name = name;
 		this.isEmployee = isEmployee;
 	}
+	
+	public Users() {
+		
+	}
 	public String getUserID() {
 		return userID;
 	}
