@@ -18,6 +18,14 @@ public class Products {
 		this.isNutFree = isNutFree;
 		this.isDairyFree = isDairyFree;
 	}
+	public Products() {
+		this.productID ="NULL";
+		this.productName = "NULL";
+		this.price = 0.00;
+		this.isVegan = false;
+		this.isNutFree = false;
+		this.isDairyFree = false;
+	}
 	
 	
 	public String getProductID() {
