@@ -4,9 +4,9 @@ public class Users {
 	private String userID;
 	private String username;
 	private String password;
-	private String Phone;
-	private String Email;
-	private String Name;
+	private String phone;
+	private String email;
+	private String name;
 	private boolean isEmployee;
 	public Users(String userID, String username, String password, String phone, String email, String name,
 			boolean isEmployee) {
@@ -14,14 +14,19 @@ public class Users {
 		this.userID = userID;
 		this.username = username;
 		this.password = password;
-		Phone = phone;
-		Email = email;
-		Name = name;
+		this.phone = phone;
+		this.email = email;
+		this.name = name;
 		this.isEmployee = isEmployee;
 	}
-	
 	public Users() {
-		
+		this.userID = "NULL";
+		this.username = "NULL";
+		this.password = "NULL";
+		this.phone = "NULL";
+		this.email = "NULL";
+		this.name = "NULL";
+		this.isEmployee = false;
 	}
 	public String getUserID() {
 		return userID;
@@ -42,22 +47,22 @@ public class Users {
 		this.password = password;
 	}
 	public String getPhone() {
-		return Phone;
+		return phone;
 	}
 	public void setPhone(String phone) {
-		Phone = phone;
+		this.phone = phone;
 	}
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public boolean isEmployee() {
 		return isEmployee;
@@ -65,4 +70,8 @@ public class Users {
 	public void setEmployee(boolean isEmployee) {
 		this.isEmployee = isEmployee;
 	}
+	
+	
+	
+	
 }

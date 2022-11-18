@@ -7,7 +7,7 @@ public class Orders {
 	private boolean orderCompleted;
 	private String orderDate;
 	private String completedDate;
-	private String orderItems[];
+	private String [] orderItems ;
 	public Orders(String userID, String orderID, String orderStatus, boolean orderCompleted, String orderDate,
 			String completedDate, String[] orderItems) {
 		super();
@@ -18,6 +18,16 @@ public class Orders {
 		this.orderDate = orderDate;
 		this.completedDate = completedDate;
 		this.orderItems = orderItems;
+	}
+	public Orders() {
+		this.userID = "NULL";
+		this.orderID = "NULL";
+		this.orderStatus = "NULL";
+		this.orderCompleted = false;
+		this.orderDate = "NULL";
+		this.completedDate = "NULL";
+		this.orderItems = null;
+		
 	}
 	public String getUserID() {
 		return userID;
