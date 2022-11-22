@@ -8,8 +8,11 @@ public class Orders {
 	private String orderDate;
 	private String completedDate;
 	private String [] orderItems ;
+	private String [] orderQuantity;
+	private double price;
+	
 	public Orders(String userID, String orderID, String orderStatus, boolean orderCompleted, String orderDate,
-			String completedDate, String[] orderItems) {
+			String completedDate, String[] orderItems, String[] orderQuantity, double price) {
 		super();
 		this.userID = userID;
 		this.orderID = orderID;
@@ -18,6 +21,8 @@ public class Orders {
 		this.orderDate = orderDate;
 		this.completedDate = completedDate;
 		this.orderItems = orderItems;
+		this.orderQuantity = orderQuantity;
+		this.price = price;
 	}
 	public Orders() {
 		this.userID = "NULL";
@@ -27,7 +32,8 @@ public class Orders {
 		this.orderDate = "NULL";
 		this.completedDate = "NULL";
 		this.orderItems = null;
-		
+		this.orderQuantity = null;
+		this.price = 00.00;
 	}
 	public String getUserID() {
 		return userID;
@@ -70,6 +76,18 @@ public class Orders {
 	}
 	public void setOrderItems(String[] orderItems) {
 		this.orderItems = orderItems;
+	}
+	public String [] getOrderQuantity() {
+		return orderQuantity;
+	}
+	public void setOrderQuantity(String [] orderQuantity) {
+		this.orderQuantity = orderQuantity;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	
 }
