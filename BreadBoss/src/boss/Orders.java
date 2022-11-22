@@ -1,18 +1,21 @@
 package boss;
 
 public class Orders {
+	
 	private String userID;
 	private String orderID;
-	private String orderStatus;
-	private boolean orderCompleted;
-	private String orderDate;
-	private String completedDate;
-	private String [] orderItems ;
-	private String [] orderQuantity;
+	private String orderStatus; //Order Status - Started, In Progress, Completed
+	private boolean orderCompleted; //T/F if Order Completed
+	private String orderDate; //Order Placed Date
+	private String completedDate; //Order Completed Date
+	private String [] orderItems ; //Array of Ordered Items
+	private String [] orderQuantity;// Array of Ordered Quantity
 	private double price;
 	
 	public Orders(String userID, String orderID, String orderStatus, boolean orderCompleted, String orderDate,
-			String completedDate, String[] orderItems, String[] orderQuantity, double price) {
+			String completedDate, String[] orderItems, String[] orderQuantity, double price) 
+	
+	{
 		super();
 		this.userID = userID;
 		this.orderID = orderID;
@@ -24,6 +27,7 @@ public class Orders {
 		this.orderQuantity = orderQuantity;
 		this.price = price;
 	}
+	
 	public Orders() {
 		this.userID = "NULL";
 		this.orderID = "NULL";
@@ -35,6 +39,7 @@ public class Orders {
 		this.orderQuantity = null;
 		this.price = 00.00;
 	}
+	
 	public String getUserID() {
 		return userID;
 	}

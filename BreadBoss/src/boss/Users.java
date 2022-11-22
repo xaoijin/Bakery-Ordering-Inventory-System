@@ -1,6 +1,7 @@
 package boss;
 
-public class Users {
+public class Users 
+{
 	private String userID;
 	private String username;
 	private String password;
@@ -8,8 +9,10 @@ public class Users {
 	private String email;
 	private String name;
 	private boolean isEmployee;
+	
 	public Users(String userID, String username, String password, String phone, String email, String name,
-			boolean isEmployee) {
+			boolean isEmployee) 
+	{
 		super();
 		this.userID = userID;
 		this.username = username;
@@ -19,7 +22,9 @@ public class Users {
 		this.name = name;
 		this.isEmployee = isEmployee;
 	}
-	public Users() {
+	
+	public Users() 
+	{
 		this.userID = "NULL";
 		this.username = "NULL";
 		this.password = "NULL";
@@ -28,6 +33,7 @@ public class Users {
 		this.name = "NULL";
 		this.isEmployee = false;
 	}
+	
 	public String getUserID() {
 		return userID;
 	}
@@ -71,7 +77,7 @@ public class Users {
 		this.isEmployee = isEmployee;
 	}
 	
-	//random
+
 	
 	
 }

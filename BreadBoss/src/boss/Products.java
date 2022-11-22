@@ -1,15 +1,17 @@
 package boss;
 
 public class Products {
-	private String productID;
+	
+	private String productID; 
 	private String productName;
 	private double price;
-	private boolean isVegan;
-	private boolean isNutFree;
-	private boolean isDairyFree;
+	private boolean isVegan; //checksif ProductisVegan
+	private boolean isNutFree; //checks if Product is Nut Free
+	private boolean isDairyFree; //checks if Product is Dairy Free
 	
 	public Products(String productID, String productName, double price, boolean isVegan, boolean isNutFree,
-			boolean isDairyFree) {
+			boolean isDairyFree) 
+	{
 		super();
 		this.productID = productID;
 		this.productName = productName;
@@ -18,7 +20,9 @@ public class Products {
 		this.isNutFree = isNutFree;
 		this.isDairyFree = isDairyFree;
 	}
-	public Products() {
+	
+	public Products() 
+	{
 		this.productID ="NULL";
 		this.productName = "NULL";
 		this.price = 0.00;
@@ -28,40 +32,51 @@ public class Products {
 	}
 	
 	
-	public String getProductID() {
+	public String getProductID() 
+	{
 		return productID;
 	}
-	public void setProductID(String productID) {
+	public void setProductID(String productID)
+	{
 		this.productID = productID;
 	}
-	public String getProductName() {
+	public String getProductName()
+	{
 		return productName;
 	}
-	public void setProductName(String productName) {
+	public void setProductName(String productName) 
+	{
 		this.productName = productName;
 	}
-	public double getPrice() {
+	public double getPrice() 
+	{
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(double price)
+	{
 		this.price = price;
 	}
-	public boolean isVegan() {
+	public boolean isVegan() 
+	{
 		return isVegan;
 	}
-	public void setVegan(boolean isVegan) {
+	public void setVegan(boolean isVegan)
+	{
 		this.isVegan = isVegan;
 	}
-	public boolean isNutFree() {
+	public boolean isNutFree() 
+	{
 		return isNutFree;
 	}
-	public void setNutFree(boolean isNutFree) {
+	public void setNutFree(boolean isNutFree) 
+	{
 		this.isNutFree = isNutFree;
 	}
 	public boolean isDairyFree() {
 		return isDairyFree;
 	}
-	public void setDairyFree(boolean isDairyFree) {
+	public void setDairyFree(boolean isDairyFree) 
+	{
 		this.isDairyFree = isDairyFree;
 	}
 	

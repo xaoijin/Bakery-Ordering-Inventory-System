@@ -41,6 +41,7 @@ public class Store {
 		
 	
 	loadUsers();
+	loadProducts();
 	
 	}
 	
@@ -89,8 +90,68 @@ public class Store {
 			System.out.println("Users Loaded");
 	 } 
 /*******************************************************END OF LOAD USER*****************************/
+	
+/*******************************************************LOAD PRODUCTS*****************************/
 
+	//Need to Check this Load Products - Not sure if logic is right
+	
+	void loadProducts() throws IOException
+    {
+	    //create a File for reading from your data file 
+	    FileReader fr=new FileReader("products.dat");
+	    BufferedReader br = new BufferedReader(fr);
+	    //create the variables for each field in the file
+	    String id = ""; //productID
+	    String pn = ""; //productName
+	    double pc = 0.00; //productPrice
+	    boolean isV;
+	    boolean isNF;
+	    boolean isDF;
+	  
+	    
+	    //Create a string to read each line and a tokenizer to separate at the field at the comma
+	    String eachLine = "";
+	    StringTokenizer st;
+	    eachLine = br.readLine(); //read the first line
+	    while (eachLine != null) //tests for the eof
+	    { st = new StringTokenizer(eachLine, ","); //read each line
+	    
+	    	while (st.hasMoreTokens()) //read each field
+		    { //remember the order of the text file
+			    id = st.nextToken();
+			    pn = st.nextToken();
+			    pc = Double.parseDouble(st.nextToken());
+			    isV = Boolean.parseBoolean(st.nextToken());
+			    isNF = Boolean.parseBoolean(st.nextToken());
+			    isDF = Boolean.parseBoolean(st.nextToken())
+			    		;
+			    item.add (new Products(id, pn, pc, isV,isNF,isDF)); //add the product to the Vector
+			    eachLine = br.readLine(); //read the next line
+		    }//end of reading one line
+	    }//end of reading the file
+    
+    br.close(); //close the file
+    System.out.println("Bakery Loaded");
+    } //end of loadProducts() method
 
+	/*******************************************************END OF LOAD PRODUCTS******************************/
+
+	
+	/*******************************************************CHECK PRODUCTS******************************/
+
+	
+	void checkProducts() {
+		
+	}
+	
+	
+	
+	
+	
+	/*******************************************************END OF CHECK PRODUCTS******************************/
+
+	
+	
 /*******************************************************ADD NEW USER******************************/
 
 		void addNewUser() {
@@ -136,6 +197,13 @@ public class Store {
 			}
 		
 /*******************************************************ENDOFADDUSER******************************/
+
+/*******************************************************VIEW PRODUCTS******************************/
+
+	
+
+		
+/*******************************************************END OF VIEW PRODUCTS******************************/
 
 		
 /*******************************************************LOGIN METHOD * @throws IOException ***************/
@@ -230,7 +298,7 @@ public class Store {
 				switch (option)
 				{
 					case (1):
-					{	 //checkProducts();
+					{	 checkProducts();
 						break;
 					}
 					case (2):
@@ -296,7 +364,7 @@ public class Store {
 					switch (option)
 					{
 						case (1):
-						{	 //checkProducts();
+						{	 checkProducts();
 							break;
 						}
 						case (2):
