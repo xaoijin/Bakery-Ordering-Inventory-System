@@ -9,11 +9,12 @@ public class Store {
 	Vector <Users> account;
 	Vector <Orders> invoice;
 	Scanner Keyboard;
-	
+	int test = 0;
 	Store(){
 		item = new Vector<Products>();
 		account = new Vector<Users>();
 		invoice = new Vector<Orders>();
 		Keyboard = new Scanner (System.in);
+		
 	}
 }
