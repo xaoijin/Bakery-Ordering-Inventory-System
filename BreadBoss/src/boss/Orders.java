@@ -4,7 +4,7 @@ public class Orders {
 	
 	private String userID;
 	private String orderID;
-	private String orderStatus; //Order Status - Started, In Progress, Completed
+	private String orderStatus; //Order Status - Started, In Progress, Completed, Declined
 	private String orderDate; //Order Placed Date
 	private String completedDate; //Order Completed Date
 	private String [] orderItems ; //Array of Ordered Items
