@@ -5,14 +5,13 @@ public class Orders {
 	private String userID;
 	private String orderID;
 	private String orderStatus; //Order Status - Started, In Progress, Completed
-	private boolean orderCompleted; //T/F if Order Completed
 	private String orderDate; //Order Placed Date
 	private String completedDate; //Order Completed Date
 	private String [] orderItems ; //Array of Ordered Items
 	private String [] orderQuantity;// Array of Ordered Quantity
 	private double price;
 	
-	public Orders(String userID, String orderID, String orderStatus, boolean orderCompleted, String orderDate,
+	public Orders(String userID, String orderID, String orderStatus, String orderDate,
 			String completedDate, String[] orderItems, String[] orderQuantity, double price) 
 	
 	{
@@ -20,7 +19,7 @@ public class Orders {
 		this.userID = userID;
 		this.orderID = orderID;
 		this.orderStatus = orderStatus;
-		this.orderCompleted = orderCompleted;
+		
 		this.orderDate = orderDate;
 		this.completedDate = completedDate;
 		this.orderItems = orderItems;
@@ -32,7 +31,7 @@ public class Orders {
 		this.userID = "NULL";
 		this.orderID = "NULL";
 		this.orderStatus = "NULL";
-		this.orderCompleted = false;
+		
 		this.orderDate = "NULL";
 		this.completedDate = "NULL";
 		this.orderItems = null;
@@ -57,12 +56,6 @@ public class Orders {
 	}
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
-	}
-	public boolean isOrderCompleted() {
-		return orderCompleted;
-	}
-	public void setOrderCompleted(boolean orderCompleted) {
-		this.orderCompleted = orderCompleted;
 	}
 	public String getOrderDate() {
 		return orderDate;
