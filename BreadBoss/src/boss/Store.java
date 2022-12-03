@@ -104,9 +104,7 @@ public class Store {
 	    String id = ""; //productID
 	    String pn = ""; //productName
 	    double pc = 0.00; //productPrice
-	    boolean isV;
-	    boolean isNF;
-	    boolean isDF;
+	    String dc = "";
 	  
 	    
 	    //Create a string to read each line and a tokenizer to separate at the field at the comma
@@ -121,11 +119,8 @@ public class Store {
 			    id = st.nextToken();
 			    pn = st.nextToken();
 			    pc = Double.parseDouble(st.nextToken());
-			    isV = Boolean.parseBoolean(st.nextToken());
-			    isNF = Boolean.parseBoolean(st.nextToken());
-			    isDF = Boolean.parseBoolean(st.nextToken())
-			    		;
-			    item.add (new Products(id, pn, pc, isV,isNF,isDF)); //add the product to the Vector
+			    dc = st.nextToken();
+			    item.add (new Products(id, pn, pc, dc)); //add the product to the Vector
 			    eachLine = br.readLine(); //read the next line
 		    }//end of reading one line
 	    }//end of reading the file
