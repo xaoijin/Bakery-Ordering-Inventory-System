@@ -75,7 +75,7 @@ public class Store {
 				pn = resultSet.getString("Phone");
 				em =  resultSet.getString("Email");
 				n = resultSet.getString("FullName");
-				isEm = resultSet.getBoolean("isEmployee");
+				isEm = Boolean.parseBoolean(resultSet.getString("isEmployee"));
 				account.add(new Users(i,en,psw,pn,em,n,isEm));
 				index++;
 			}
@@ -99,9 +99,11 @@ public class Store {
 		 while (resultSet.next()) //tests for the eof
 		 {   totalrows = resultSet.getRow();
 		 	pi = resultSet.getString("ProductID");
-		 	pn = resultSet.getString(Name);
-		 	pc = Double.parseDouble(resultSet.getString(Price));
-		
+		 	pn = resultSet.getString("Name");
+		 	pc = Double.parseDouble(resultSet.getString("Price"));
+		 	ds = resultSet.getString("Description");
+		 	
+		 	item.add(new Products(pi,pn,pc,ds));
 		
 		
 			index++;
