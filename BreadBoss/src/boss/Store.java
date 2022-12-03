@@ -112,7 +112,12 @@ public class Store {
     } //end of loadProducts() method
 
 	/*******************************************************END OF LOAD PRODUCTS******************************/
-
+	void loadOrders() throws IOException, SQLException
+	{
+		
+		
+	}
+	
 	
 	/*******************************************************CHECK PRODUCTS******************************/
 
