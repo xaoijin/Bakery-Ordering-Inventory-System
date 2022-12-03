@@ -83,41 +83,29 @@ public class Store {
 	 } 
 /*******************************************************END OF LOAD USER*****************************/
 	
-/*******************************************************LOAD PRODUCTS*****************************/
+/*******************************************************LOAD PRODUCTS
+ * @throws SQLException *****************************/
 
 	//Need to Check this Load Products - Not sure if logic is right
 	
-	void loadProducts() throws IOException
+	void loadProducts() throws IOException, SQLException
     {
-	    //create a File for reading from your data file 
-	    FileReader fr=new FileReader("products.dat");
-	    BufferedReader br = new BufferedReader(fr);
-	    //create the variables for each field in the file
-	    String id = ""; //productID
-	    String pn = ""; //productName
-	    double pc = 0.00; //productPrice
-	    String dc = "";
-	  
-	    
-	    //Create a string to read each line and a tokenizer to separate at the field at the comma
-	    String eachLine = "";
-	    StringTokenizer st;
-	    eachLine = br.readLine(); //read the first line
-	    while (eachLine != null) //tests for the eof
-	    { st = new StringTokenizer(eachLine, ","); //read each line
-	    
-	    	while (st.hasMoreTokens()) //read each field
-		    { //remember the order of the text file
-			    id = st.nextToken();
-			    pn = st.nextToken();
-			    pc = Double.parseDouble(st.nextToken());
-			    dc = st.nextToken();
-			    item.add (new Products(id, pn, pc, dc)); //add the product to the Vector
-			    eachLine = br.readLine(); //read the next line
-		    }//end of reading one line
-	    }//end of reading the file
-    
-    br.close(); //close the file
+	   String pi = "";
+	   String pn = "";
+	   double pc = 0.00;
+	   String ds = "";
+	   int totalrows = 0, index = 0;
+	   resultSet = statement.executeQuery("SELECT * FROM Products"); 
+		 while (resultSet.next()) //tests for the eof
+		 {   totalrows = resultSet.getRow();
+		 	pi = resultSet.getString("ProductID");
+		 	pn = resultSet.getString(Name);
+		 	pc = Double.parseDouble(resultSet.getString(Price));
+		
+		
+		
+			index++;
+		}
     System.out.println("Bakery Loaded");
     } //end of loadProducts() method
 
