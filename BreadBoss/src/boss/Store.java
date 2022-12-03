@@ -1,14 +1,18 @@
 package boss;
 
-import java.io.IOException;
-import java.io.BufferedWriter;
 import java.io.BufferedReader;
-import java.util.StringTokenizer;
-import java.util.Scanner;
-import java.util.Vector;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.util.Vector;
 //this is where all the methods will be
 public class Store {
 	
@@ -20,7 +24,10 @@ public class Store {
 	Scanner Keyboard;
 	
 	int test = 0;
-	
+	//Database objects
+		 Connection connection;
+		 Statement statement;
+		 ResultSet resultSet;
 	/*******************************************************CONSTRUCTOR*****************************************************/
 
 	Store()
@@ -33,10 +40,11 @@ public class Store {
 	}
 	/*******************************************************ENDOFCONSTRUCTOR*****************************************************/
 
-	/*******************************************************LOAD METHODS******************************************************/
+	/*******************************************************LOAD METHODS
+	 * @throws SQLException ******************************************************/
 	//this method calls the load methods for each text files
 	
-	void loadData() throws IOException
+	void loadData() throws IOException, SQLException
 	{
 		
 	
@@ -45,49 +53,33 @@ public class Store {
 	
 	}
 	
-	/*******************************************************LOAD USER******************************/
+	/*******************************************************LOAD USER
+	 * @throws SQLException ******************************/
 	
-	void loadUsers() throws IOException {
-		 FileReader fr=new FileReader("users.dat");
-
-		 BufferedReader br = new BufferedReader(fr);
-		 
-		 
-			String i=""; //UserID
-			String u=""; //UserName
-			String p=""; //Password
-			String e=""; //Email
-			String n =""; //Name
-			
-			boolean em =false;
-			String employee = "";
-
-			String eachLine = "";
-			StringTokenizer st;
-			eachLine = br.readLine(); // read the first line
-			while( eachLine != null)
-			{
-				st = new StringTokenizer(eachLine, ",");
-					while (st.hasMoreTokens()) 
-					{
-						i = st.nextToken();
-						u = st.nextToken();
-						p = st.nextToken();
-						e = st.nextToken();
-						n = st.nextToken();
-						
-						employee = st.nextToken();
-						if (employee.equals("True")) em = true;
-						
-						
-						 account.add(new Users(i, u, p, e, n, eachLine, em)); //add the user to the Vector
-						 em = false; //reset employee status
-						 eachLine = br.readLine(); //read the next line
-					}//end of reading a lime
-			} //end of reading the file
-			
-			 br.close(); //close the file
-			System.out.println("Users Loaded");
+	void loadUsers() throws IOException, SQLException {
+		 String i = "";
+		 String en = "";
+		 String psw = "";
+		 String pn = "";
+		 String em = "";
+		 String n = "";
+		 Boolean isEm = false;
+		 int totalrows = 0, index = 0;
+		 resultSet = statement.executeQuery("SELECT * FROM Users");
+		 while (resultSet.next()) //tests for the eof
+			{   totalrows = resultSet.getRow();
+		
+				i = resultSet.getString("UserID"); // or 	i = resultSet.getString(1);
+				en = resultSet.getString("UserName");
+				psw = resultSet.getString("Password");
+				pn = resultSet.getString("Phone");
+				em =  resultSet.getString("Email");
+				n = resultSet.getString("FullName");
+				isEm = resultSet.getBoolean("isEmployee");
+				account.add(new Users(i,en,psw,pn,em,n,isEm));
+				index++;
+			}
+		System.out.println("Employees Loaded");
 	 } 
 /*******************************************************END OF LOAD USER*****************************/
 	
@@ -418,6 +410,26 @@ public class Store {
 				 }
 				 
 		}
+			 void connectDB() throws ClassNotFoundException, SQLException
+				{
+				 // Step 1: Loading or registering JDBC driver class 
+			
+					Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+				
+				 // Step 2: Opening database connection
+				 String msAccDB = "SIMS.accdb";
+				 String dbURL = "jdbc:ucanaccess://" + msAccDB; 
+				 
+				 // Step 3: Create and get connection using DriverManager class
+				 connection = DriverManager.getConnection(dbURL); 
+				 
+				 // Step 4: Creating JDBC Statement 
+				 // It is scrollable so we can use next() and last() & It is updatable so we can enter new records
+				 statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				 ResultSet.CONCUR_UPDATABLE);
+				 
+				 System.out.println("Database Connected!");
+				}
 	/************************************************ END OFUPDATE RECORDS******************************************************/
 
 }
