@@ -127,7 +127,7 @@ public class Store {
 			//String[] oI = ''; //array of orderedItems
 			//String[] oQ = ""; //array of ordered Quantity
 			
-			//FIX - not sure how to pass the array
+			//FIX - not sure how to pass the array?
 			double p = 0.00;
 			int totalrows = 0, index = 0;
 			
@@ -344,6 +344,30 @@ public class Store {
 		
 		/************************************************END OF SHOW USER MENU METHOD
 		 * @throws IOException ******************************************************/
+		
+		/*************************************Check Status METHOD ****************************/
+		
+		void checkStatus ()
+		{
+			String eod;
+			String uid;
+			
+			System.out.println("Check Your Order Status:");
+			System.out.println("Enter Your UserID");
+			uid = Keyboard.next();
+			System.out.println("Enter Your OrderID");
+			eod = Keyboard.next();
+			
+			//if(uid = Orders.getUserID()) && (eod = Orders.getOrderID())
+  {
+	  
+  }
+					
+					
+		
+		}
+		
+		
 		
 		
 		/************************************************SHOW EMPLOYEE MENU METHOD

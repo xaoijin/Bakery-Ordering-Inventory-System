@@ -2,7 +2,7 @@ package boss;
 
 public class Orders {
 	
-	private String userID;
+	private static String userID;
 	private String orderID;
 	private String orderStatus; //Order Status - Started, In Progress, Completed, Declined
 	private String orderDate; //Order Placed Date
@@ -39,7 +39,7 @@ public class Orders {
 		this.price = 00.00;
 	}
 	
-	public String getUserID() {
+	public static String getUserID() {
 		return userID;
 	}
 	public void setUserID(String userID) {
