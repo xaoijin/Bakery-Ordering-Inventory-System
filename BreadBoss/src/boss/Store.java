@@ -124,8 +124,8 @@ public class Store {
 			String oS = "";
 			String oD = "";
 			String cD = "";
-			//String[] oI = ''; //array of orderedItems
-			//String[] oQ = ""; //array of ordered Quantity
+			String oI = ""; //array of orderedItems
+			String oQ = ""; //array of ordered Quantity
 			
 			//FIX - not sure how to pass the array?
 			double p = 0.00;
@@ -140,8 +140,8 @@ public class Store {
 				oS = resultSet.getString(3); 
 				oD = resultSet.getString(4); 
 				cD = resultSet.getString(5); 
-			//oI = resultSet.getArray(6)); 
-			//	oQ= resultSet.getString(7); 
+				oI = resultSet.getString(6); 
+				oQ= resultSet.getString(7); 
 				p = resultSet.getDouble(8); 
 				
 				
