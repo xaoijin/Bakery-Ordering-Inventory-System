@@ -145,8 +145,10 @@ public class Store {
 				p = resultSet.getDouble(8); 
 				
 				
-				//invoice.add(new Orders(uID,oID,oS,oD,cD, oI,oQ,p)); //add to the arraylist
+				invoice.add(new Orders(uID,oID,oS,oD,cD, oI.split("+"),oQ.split("+"),p)); //add to the arraylist
 				index++;
+				
+			
 			 }//end of loading Inventory
 			System.out.println("Orders Loaded");
 		} //end of loadInventory() method
