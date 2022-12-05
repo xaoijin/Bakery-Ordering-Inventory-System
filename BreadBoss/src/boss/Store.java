@@ -50,6 +50,7 @@ public class Store {
 	
 	loadUsers();
 	loadProducts();
+	loadOrders();
 	
 	}
 	
@@ -112,11 +113,44 @@ public class Store {
     } //end of loadProducts() method
 
 	/*******************************************************END OF LOAD PRODUCTS******************************/
+	/*******************************************************LOAD INVOICE******************************/
+	
 	void loadOrders() throws IOException, SQLException
 	{
 		
-		
-	}
+			//create the variables for each field in the database
+			String uID = "";
+			String oID = "";
+			String oS = "";
+			String oD = "";
+			String cD = "";
+			//String[] oI = ''; //array of orderedItems
+			//String[] oQ = ""; //array of ordered Quantity
+			
+			//FIX - not sure how to pass the array
+			double p = 0.00;
+			int totalrows = 0, index = 0;
+			
+			//Get the total rows in the table to loop through the result set
+			 resultSet = statement.executeQuery("SELECT * FROM Orders"); 
+			 while (resultSet.next()) //tests for the eof
+			 {   totalrows = resultSet.getRow();
+				uID = resultSet.getString(1); 
+				oID = resultSet.getString(2); 
+				oS = resultSet.getString(3); 
+				oD = resultSet.getString(4); 
+				cD = resultSet.getString(5); 
+			//oI = resultSet.getArray(6)); 
+			//	oQ= resultSet.getString(7); 
+				p = resultSet.getDouble(8); 
+				
+				
+				//invoice.add(new Orders(uID,oID,oS,oD,cD, oI,oQ,p)); //add to the arraylist
+				index++;
+			 }//end of loading Inventory
+			System.out.println("Orders Loaded");
+		} //end of loadInventory() method
+
 	
 	
 	
@@ -125,7 +159,7 @@ public class Store {
 	
 	
 	
-	/*******************************************************END OF CHECK PRODUCTS******************************/
+	/*******************************************************END OF LOADINVOICE******************************/
 
 	
 	
@@ -175,12 +209,6 @@ public class Store {
 		
 /*******************************************************ENDOFADDUSER******************************/
 
-/*******************************************************VIEW PRODUCTS******************************/
-
-	
-
-		
-/*******************************************************END OF VIEW PRODUCTS******************************/
 
 		
 /*******************************************************LOGIN METHOD * @throws IOException 
