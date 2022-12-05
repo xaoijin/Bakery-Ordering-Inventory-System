@@ -1,4 +1,4 @@
-package boss;
+  package boss;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -119,12 +119,7 @@ public class Store {
 	}
 	
 	
-	/*******************************************************CHECK PRODUCTS******************************/
-
 	
-	void checkProducts() {
-		
-	}
 	
 	
 	
@@ -188,9 +183,10 @@ public class Store {
 /*******************************************************END OF VIEW PRODUCTS******************************/
 
 		
-/*******************************************************LOGIN METHOD * @throws IOException ***************/
+/*******************************************************LOGIN METHOD * @throws IOException 
+ * @throws SQLException ***************/
 
-		void login() throws IOException {
+		void login() throws IOException, SQLException {
 			String username ="", password ="";
 			
 			boolean isValid = false;
@@ -228,7 +224,7 @@ public class Store {
 				//showMenu();
 				
 			}else{
-				//showEmployeeMenu();
+				showEmployeeMenu();
 			}
 			
 		}
@@ -253,12 +249,13 @@ public class Store {
 		
 		/**************************************************END OF WELCOME METHOD******************************************************/
 		
-		/*******************************************************SHOW USER MENU METHOD * @throws IOException *********/
+		/*******************************************************SHOW USER MENU METHOD * @throws IOException 
+		 * @throws SQLException *********/
 		
 		//arrays = 0 (index - 1)
 		
 		 //Display Menu
-		void showMenu() throws IOException
+		void showMenu() throws IOException, SQLException
 		{	
 			int option = -1;
 
@@ -275,12 +272,12 @@ public class Store {
 				System.out.println("5. Display Invoice");
 				System.out.println("6. Register New User");
 				System.out.println("7. Exit");
-				System.out.print("Choose a system process (1-7): ");
+				System.out.print("Choose a system process (1-6): ");
 				option = Keyboard.nextInt();
 				switch (option)
 				{
 					case (1):
-					{	 checkProducts();
+					{	 loadProducts();
 						break;
 					}
 					case (2):
@@ -291,19 +288,16 @@ public class Store {
 					{	 //chkStatus();
 						break;
 					}
+				
 					case (4):
-					{	//cnclOrder();
-						break;
-					}
-					case (5):
 					{	//showInvoice();
 						break;
 					}
-					case (6):
+					case (5):
 					{	addNewUser();
 						break;
 					}
-					case (7):
+					case (6):
 					{	 //updateRecords();
 						System.out.println("\n\n");
 						System.out.println("****************************************************************************");	
@@ -312,10 +306,10 @@ public class Store {
 						System.exit(0);
 					}
 					default:
-					{	System.out.println("Invalid choice, please choose between 1-7"); }
+					{	System.out.println("Invalid choice, please choose between 1-6"); }
 			
 				} //end of switch
-				}while (option != 7);
+				}while (option != 6);
 				
 			
 		}
@@ -325,9 +319,10 @@ public class Store {
 		
 		
 		/************************************************SHOW EMPLOYEE MENU METHOD
-		 * @throws IOException ******************************************************/
+		 * @throws IOException 
+		 * @throws SQLException ******************************************************/
 		 //Display Menu
-			void showEmployeeMenu() throws IOException
+			void showEmployeeMenu() throws IOException, SQLException
 			{	
 				int option = -1;
 
@@ -346,7 +341,7 @@ public class Store {
 					switch (option)
 					{
 						case (1):
-						{	 checkProducts();
+						{	 loadProducts();
 							break;
 						}
 						case (2):
@@ -405,6 +400,9 @@ public class Store {
 				 }
 				 
 		}
+/************************************************ END OFUPDATE RECORDS******************************************************/
+
+/************************************* CONNECT TO DATABASe*************************************************/
 			 void connectDB() throws ClassNotFoundException, SQLException
 				{
 				 // Step 1: Loading or registering JDBC driver class 
@@ -425,6 +423,6 @@ public class Store {
 				 
 				 System.out.println("Database Connected!");
 				}
-	/************************************************ END OFUPDATE RECORDS******************************************************/
+				/************************************************ END OF DATABASE CONNECT******************************************************/
 
 }
