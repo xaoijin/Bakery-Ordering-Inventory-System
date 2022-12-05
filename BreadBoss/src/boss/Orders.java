@@ -14,6 +14,7 @@ public class Orders {
 	public Orders(String userID, String orderID, String orderStatus, String orderDate,
 			String completedDate, String[] orderItems, String[] orderQuantity, double price) 
 	
+
 	{
 		super();
 		this.userID = userID;
