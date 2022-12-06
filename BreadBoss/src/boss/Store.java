@@ -125,10 +125,10 @@ public class Store {
 			String oS = "";
 			String oD = "";
 			String cD = "";
-			//String[] oI = ''; //array of orderedItems
-			//String[] oQ = ""; //array of ordered Quantity
+			String oI; //array of orderedItems
+			String oQ; //array of ordered Quantity
 			
-			//FIX - not sure how to pass the array?
+	
 			double p = 0.00;
 			int totalrows = 0, index = 0;
 			
@@ -136,17 +136,17 @@ public class Store {
 			 resultSet = statement.executeQuery("SELECT * FROM Orders"); 
 			 while (resultSet.next()) //tests for the eof
 			 {   totalrows = resultSet.getRow();
-				uID = resultSet.getString(1); 
-				oID = resultSet.getString(2); 
-				oS = resultSet.getString(3); 
-				oD = resultSet.getString(4); 
-				cD = resultSet.getString(5); 
-			//oI = resultSet.getArray(6)); 
-			//	oQ= resultSet.getString(7); 
-				p = resultSet.getDouble(8); 
+				uID = resultSet.getString(1); //userID
+				oID = resultSet.getString(2); //orderID
+				oS = resultSet.getString(3); //orderStatus
+				oD = resultSet.getString(4); //orderDate
+				cD = resultSet.getString(5);  //completedDate
+				oI = resultSet.getString(6);  //orderID
+				oQ= resultSet.getString(7); //orderquanity
+				p = resultSet.getDouble(8); //price
 				
 				
-				//invoice.add(new Orders(uID,oID,oS,oD,cD, oI,oQ,p)); //add to the arraylist
+				invoice.add(new Orders(uID,oID,oS,oD,cD, oI.split("+"),oQ.split("+"),p)); //add to the arraylist
 				index++;
 			 }//end of loading Inventory
 			System.out.println("Orders Loaded");
@@ -306,7 +306,7 @@ public class Store {
 				switch (option)
 				{
 					case (1):
-					{	 loadProducts();
+					{	 viewBakery();
 						break;
 					}
 					case (2):
@@ -314,12 +314,12 @@ public class Store {
 						break;
 					}
 					case (3):
-					{	 //chkStatus();
+					{	 checkStatus();
 						break;
 					}
 				
 					case (4):
-					{	//showInvoice();
+					{	viewInvoice();
 						break;
 					}
 					case (5):
@@ -368,10 +368,43 @@ public class Store {
 		
 		}
 		
+	/*****************************************END Check Status Method **************************************/
 		
+		/*************************************Change Status METHOD *****************************************/
 		
+		void changeStatus ()
+        {
+            String oid = "";
+            String uid = "";
+            String newStatus = "";
+
+            boolean isValid = false;
+
+            System.out.println("Update Order Status: ");
+
+            System.out.println("Enter OrderID To Be Updated: ");
+            uid = Keyboard.next();
+
+            for(int i = 0; i < invoice.size(); i++) {
+
+                if( oid.equals(invoice.get(i).getOrderID())) {
+                    isValid = true;
+                    loggedinuser = i;
+
+                    System.out.println("Enter New Status To Be Updated: ");
+
+                    newStatus = Keyboard.next();
+
+                    // ((Orders) invoice).setOrderStatus(newStatus);
+
+                    System.out.println("Your Order Status for Order#: " + oid + " is:" + invoice.get(1));
+
+                }
+            }}
 		
-		/************************************************SHOW EMPLOYEE MENU METHOD
+		/**********************************************END Change Status Method **************************/
+		
+		/************************************************SHOW EMPLOYEE MENU METHOD************************
 		 * @throws IOException 
 		 * @throws SQLException ******************************************************/
 		 //Display Menu
@@ -393,8 +426,8 @@ public class Store {
 					option = Keyboard.nextInt();
 					switch (option)
 					{
-						case (1):
-						{	 loadProducts();
+						case (1):{
+						viewBakery();
 							break;
 						}
 						case (2):
@@ -463,7 +496,7 @@ public class Store {
 					Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 				
 				 // Step 2: Opening database connection
-				 String msAccDB = "SIMS.accdb";
+				 String msAccDB = "BOSSDATAFILES(1).accdb";
 				 String dbURL = "jdbc:ucanaccess://" + msAccDB; 
 				 
 				 // Step 3: Create and get connection using DriverManager class
@@ -473,24 +506,24 @@ public class Store {
 				 // It is scrollable so we can use next() and last() & It is updatable so we can enter new records
 				 statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				 
-				 //check this - we mesed up somewhere without merge 
+				 //check this - we mesed up somewhere without merge * yeah this needs fixing DB is wrong.
 				 
 				 System.out.println("Database Connected!");
 				}
 				/************************************************ END OF DATABASE CONNECT******************************************************/
 			
-			 /** ------------------start view bakery-------------------**/
+			 /****************************************************start view bakery*****************************************************/
 			 @SuppressWarnings("unchecked")
 			void viewBakery() {
 				 while (((Iterator<String>) item).hasNext()) {
 			            System.out.print(Products.next() + " ");
 			        }
 				}
-			 //**---------------------end view bakery-------------------**/
+			 /***************************************************end view bakery*******************************************************/
 			 
-			 /** ----------------------start display invoice-------------------------------- 
-			 * @throws SQLException **/
+			 /** *********************************************start display invoice***************************************************/
 			 @SuppressWarnings("unchecked")
+<<<<<<< HEAD
 			 void viewInvoice() throws SQLException 
 			 {
 				 Scanner scan = new Scanner(System.in); 
@@ -521,4 +554,12 @@ public class Store {
 			 }
 				
 			 /** ----------------------end display invoice----------------------**/
+=======
+			 void viewInvoice() throws SQLException {
+				 while (((Iterator<String>) invoice).hasNext()) {
+			            System.out.print(((ResultSet) invoice).next() + " ");
+			        }
+				}
+			 /************************************************end display invoice*****************************************************/
+>>>>>>> branch 'master' of https://github.com/TwigJL/BreadBOSS.git
 }
