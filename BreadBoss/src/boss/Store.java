@@ -522,8 +522,7 @@ public class Store {
 			 /***************************************************end view bakery*******************************************************/
 			 
 			 /** *********************************************start display invoice***************************************************/
-			 @SuppressWarnings("unchecked")
-<<<<<<< HEAD
+			
 			 void viewInvoice() throws SQLException 
 			 {
 				 Scanner scan = new Scanner(System.in); 
@@ -554,12 +553,66 @@ public class Store {
 			 }
 				
 			 /** ----------------------end display invoice----------------------**/
-=======
-			 void viewInvoice() throws SQLException {
-				 while (((Iterator<String>) invoice).hasNext()) {
-			            System.out.print(((ResultSet) invoice).next() + " ");
-			        }
-				}
+
+			 
+			 
+			 
+			 /** *********************************************start create order***************************************************/
+				
+			 void createOrder() throws SQLException 
+			 {
+				 Scanner scan = new Scanner(System.in); 
+				 
+				 System.out.println("Please enter the userID: ");
+				 String tempuserID = scan.nextLine();
+				 System.out.println("Please enter the orderId: ");
+				 String temporderID = scan.nextLine();
+				 System.out.println("Please enter the order Status: ");
+				 String temporderStatus = scan.nextLine();
+				 System.out.println("Please enter the order Date: ");
+				 String temporderDate = scan.nextLine();
+				 System.out.println("Please enter the order completed date: ");
+				 String tempcompletedDate = scan.nextLine();
+				 System.out.println("Please enter the order items: ");
+				 String temporderItems = scan.nextLine();
+				 System.out.println("Please enter the order quantity: ");
+				 String temporderQuantity = scan.nextLine();
+				 System.out.println("Please enter the order price: ");
+				 double tempprice = scan.nextDouble();
+								 				 
+                                                                                    //johnson please check next three lines	
+				 
+			//	 Orders newOrder = new Orders (tempuserID,temporderID, temporderStatus, temporderDate, 
+			//			 tempcompletedDate,temporderItems[],temporderQuantity[],tempprice);
+				 
+			//	 invoice.add(newOrder);
+				 				 
+			 }
+				
+			 /** *********************************************end create order***************************************************/
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
 			 /************************************************end display invoice*****************************************************/
->>>>>>> branch 'master' of https://github.com/TwigJL/BreadBOSS.git
+
 }
