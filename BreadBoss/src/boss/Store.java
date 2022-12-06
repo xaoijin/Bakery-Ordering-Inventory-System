@@ -471,7 +471,7 @@ public class Store {
 				 
 				 // Step 4: Creating JDBC Statement 
 				 // It is scrollable so we can use next() and last() & It is updatable so we can enter new records
-				 statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				 statement = connection.createStatement(ResultSet.TYPE_SCROxaLL_INSENSITIVE,
 				 ResultSet.CONCUR_UPDATABLE);
 				 
 				 System.out.println("Database Connected!");
