@@ -6,10 +6,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -378,7 +380,6 @@ public class Store {
 		
 		/*************************************Change Status METHOD *****************************************/
 		
-/*************************************Change Status METHOD *****************************************/
 		
 		void changeStatus ()
         {
@@ -454,7 +455,7 @@ public class Store {
 							System.exit(0);
 						}
 						default:
-						{	System.out.println("Invalid choice, please choose between 1-7"); }
+						{	System.out.println("Invalid choice, please choose between 1-4"); }
 				
 					} //end of switch
 					}while (option != 4);
@@ -497,7 +498,7 @@ public class Store {
 		}
 /************************************************ END OFUPDATE RECORDS******************************************************/
 
-/************************************* CONNECT TO DATABASe*************************************************/
+/************************************* CONNECT TO DATABASE*************************************************/
 			 void connectDB() throws ClassNotFoundException, SQLException
 				{
 				 // Step 1: Loading or registering JDBC driver class 
@@ -521,22 +522,23 @@ public class Store {
 				}
 				/************************************************ END OF DATABASE CONNECT******************************************************/
 			
-			 /****************************************************start view bakery*****************************************************/
+			 /****************************************************START VIEW BAKERY*****************************************************/
 			 @SuppressWarnings("unchecked")
 			void viewBakery() {
 				 while (((Iterator<String>) item).hasNext()) {
 			            System.out.print(Products.next() + " ");
 			        }
 				}
-			 /***************************************************end view bakery*******************************************************/
+			 /***************************************************END VIEW BAKERY*******************************************************/
 			 
-			 /** *********************************************start display invoice***************************************************/
+			 /** *********************************************START DISPLAY INVOICE***************************************************/
 			
-			 void viewInvoice() throws SQLException 
+			 @SuppressWarnings({ "static-access", "unchecked" })
+			void viewInvoice() throws SQLException 
 			 {
 				 Scanner scan = new Scanner(System.in); 
 				 int result=-1;
-				 System.out.println("Please enter the orderId you want to show: ");
+				 System.out.println("Please Enter Your OrderID: ");
 				 String order = scan.nextLine();
 				 
 				 
@@ -549,10 +551,10 @@ public class Store {
 				 result=invoice.indexOf(order);  //logic check
 				 if (result>-1)
 				 {
-			     System.out.print(invoice.get(result).getUserID());
-				 System.out.print(account.get(result).getUsername());
-				 System.out.print(invoice.get(result).getOrderDate());
-				 System.out.print(invoice.get(result).getCompletedDate());
+			     System.out.print("UserID: " + invoice.get(result).getUserID());
+				 System.out.print("UserName: " + account.get(result).getUsername());
+				 System.out.print("OrderDate: " + invoice.get(result).getOrderDate());
+				 System.out.print("CompletedDate: " + invoice.get(result).getCompletedDate());
 				 System.out.print(invoice.get(result).getOrderItems());
 				 System.out.print(invoice.get(result).getOrderItems());
 				 System.out.print(invoice.get(result).getOrderItems());
@@ -561,7 +563,7 @@ public class Store {
 				 
 			 }
 				
-			 /** ----------------------end display invoice----------------------**/
+			 /*****************************************end display invoice******************************/
 
 			 
 			 
@@ -599,29 +601,20 @@ public class Store {
 			 }
 				
 			 /** *********************************************end create order***************************************************/
+			
 			 
 			 
+			 /************************************************CAPTURE DATE*****************************************************/
 			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 
-			 /************************************************end display invoice*****************************************************/
+			 /*****************************GET TIME STAMP*********************************/
+				String getSystemDate()
+				{ 	String timestamp = ""; //Create a string to hold the date
+					String pattern = "MM-dd-yyyy HH:mm:ss"; //Determine the pattern for the date and time fields
+					SimpleDateFormat formatter = new SimpleDateFormat(pattern); //Set your date and time pattern
+					Date date = new Date(0); //Capture the system datetime in milliseconds
+					timestamp = formatter.format(date); //Format the date based on the pattern
+					return timestamp;
+				}
+				/****************************END GET TIME STAMP*********************************/
 
 }
