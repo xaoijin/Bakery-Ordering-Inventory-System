@@ -14,8 +14,10 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.Vector;
 //this is where all the methods will be
+
+
 public class Store {
-	
+
 	Vector <Products> item; // Vector to Hold Products
 	Vector <Users> account; //Vector to Hold All Users
 	Vector <Orders> invoice; //Vector to Hold Order Information
@@ -24,6 +26,8 @@ public class Store {
 	Scanner Keyboard;
 	
 	int test = 0;
+	
+	
 	//Database objects
 		 Connection connection;
 		 Statement statement;
@@ -36,6 +40,9 @@ public class Store {
 		account = new Vector<Users>();
 		invoice = new Vector<Orders>();
 		Keyboard = new Scanner (System.in);
+		connection = null;
+		statement = null;
+		resultSet = null;
 		
 	}
 	/*******************************************************ENDOFCONSTRUCTOR*****************************************************/
@@ -65,8 +72,11 @@ public class Store {
 		 String em = "";
 		 String n = "";
 		 Boolean isEm = false;
+		
 		 int totalrows = 0, index = 0;
+		 
 		 resultSet = statement.executeQuery("SELECT * FROM Users");
+		 
 		 while (resultSet.next()) //tests for the eof
 			{   totalrows = resultSet.getRow();
 		
@@ -77,6 +87,7 @@ public class Store {
 				em =  resultSet.getString("Email");
 				n = resultSet.getString("FullName");
 				isEm = Boolean.parseBoolean(resultSet.getString("isEmployee"));
+				
 				account.add(new Users(i,en,psw,pn,em,n,isEm));
 				index++;
 			}
@@ -315,19 +326,23 @@ public class Store {
 						break;
 					}
 					case (3):
-					{	 //chkStatus();
+					{	 checkStatus();
 						break;
 					}
 				
 					case (4):
-					{	//showInvoice();
+					{	//cancelOrder();
 						break;
 					}
 					case (5):
-					{	addNewUser();
+					{	//display invoice();
 						break;
 					}
 					case (6):
+					{	addNewUser();
+						break;
+					}
+					case (7):
 					{	 //updateRecords();
 						System.out.println("\n\n");
 						System.out.println("****************************************************************************");	
@@ -351,26 +366,61 @@ public class Store {
 		
 		void checkStatus ()
 		{
-			String eod;
-			String uid;
+			String oid = "";
+			String uid = "";
+			boolean isValid = false;
 			
 			System.out.println("Check Your Order Status:");
 			System.out.println("Enter Your UserID");
 			uid = Keyboard.next();
 			System.out.println("Enter Your OrderID");
-			eod = Keyboard.next();
+			uid = Keyboard.next();
 			
-			//if(uid = Orders.getUserID()) && (eod = Orders.getOrderID())
-  {
-	  
-  }
-					
-					
-		
+			for(int i = 0; i < account.size(); i++) {
+				if(uid.equals(account.get(i).getUserID()) && oid.equals(invoice.get(1).getOrderID())) {
+					isValid = true;
+					loggedinuser = i;
+			System.out.println("Hello User: " + uid);
+			System.out.println("Your Order Status for Order#:" + oid + " is:" + (invoice.get(3).getOrderStatus()));
+				}
+			}
 		}
+		//Johnson Look Over This GETTER
+		/*************************************Order Status Complete****************************/
+
+	/*************************************Change Status METHOD ****************************/
 		
+		void changeStatus ()
+		{
+			String oid = ""; //OrderID
+			String newStatus = ""; //New Status User Entered
+			
+			boolean isValid = false;
+			
+			System.out.println("Update Order Status: ");
 		
+			System.out.println("Enter OrderID To Be Updated: "); //User enters order
+			oid = Keyboard.next();
+			
+			for(int i = 0; i < invoice.size(); i++) { //checks if orderID is valid
+				
+				if( oid.equals(invoice.get(i).getOrderID())) {
+					isValid = true;
+					loggedinuser = i;
+					
+					System.out.println("Enter New Status To Be Updated: ");
+					
+					newStatus = Keyboard.next(); //user inputs new Status
+					
+					 // invoice. 
 		
+					//System.out.println("Your Order Status for Order#: " + oid + " is:" + invoice.setOrderStatus(newStatus));
+			
+				}
+			}
+		}
+		//JOHNSON LOOK OVER THIS SETTER
+		/*************************************Order Status Complete****************************/
 		
 		/************************************************SHOW EMPLOYEE MENU METHOD
 		 * @throws IOException 
@@ -424,7 +474,7 @@ public class Store {
 			/************************************************END OF SHOW MENU METHOD******************************************************/
 		
 			
-	/********************************************************UPDATE RECORDS* @throws IOException ***/
+			/********************************************************UPDATE RECORDS* @throws IOException ***/
 			 void updateRecords() throws IOException
 			 {
 				 //update Employee records
