@@ -1,4 +1,4 @@
-  package boss;
+package boss;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -476,5 +477,23 @@ public class Store {
 				 System.out.println("Database Connected!");
 				}
 				/************************************************ END OF DATABASE CONNECT******************************************************/
-
+			
+			 /** ------------------start view bakery-------------------**/
+			 @SuppressWarnings("unchecked")
+			void viewBakery() {
+				 while (((Iterator<String>) item).hasNext()) {
+			            System.out.print(Products.next() + " ");
+			        }
+				}
+			 //**---------------------end view bakery-------------------**/
+			 
+			 /** ----------------------start display invoice-------------------------------- 
+			 * @throws SQLException **/
+			 @SuppressWarnings("unchecked")
+			 void viewInvoice() throws SQLException {
+				 while (((Iterator<String>) invoice).hasNext()) {
+			            System.out.print(((ResultSet) invoice).next() + " ");
+			        }
+				}
+			 /** ----------------------end display invoice----------------------**/
 }

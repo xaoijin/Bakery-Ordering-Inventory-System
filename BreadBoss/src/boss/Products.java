@@ -43,5 +43,9 @@ public class Products {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public static String next() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
