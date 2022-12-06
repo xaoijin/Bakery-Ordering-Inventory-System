@@ -350,33 +350,41 @@ public class Store {
 		
 		void checkStatus ()
 		{
-			String eod;
-			String uid;
+			String oid = ""; //OrderID
+			String uid = ""; //UserID
+			boolean isValid = false;
 			
 			System.out.println("Check Your Order Status:");
 			System.out.println("Enter Your UserID");
 			uid = Keyboard.next();
 			System.out.println("Enter Your OrderID");
-			eod = Keyboard.next();
-			
-			//if(uid = Orders.getUserID()) && (eod = Orders.getOrderID())
-  {
-	  
-  }
+			oid = Keyboard.next();
+
+			   for(int i = 0; i < invoice.size(); i++) {
+
+	                if( oid.equals(invoice.get(i).getOrderID())) {
+	                    isValid = true;
+	                    loggedinuser = i;
+	                    
+	                    
+	                    System.out.println("Order Status for  Order#:" + oid + " " + invoice.get(2));
+	                }
+			   }
 					
-					
-		
+		//Check LOGIC - NOT SURE IF CORRECT OR VALID
 		}
 		
 	/*****************************************END Check Status Method **************************************/
 		
 		/*************************************Change Status METHOD *****************************************/
 		
+/*************************************Change Status METHOD *****************************************/
+		
 		void changeStatus ()
         {
-            String oid = "";
-            String uid = "";
-            String newStatus = "";
+            String oid = ""; //OrderID
+            String uid = ""; //UserID//
+            String newStatus = ""; //UserInput for Status Change
 
             boolean isValid = false;
 
@@ -395,13 +403,14 @@ public class Store {
 
                     newStatus = Keyboard.next();
 
-                    // ((Orders) invoice).setOrderStatus(newStatus);
+                    // ((Orders) invoice).setOrderStatus(newStatus); //issues on this line
 
-                    System.out.println("Your Order Status for Order#: " + oid + " is:" + invoice.get(1));
+                    System.out.println("Your Order Status for Order#: " + oid + " is:" + invoice.get(2));
 
                 }
             }}
 		
+	
 		/**********************************************END Change Status Method **************************/
 		
 		/************************************************SHOW EMPLOYEE MENU METHOD************************
