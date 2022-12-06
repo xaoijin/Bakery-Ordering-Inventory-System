@@ -491,10 +491,34 @@ public class Store {
 			 /** ----------------------start display invoice-------------------------------- 
 			 * @throws SQLException **/
 			 @SuppressWarnings("unchecked")
-			 void viewInvoice() throws SQLException {
-				 while (((Iterator<String>) invoice).hasNext()) {
-			            System.out.print(((ResultSet) invoice).next() + " ");
-			        }
-				}
+			 void viewInvoice() throws SQLException 
+			 {
+				 Scanner scan = new Scanner(System.in); 
+				 int result=-1;
+				 System.out.println("Please enter the orderId you want to show: ");
+				 String order = scan.nextLine();
+				 
+				 
+				 while (((Iterator<String>) invoice).hasNext()) 
+				 {
+					 
+			            System.out.print(((ResultSet) invoice).next() + " "); 
+				 } 
+				 
+				 result=invoice.indexOf(order);  //logic check
+				 if (result>-1)
+				 {
+			     System.out.print(invoice.get(result).getUserID());
+				 System.out.print(account.get(result).getUsername());
+				 System.out.print(invoice.get(result).getOrderDate());
+				 System.out.print(invoice.get(result).getCompletedDate());
+				 System.out.print(invoice.get(result).getOrderItems());
+				 System.out.print(invoice.get(result).getOrderItems());
+				 System.out.print(invoice.get(result).getOrderItems());
+				 }
+				
+				 
+			 }
+				
 			 /** ----------------------end display invoice----------------------**/
 }
