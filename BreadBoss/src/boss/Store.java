@@ -312,24 +312,32 @@ public class Store {
 						break;
 					}
 					case (2):
-					{	//placeOrder();
+					{	createOrder();
 						break;
 					}
 					case (3):
 					{	 checkStatus();
 						break;
 					}
+				//	case 4):
+				//	{	//cancelOrder);
+				//		break;
+				//	}
 				
-					case (4):
+					case (5):
 					{	viewInvoice();
 						break;
 					}
-					case (5):
+					case (6):
 					{	addNewUser();
 						break;
 					}
-					case (6):
-					{	 //updateRecords();
+					case (7):
+					{	
+						
+						updateRecords();
+						exitBOSSSystem();
+					
 						System.out.println("\n\n");
 						System.out.println("****************************************************************************");	
 						System.out.println("Thank you for using BOSS - Program Terminated!");
@@ -337,13 +345,14 @@ public class Store {
 						System.exit(0);
 					}
 					default:
-					{	System.out.println("Invalid choice, please choose between 1-6"); }
+					{	System.out.println("Invalid choice, please choose between 1-7"); }
 			
 				} //end of switch
-				}while (option != 6);
+				}while (option != 7);
 				
 			
 		}
+		
 		
 		/************************************************END OF SHOW USER MENU METHOD
 		 * @throws IOException ******************************************************/
@@ -369,7 +378,7 @@ public class Store {
 	                    loggedinuser = i;
 	                    
 	                    
-	                    System.out.println("Order Status for  Order#:" + oid + " " + invoice.get(2));
+	                    System.out.println("Order Status for  Order#:" + oid + " " + invoice.get(2) + " " + getSystemDate());
 	                }
 			   }
 					
@@ -406,7 +415,7 @@ public class Store {
 
                     // ((Orders) invoice).setOrderStatus(newStatus); //issues on this line
 
-                    System.out.println("Your Order Status for Order#: " + oid + " is:" + invoice.get(2));
+                    System.out.println("New Order Status for Order#: " + oid + " is: " + invoice.get(2) + " " +getSystemDate());
 
                 }
             }}
@@ -441,7 +450,7 @@ public class Store {
 							break;
 						}
 						case (2):
-						{	 //updateStatus();
+						{	 changeStatus();
 							break;
 						}
 						case (3):
@@ -449,7 +458,9 @@ public class Store {
 							break;
 						}
 						case (4):
-						{	// updateRecords();
+						{	updateRecords();
+							exitBOSSSystem();
+							
 							System.out.println("Thank you for using BOSS System, - Program Terminated!");
 							System.out.println("****************************************************************************\n\n");	
 							System.exit(0);
@@ -489,7 +500,7 @@ public class Store {
 								em = "false"; //reset manager
 						} //write each line separated by the enter key
 						
-						 System.out.println("User File Update Successfully");
+						 System.out.println("User File Update Successfully " + getSystemDate());
 						bw.close();
 				 
 			
@@ -591,7 +602,8 @@ public class Store {
 				 System.out.println("Please enter the order price: ");
 				 double tempprice = scan.nextDouble();
 								 				 
-                                                                                    //johnson please check next three lines	
+                                                                                    
+				 //johnson please check next three lines	
 				 
 			//	 Orders newOrder = new Orders (tempuserID,temporderID, temporderStatus, temporderDate, 
 			//			 tempcompletedDate,temporderItems[],temporderQuantity[],tempprice);
@@ -616,5 +628,15 @@ public class Store {
 					return timestamp;
 				}
 				/****************************END GET TIME STAMP*********************************/
+				
+				/******************************EXIT SIM SYSTEM*********************************/
+				void exitBOSSSystem() throws SQLException
+				{	System.out.println("\n\n--------------------------------------------");
+					System.out.println("Thank you for using BOSS System, Program Ended!");
+					System.out.println("-----------------------------------------------");
+					System.exit(0);
+					connection.close();
+				}
+				/*****************************END EXIT SIM SYSTEM*************/
 
 }
