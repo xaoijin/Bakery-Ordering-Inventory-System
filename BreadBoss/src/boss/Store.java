@@ -48,7 +48,7 @@ public class Store {
 		Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 
 		// Step 2: Opening database connection
-		String msAccDB = "BOSSDATAFILES(1).accdb"; //Check if this correct - merged and might have messed this comnnect
+		String msAccDB = "bossdatabase.accdb"; //Check if this correct - merged and might have messed this comnnect
 		String dbURL = "jdbc:ucanaccess://" + msAccDB; 
 
 		// Step 3: Create and get connection using DriverManager class
