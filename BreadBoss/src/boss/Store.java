@@ -175,17 +175,18 @@ public class Store {
 
 		while (resultSet.next()) //tests for the eof
 		{   totalrows = resultSet.getRow();
-		uID = resultSet.getString(1); //userID
-		oID = resultSet.getString(2); //orderID
-		oS = resultSet.getString(3); //orderStatus
-		oD = resultSet.getString(4); //orderDate
-		cD = resultSet.getString(5);  //completedDate
-		oI = resultSet.getString(6);  //orderID
-		oQ= resultSet.getString(7); //orderquanity
-		p = resultSet.getDouble(8); //price
+		uID = resultSet.getString("UserID"); //userID
+		oID = resultSet.getString("OrderID"); //orderID
+		oS = resultSet.getString("OrderStatus"); //orderStatus
+		oD = resultSet.getString("OrderDate"); //orderDate
+		cD = resultSet.getString("CompletedDate");  //completedDate
+		oI = resultSet.getString("OrderItems");  //orderID
+		oQ= resultSet.getString("Quantities"); //orderquanity
+		p = resultSet.getDouble("Price"); //price
+		String tempoI[] = oI.split("\\+");
+		String[] tempoQ = oQ.split("\\+");
 
-
-		invoice.add(new Orders(uID,oID,oS,oD,cD, oI.split("+"),oQ.split("+"),p)); //add to the arraylist
+		invoice.add(new Orders(uID,oID,oS,oD,cD, tempoI,tempoQ,p)); //add to the arraylist
 		index++;
 		}
 		System.out.println("Orders Loaded");
