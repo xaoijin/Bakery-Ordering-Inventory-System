@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="hsqldb-2.5.0.jar"/>
 	<classpathentry kind="lib" path="jackcess-3.0.1.jar"/>
+	<classpathentry kind="lib" path="ucanaccess-5.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
