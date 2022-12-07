@@ -228,14 +228,14 @@ public class Store {
 		}
 		//Welcome the Logged In User
 
-		System.out.println("Welcome "+ account.get(loggedinuser).getUsername() + " Employee: " + account.get(loggedinuser).isEmployee());
+		System.out.println("Welcome "+ account.get(loggedinuser).getUsername());
 		if(account.get(loggedinuser).isEmployee()) {
 
 			welcome();
-			showMenu();
+			showEmployeeMenu();
 
 		}else{
-			showEmployeeMenu();
+			showMenu();
 		}
 
 	}
@@ -419,9 +419,10 @@ public class Store {
 	void viewBakery() {
 		System.out.println("View BOSS Bakery:");
 		System.out.println();
-		while (((Iterator<String>) item).hasNext()) {
-			System.out.print(Products.next() + " ");
-		}
+		for (Integer i = 0; i < item.size(); i++)
+        {
+            System.out.print(item.get(i) + " ");
+        }
 	}
 	/***************************************************END VIEW BAKERY*******************************************************/		
 
