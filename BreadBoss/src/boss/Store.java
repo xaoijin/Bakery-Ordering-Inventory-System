@@ -523,27 +523,20 @@ public class Store {
 			}
 		}}			
 	/***************************************************END Change Status Method **************************************************/							
-	/** *************************************************START DISPLAY INVOICE****************************************************/
+	/** *************************************************START search INVOICE****************************************************/
 
 	@SuppressWarnings({ "static-access", "unchecked" })
-	void viewInvoice() throws SQLException 
+	void viewSearch() throws SQLException 
 	{
 		//DISPLAY MENU HEADER
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
-		System.out.println("            VIEW YOUR INVOICE:              ");
+		System.out.println("            Search INVOICE:              ");
 		System.out.println("-------------------------------------------");	
 		Scanner scan = new Scanner(System.in); 
 		int result=-1;
-		System.out.println("Please Enter Your OrderID: ");
-		String order = scan.nextLine();
-
-
-		while (((Iterator<String>) invoice).hasNext())  
-		{
-
-			System.out.print(((ResultSet) invoice).next() + " "); 
-		} 
+		System.out.println("Please Enter the OrderID: ");
+		String order = scan.nextLine(); 
 
 		result=invoice.indexOf(order);  //logic check - @Johnson
 		if (result>-1)
@@ -556,8 +549,12 @@ public class Store {
 			System.out.print(invoice.get(result).getOrderItems());
 			System.out.print(invoice.get(result).getOrderItems());
 		}	 
+		else 
+		{
+			System.out.println("The orderID of "+result+" does not exist exist.");
+		}
 	}								
-	/*****************************************END DISPLAY INVOICE *************************************************************/
+	/*****************************************END search INVOICE *************************************************************/
 
 	/*******************************************************ADD NEW USER*******************************************************/
 
@@ -633,6 +630,51 @@ public class Store {
 
 	}
 	/************************************************ END OFUPDATE RECORDS****************************************************/
+	
+	/***************************************************start view invoice
+	 * @throws SQLException *******************************************************/
+	 @SuppressWarnings("unchecked")
+		void viewInvoice() throws SQLException {
+			 while (((Iterator<String>) item).hasNext()) {
+		            System.out.println(((ResultSet) invoice).next() + " ");
+		        }
+			}
+		 /***************************************************end view invoice*******************************************************/
+	
+	 /** *********************************************start delete order***************************************************/
+	 
+	 void deleteOrder() throws SQLException 
+	 {
+		 Scanner scan = new Scanner(System.in); 
+		 int result=-1;
+		 
+		 System.out.println("Please enter the orderID you want to delete: ");
+		 String temporderID = scan.nextLine();
+		 
+		 result=invoice.indexOf(temporderID);  //logic check
+		 
+		 String tempuserID = (invoice.get(result).getUserID());
+		 String temporderStatus = (invoice.get(result).getOrderStatus());
+		 String temporderDate = (invoice.get(result).getOrderDate());
+		 String tempcompletedDate = (invoice.get(result).getCompletedDate());
+		 String[] temporderItems = (invoice.get(result).getOrderItems());
+		 String[] temporderQuantity = (invoice.get(result).getOrderQuantity());
+		 double tempprice = (invoice.get(result).getPrice());
+						 				 
+                                                                            //johnson please check next three lines	
+		 
+	//	 Orders deleteOrder = new Orders (tempuserID,temporderID, temporderStatus, temporderDate, 
+	//			 tempcompletedDate,temporderItems[],temporderQuantity[],tempprice);
+		 
+	//	 invoice.delete(deleteOrder);
+		 				 
+	 }
+	 
+	 /** *********************************************end delete order***************************************************/
+	 
+	 
+	 
+	
 	/************************************************CAPTURE DATE*************************************************************/
 
 	/************************************************GET TIME STAMP**********************************************************/
