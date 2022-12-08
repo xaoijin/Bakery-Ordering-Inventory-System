@@ -201,7 +201,7 @@ public class Store {
 
 		boolean isValid = false;
 		int counter = 0;
-		System.out.println("************************LOGIN SCREEN**************************");
+		System.out.println("*********************************************************************LOGIN SCREEN*********************************************");
 
 		do {
 			counter++;
@@ -228,14 +228,14 @@ public class Store {
 		}
 		//Welcome the Logged In User
 
-		System.out.println("Welcome "+ account.get(loggedinuser).getUsername());
+		System.out.println("Welcome "+ account.get(loggedinuser).getUsername() + " Employee: " + account.get(loggedinuser).isEmployee());
 		if(account.get(loggedinuser).isEmployee()) {
 
 			welcome();
-			showEmployeeMenu();
+			showMenu();
 
 		}else{
-			showMenu();
+			showEmployeeMenu();
 		}
 
 	}
@@ -248,10 +248,10 @@ public class Store {
 
 	{
 		System.out.println("\n\n");
-		System.out.println("-------------------------------------------");
-		System.out.println("               WELCOME!!!               ");
-		System.out.println("-------------------------------------------");	
-		System.out.println("                    \\                     .----------------.  .----------------.  .----------------.  .----------------.");
+		System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("                                                                         WELCOME!!!                                       ");
+		System.out.println("---------------------------------------------------------------------------------------------------------------------------");	
+		System.out.println("                    \\                     .----------------.  .----------------.  .----------------.  j.----------------.");
 		System.out.println("                     @                     | .--------------. || .--------------.| |.--------------. |.--------------.|");
 		System.out.println("                 #;;;;;;;#                 | |   ______     | || |     ____     || ||   _________  | |||    _______   | |");
 		System.out.println("                ;;;+;;;;;;;                | |  |_   _ \\   | || |   .'    `.   || ||  /  ___    | | |||   /  ___  |  | |");
@@ -275,9 +275,12 @@ public class Store {
 		System.out.println("               @@#';,;;+@@@                 '----------------'  '----------------'  '----------------'  '----------------' ");
 
 
-		System.out.println("*********************************************");	
-		System.out.println("Welcome to BOSS System!");
-		System.out.println("**********************************************");	
+		System.out.println("****************************************************************************************************************************");	
+		System.out.println("                                                                  Welcome to BOSS System!");
+		System.out.println("****************************************************************************************************************************");
+		System.out.println();
+		System.out.println();
+		System.out.println();
 	}
 
 	/**************************************************END OF WELCOME METHOD******************************************************/			
@@ -419,10 +422,9 @@ public class Store {
 	void viewBakery() {
 		System.out.println("View BOSS Bakery:");
 		System.out.println();
-		for (Integer i = 0; i < item.size(); i++)
-        {
-            System.out.println(item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
-        }
+		while (((Iterator<String>) item).hasNext()) {
+			System.out.print(Products.next() + " ");
+		}
 	}
 	/***************************************************END VIEW BAKERY*******************************************************/		
 
