@@ -152,7 +152,7 @@ public class Store {
 
 	/*******************************************************END OF LOAD PRODUCTS******************************/
 
-	/*******************************************************LOAD INVOICE******************************/
+	/*******************************************************LOAD ORDERS******************************/
 
 	void loadOrders() throws IOException, SQLException
 	{
@@ -639,9 +639,19 @@ public class Store {
 	 * @throws SQLException *******************************************************/
 	 @SuppressWarnings("unchecked")
 		void viewInvoice() throws SQLException {
-			 while (((Iterator<String>) item).hasNext()) {
-		            System.out.println(((ResultSet) invoice).next() + " ");
-		        }
+			 
+			 for (int i = 0; i < invoice.size(); i++)
+				{	   System.out.println(invoice.get(i).getUserID() + "," +
+						invoice.get(i).getOrderID() + "," + 
+						invoice.get(i).getOrderStatus() + "," +
+						invoice.get(i).getOrderDate()+ "," +
+						invoice.get(i).getCompletedDate() + "," +
+						invoice.get(i).getOrderItems() + "," +
+						invoice.get(i).getOrderQuantity() + "," +
+						invoice.get(i).getPrice());
+				}
+			 
+			 
 			}
 		 /***************************************************end view invoice*******************************************************/
 	
