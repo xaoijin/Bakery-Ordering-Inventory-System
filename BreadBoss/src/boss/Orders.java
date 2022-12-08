@@ -1,18 +1,20 @@
 package boss;
 
+import java.util.Date;
+
 public class Orders {
 	
 	private static String userID;
 	private String orderID;
 	private String orderStatus; //Order Status - Started, In Progress, Completed, Declined
-	private String orderDate; //Order Placed Date
-	private String completedDate; //Order Completed Date
+	private Date orderDate; //Order Placed Date
+	private Date completedDate; //Order Completed Date
 	private String [] orderItems ; //Array of Ordered Items
 	private String [] orderQuantity;// Array of Ordered Quantity
 	private double price;
 	
-	public Orders(String userID, String orderID, String orderStatus, String orderDate,
-			String completedDate, String[] orderItems, String[] orderQuantity, double price) 
+	public Orders(String userID, String orderID, String orderStatus, Date orderDate,
+			Date completedDate, String[] orderItems, String[] orderQuantity, double price) 
 	
 
 	{
@@ -33,8 +35,8 @@ public class Orders {
 		this.orderID = "NULL";
 		this.orderStatus = "NULL";
 		
-		this.orderDate = "NULL";
-		this.completedDate = "NULL";
+		this.orderDate = null;
+		this.completedDate = null;
 		this.orderItems = null;
 		this.orderQuantity = null;
 		this.price = 00.00;
@@ -58,16 +60,16 @@ public class Orders {
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-	public String getOrderDate() {
+	public Date getOrderDate() {
 		return orderDate;
 	}
-	public void setOrderDate(String orderDate) {
+	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
-	public String getCompletedDate() {
+	public Date getCompletedDate() {
 		return completedDate;
 	}
-	public void setCompletedDate(String completedDate) {
+	public void setCompletedDate(Date completedDate) {
 		this.completedDate = completedDate;
 	}
 	public String[] getOrderItems() {

@@ -12,6 +12,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -19,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -161,8 +163,8 @@ public class Store {
 		String uID = ""; //userID
 		String oID = ""; //orderID
 		String oS = ""; //orderStatus
-		String oD = ""; //orderDate
-		String cD = ""; //completedDate
+		Date oD = null; //orderDate
+		Date cD = null; //completedDate
 		String oI; //array of orderedItems
 		String oQ; //array of ordered Quantity
 
@@ -172,20 +174,21 @@ public class Store {
 
 		//Get the total rows in the table to loop through the result set
 		resultSet = statement.executeQuery("SELECT * FROM Orders"); 
-
+		String delimiters = "\\s+|,\\s*|\\.\\s*";
 		while (resultSet.next()) //tests for the eof
 		{   totalrows = resultSet.getRow();
 		uID = resultSet.getString("UserID"); //userID
 		oID = resultSet.getString("OrderID"); //orderID
 		oS = resultSet.getString("OrderStatus"); //orderStatus
-		oD = resultSet.getString("OrderDate"); //orderDate
-		cD = resultSet.getString("CompletedDate");  //completedDate
+		oD = resultSet.getDate("OrderDate");
+		System.out.println(oD);
+		cD = resultSet.getDate("CompletedDate");  //completedDate
+		System.out.println(cD);
 		oI = resultSet.getString("OrderItems");  //orderID
 		oQ= resultSet.getString("Quantities"); //orderquanity
 		p = resultSet.getDouble("Price"); //price
-		String tempoI[] = oI.split("\\+");
-		String[] tempoQ = oQ.split("\\+");
-
+		String[] tempoI = oI.split("//+");
+		String[] tempoQ = oQ.split("//+");
 		invoice.add(new Orders(uID,oID,oS,oD,cD, tempoI,tempoQ,p)); //add to the arraylist
 		index++;
 		}
@@ -642,13 +645,14 @@ public class Store {
 		void viewInvoice() throws SQLException {
 			 
 			 for (int i = 0; i < invoice.size(); i++)
-				{	   System.out.println(invoice.get(i).getUserID() + "," +
+				{	   System.out.println(
+						invoice.get(i).getUserID() + "," +
 						invoice.get(i).getOrderID() + "," + 
 						invoice.get(i).getOrderStatus() + "," +
 						invoice.get(i).getOrderDate()+ "," +
 						invoice.get(i).getCompletedDate() + "," +
-						invoice.get(i).getOrderItems() + "," +
-						invoice.get(i).getOrderQuantity() + "," +
+						Arrays.toString(invoice.get(i).getOrderItems()) + "," +
+						Arrays.toString(invoice.get(i).getOrderQuantity()) + "," +
 						invoice.get(i).getPrice());
 				}
 			 
@@ -670,8 +674,8 @@ public class Store {
 		 
 		 String tempuserID = (invoice.get(result).getUserID());
 		 String temporderStatus = (invoice.get(result).getOrderStatus());
-		 String temporderDate = (invoice.get(result).getOrderDate());
-		 String tempcompletedDate = (invoice.get(result).getCompletedDate());
+		 Date temporderDate = (Date) (invoice.get(result).getOrderDate());
+		 Date tempcompletedDate = (Date) (invoice.get(result).getCompletedDate());
 		 String[] temporderItems = (invoice.get(result).getOrderItems());
 		 String[] temporderQuantity = (invoice.get(result).getOrderQuantity());
 		 double tempprice = (invoice.get(result).getPrice());
