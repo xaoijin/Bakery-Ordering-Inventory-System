@@ -232,10 +232,10 @@ public class Store {
 		if(account.get(loggedinuser).isEmployee()) {
 
 			welcome();
-			showMenu();
+			showEmployeeMenu();
 
 		}else{
-			showEmployeeMenu();
+			showMenu();
 		}
 
 	}
@@ -422,9 +422,10 @@ public class Store {
 	void viewBakery() {
 		System.out.println("View BOSS Bakery:");
 		System.out.println();
-		while (((Iterator<String>) item).hasNext()) {
-			System.out.print(Products.next() + " ");
-		}
+		for (Integer i = 0; i < item.size(); i++)
+        {
+            System.out.println(item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
+        }
 	}
 	/***************************************************END VIEW BAKERY*******************************************************/		
 
