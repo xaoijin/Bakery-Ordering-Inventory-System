@@ -22,6 +22,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -382,8 +383,9 @@ public class Store {
 			System.out.println("1. View Bakery");
 			System.out.println("2. Update Order Status");
 			System.out.println("3. Contact Customer");
-			System.out.println("4. Exit");
-			System.out.print("Choose a system process (1-4): ");
+			System.out.println("4. Delete Order");
+			System.out.println("5. Eit");
+			System.out.print("Choose a system process (1-5): ");
 			option = Keyboard.nextInt();
 			switch (option)
 			{
@@ -400,6 +402,10 @@ public class Store {
 				break;
 			}
 			case (4):
+			{	 deleteOrder();
+				break;
+			}
+			case (5):
 			{	updateRecords();
 			exitBOSSSystem();
 
@@ -408,10 +414,10 @@ public class Store {
 			System.exit(0);
 			}
 			default:
-			{	System.out.println("Invalid choice, please choose between 1-4"); }
+			{	System.out.println("Invalid choice, please choose between 1-5"); }
 
 			} //end of switch
-		}while (option != 4);
+		}while (option != 5);
 
 
 	}
@@ -669,23 +675,27 @@ public class Store {
 		 
 		 System.out.println("Please enter the orderID you want to delete: ");
 		 String temporderID = scan.nextLine();
+		 for(int a=0;a<invoice.size();a++) 
+		 {
+			 if(invoice.get(a).getOrderID() == temporderID)
+			 {
+			 result=((List<Products>) invoice.get(a)).indexOf(temporderID);  //logic check
 		 
-		 result=invoice.indexOf(temporderID);  //logic check
+			 String tempuserID = (invoice.get(result).getUserID());
+			 String temporderStatus = (invoice.get(result).getOrderStatus());
+			 Date temporderDate = (Date) (invoice.get(result).getOrderDate());
+			 Date tempcompletedDate = (Date) (invoice.get(result).getCompletedDate());
+			 String[] temporderItems = (invoice.get(result).getOrderItems());
+			 String[] temporderQuantity = (invoice.get(result).getOrderQuantity());
+			 double tempprice = (invoice.get(result).getPrice());
 		 
-		 String tempuserID = (invoice.get(result).getUserID());
-		 String temporderStatus = (invoice.get(result).getOrderStatus());
-		 Date temporderDate = (Date) (invoice.get(result).getOrderDate());
-		 Date tempcompletedDate = (Date) (invoice.get(result).getCompletedDate());
-		 String[] temporderItems = (invoice.get(result).getOrderItems());
-		 String[] temporderQuantity = (invoice.get(result).getOrderQuantity());
-		 double tempprice = (invoice.get(result).getPrice());
-						 				 
-                                                                            //johnson please check next three lines	
+			 invoice.erase(tempuserID, temporderID, temporderStatus, temporderDate, 
+					 tempcompletedDate,temporderItems[],temporderQuantity[],tempprice);
 		 
-	//	 Orders deleteOrder = new Orders (tempuserID,temporderID, temporderStatus, temporderDate, 
-	//			 tempcompletedDate,temporderItems[],temporderQuantity[],tempprice);
+			 }			 				 
+		 }                                                                //johnson please check next three lines	
 		 
-	//	 invoice.delete(deleteOrder);
+	
 		 				 
 	 }
 	 
