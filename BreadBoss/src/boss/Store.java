@@ -384,8 +384,9 @@ public class Store {
 			System.out.println("2. Update Order Status");
 			System.out.println("3. Contact Customer");
 			System.out.println("4. Delete Order");
-			System.out.println("5. Eit");
-			System.out.print("Choose a system process (1-5): ");
+			System.out.println("5. Search Invoice");
+			System.out.println("6. Eit");
+			System.out.print("Choose a system process (1-6): ");
 			option = Keyboard.nextInt();
 			switch (option)
 			{
@@ -406,6 +407,10 @@ public class Store {
 				break;
 			}
 			case (5):
+			{	 viewSearch();
+				break;
+			}
+			case (6):
 			{	updateRecords();
 			exitBOSSSystem();
 
@@ -414,10 +419,10 @@ public class Store {
 			System.exit(0);
 			}
 			default:
-			{	System.out.println("Invalid choice, please choose between 1-5"); }
+			{	System.out.println("Invalid choice, please choose between 1-6"); }
 
 			} //end of switch
-		}while (option != 5);
+		}while (option != 6);
 
 
 	}
@@ -548,25 +553,29 @@ public class Store {
 		System.out.println("            Search INVOICE:              ");
 		System.out.println("-------------------------------------------");	
 		Scanner scan = new Scanner(System.in); 
-		int result=-1;
 		System.out.println("Please Enter the OrderID: ");
 		String order = scan.nextLine(); 
-
-		result=invoice.indexOf(order);  //logic check - @Johnson
-		if (result>-1)
-		{
-			System.out.print("UserID: " + invoice.get(result).getUserID());
-			System.out.print("UserName: " + account.get(result).getUsername());
-			System.out.print("OrderDate: " + invoice.get(result).getOrderDate());
-			System.out.print("CompletedDate: " + invoice.get(result).getCompletedDate());
-			System.out.print(invoice.get(result).getOrderItems());
-			System.out.print(invoice.get(result).getOrderItems());
-			System.out.print(invoice.get(result).getOrderItems());
-		}	 
-		else 
-		{
-			System.out.println("The orderID of "+result+" does not exist exist.");
-		}
+		
+		for(int a=0;a<invoice.size();a++) 
+		 {
+			 if(invoice.get(a).getOrderID() == order)
+			 {
+		     System.out.println("Here are the results:");
+			 System.out.println(invoice.get(a).getUserID());
+			 System.out.println(invoice.get(a).getOrderStatus());
+			 System.out.println((Date) (invoice.get(a).getOrderDate()));
+			 System.out.println((Date) (invoice.get(a).getCompletedDate()));
+			 System.out.println(invoice.get(a).getOrderItems());
+			 System.out.println(invoice.get(a).getOrderQuantity());
+			 System.out.println(invoice.get(a).getPrice());
+		
+			 }
+			 else 
+			 {
+				 System.out.println(order+" OrderID does not exist.");
+			 }
+		 } 
+		
 	}								
 	/*****************************************END search INVOICE *************************************************************/
 
@@ -689,8 +698,8 @@ public class Store {
 			 String[] temporderQuantity = (invoice.get(result).getOrderQuantity());
 			 double tempprice = (invoice.get(result).getPrice());
 		 
-			 invoice.erase(tempuserID, temporderID, temporderStatus, temporderDate, 
-					 tempcompletedDate,temporderItems[],temporderQuantity[],tempprice);
+		//	 invoice.erase(tempuserID, temporderID, temporderStatus, temporderDate, 
+		//			 tempcompletedDate,temporderItems[],temporderQuantity[],tempprice);
 		 
 			 }			 				 
 		 }                                                                //johnson please check next three lines	
