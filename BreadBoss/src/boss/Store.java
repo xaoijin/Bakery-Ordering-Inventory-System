@@ -421,7 +421,7 @@ public class Store {
 		System.out.println();
 		for (Integer i = 0; i < item.size(); i++)
         {
-            System.out.print(item.get(i) + " ");
+            System.out.println(item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
         }
 	}
 	/***************************************************END VIEW BAKERY*******************************************************/		
