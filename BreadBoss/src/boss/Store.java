@@ -18,8 +18,11 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
+
+import org.hsqldb.rights.User;
 
 public class Store {
 	Vector <Products> item; // Vector to Hold Products
@@ -445,6 +448,7 @@ public class Store {
 		Scanner scan = new Scanner(System.in); 
 
 		System.out.println("Please enter the userID: ");
+		
 		String tempuserID = scan.nextLine();
 		System.out.println("Please enter the orderId: ");
 		String temporderID = scan.nextLine();
@@ -583,28 +587,118 @@ public class Store {
 		System.out.println("-------------------------------------------");	
 
 		Scanner input = new Scanner(System.in);
+		
 
-		System.out.print("Enter User ID: ");
-		String userID = input.nextLine();
-
+			 String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			 StringBuilder id = new StringBuilder();
+			 Random rnd = new Random();
+			 
+			while(id.length() < 3) {//length of random string
+				int index = (int) (rnd.nextFloat() * CHARS.length());
+						id.append(CHARS.charAt(index));
+			}
+			 String CharStr = id.toString();
+			 
+			 
+			 String ALPHA = "1234567890";
+			 StringBuilder id2 = new StringBuilder();
+			 Random rnd1 = new Random();
+			 
+			while(id2.length() < 1) {//length of random string
+				int index = (int) (rnd.nextFloat() * CHARS.length());
+						id2.append(CHARS.charAt(index));
+			}
+			 String AlphaStr = id2.toString();
+		
+			 String userID = CharStr + AlphaStr;		
+		
+		/*****************************************************************/
+	
 		System.out.print("Enter New UserName: ");
 		String username = input.nextLine();
-
+		Boolean usernameValid = false;
+		
+		while(!usernameValid) {
+		 for (int i = 0; i < account.size(); i++)
+	        {
+	           if(account.get(i).getUsername() == username) 
+	           {
+	        	   System.out.print("Invalid UserName Entry - UserName Already Exists");
+	        	  
+	           }
+	           else
+	           {
+	        	   username = input.next();
+	        	   usernameValid = true;
+	           }
+	        }
+		}	
+/**********************************************************************************/
 		System.out.print("Enter New Password ");
 		String password = input.nextLine();
 
 		System.out.print("Enter Phone: ");
 		String phone = input.nextLine();
-
+		Boolean phoneValid = false;
+		
+		while(!phoneValid) {
+			 for (int i = 0; i < account.size(); i++)
+		        {
+		           if(account.get(i).getPhone() ==phone) 
+		           {
+		        	   System.out.print("Invalid Phone Number Entry - Phone Number Already Exists");
+		        	  
+		           }
+		           else
+		           {
+		        	   phone = input.next();
+		        	   phoneValid = true;
+		           }
+		        }
+		}
+/*****************************************************************************************/		
 		System.out.print("Enter Email: ");
 		String email = input.nextLine();
-
+		Boolean emailValid = false;
+		
+		while(!emailValid) {
+			 for (int i = 0; i < account.size(); i++)
+		        {
+		           if(account.get(i).getEmail() ==email) 
+		           {
+		        	   System.out.print("Invalid Email Entry - Email Already Exists");
+		        	  
+		           }
+		           else
+		           {
+		        	   email = input.next();
+		        	  emailValid = true;
+		           }
+		        }
+		}
+		
+/******************************************************************************************/		
 		System.out.print("Enter Name: ");
 		String name= input.nextLine();
 
-		System.out.print("Is User an Employee(True/False): ");
-		Boolean employee = input.nextBoolean();
-
+		//Employee Pin A2XVM232:
+		
+		System.out.print("Is User an Employee(Enter Employee Access Code Otherwise Enter Any Four Digits): ");
+		String code = input.nextLine();
+		Boolean employee = false;
+	
+		while(!employee) {
+			if(code == "A2XVM232") { 
+				 employee = true;
+				
+			}
+			else {
+				employee = false;
+				
+			}
+		}
+		
+/*****************************************************************************************************************/		
 		Users nUser = new Users (userID,username, password, phone, email,name,
 				employee);
 
@@ -706,7 +800,12 @@ public class Store {
 	 /** *********************************************end delete order***************************************************/
 	 
 	 
+	 /************************************************RANDOME USERID GENERATOR********************************************/
+
 	 
+	 
+	 
+	 /************************************************RANDOM USERID GENERATOR END ***************************************/
 	
 	/************************************************CAPTURE DATE*************************************************************/
 
