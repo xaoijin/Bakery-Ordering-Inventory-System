@@ -438,11 +438,11 @@ public class Store {
 		System.out.println("-------------------------------------------");	
 		String input = "";
 		boolean inputValid = false;
-		Integer x = 1;
+		
 		for (Integer i = 0; i < item.size(); i++)
         {
-            System.out.println(x+". "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
-            x++;
+            System.out.println(item.get(i).getProductID()+ " | "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
+            
         }
 		System.out.println("Do you want to place an order?");
 		input = Keyboard.next().toString().toLowerCase();

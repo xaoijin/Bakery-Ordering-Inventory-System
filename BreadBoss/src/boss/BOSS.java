@@ -2,7 +2,6 @@ package boss;
 
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 
 //this is where we run the system itself
