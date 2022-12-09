@@ -27,7 +27,7 @@ import java.util.Vector;
 public class Store {
 	Vector <Products> item; // Vector to Hold Products
 	Vector <Users> account; //Vector to Hold All Users
-	Vector <Orders> invoice; //Vector to Hold Order Information
+	Vector <Orders> orders; //Vector to Hold Order Information
 	int numUupdates;
 	int loggedinuser = -1;
 	Scanner Keyboard;
@@ -67,7 +67,7 @@ public class Store {
 	{
 		item = new Vector<Products>();
 		account = new Vector<Users>();
-		invoice = new Vector<Orders>();
+		orders = new Vector<Orders>();
 		Keyboard = new Scanner (System.in);
 
 	}
@@ -181,7 +181,7 @@ public class Store {
 		p = resultSet.getDouble("Price"); //price
 		String[] tempoI = oI.split("//+");
 		String[] tempoQ = oQ.split("//+");
-		invoice.add(new Orders(uID,oID,oS,oD,cD, tempoI,tempoQ,p)); //add to the vector
+		orders.add(new Orders(uID,oID,oS,oD,cD, tempoI,tempoQ,p)); //add to the vector
 		index++;
 		}
 		System.out.println("Orders Loaded");
@@ -527,40 +527,63 @@ public class Store {
 				System.out.println("Do you want to add more items?(yes/no)");
 				addmoreitems = Keyboard.next();
 				if(addmoreitems.equals("yes") || addmoreitems.equals("no")) {
-					if(addmoreitems.toLowerCase().equals("no")){
-						String[] convertedPIDs = userItems.toArray(new String[userItems.size()]);//converts the user items from a vector to an String array and is the variable used to create an object
-						Integer[] convertedUIQs = userItemQuantities.toArray(new Integer[userItemQuantities.size()]);// converts the item quantities from a vector to an array 
-						String stringAPIDs = Arrays.toString(convertedPIDs).replaceAll("\\,", "+");//turns the user items array to a String and is the variable used for injecting to Access/MYSQL
-						stringAPIDs = stringAPIDs.replaceAll("\\[", "");//removes left bracket
-						stringAPIDs = stringAPIDs.replaceAll("\\]", "");//removes right bracket
-						stringAPIDs = stringAPIDs.replaceAll("\\s+", "");//removes any spaces
-						System.out.println(stringAPIDs);
-						String stringAUIQs = Arrays.toString(convertedUIQs).replaceAll("\\,", "+");//turns the item quantities array to a String and is the variable used for injecting to Access/MYSQL
-						stringAUIQs = stringAUIQs.replaceAll("\\[", "");//removes left bracket
-						stringAUIQs = stringAUIQs.replaceAll("\\]", "");//removes right bracket
-						stringAUIQs = stringAUIQs.replaceAll("\\s+", "");//removes any spaces
-						System.out.println(stringAUIQs);
-						String arUIQs[] = stringAUIQs.substring(1,stringAUIQs.length()-1).split("\\+");//turns the item quantities string to an String array and is the variable used to create an object
-						if(convertedUIQs.length > 1) {
-	
-							finishedOrdering = true;
-						}
-						System.out.println("The total price comes down to " + totalPrice + "$");
-						
-						finishedOrdering = true;
-					}
-					
-					if(addmoreitems.toLowerCase().equals("yes")) {
-						isValidYesOrNo = true;
-						validProductID = false;
-						validProductQuantity = false;
-					}
+					isValidYesOrNo = true;
 				}else {
 					System.out.println("Invalid Input, Try Again!");
 				}
 			}
+			if(addmoreitems.toLowerCase().equals("no")){
+				boolean uniqueOID = false;
+				String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+				String newOID = "";
+				Random rnd = new Random();
+				String[] convertedPIDs = userItems.toArray(new String[userItems.size()]);//converts the user items from a vector to an String array and is the variable used to create an object
+				Integer[] convertedUIQs = userItemQuantities.toArray(new Integer[userItemQuantities.size()]);// converts the item quantities from a vector to an array 
+				String stringAPIDs = Arrays.toString(convertedPIDs).replaceAll("\\,", "+");//turns the user items array to a String and is the variable used for injecting to Access/MYSQL
+				stringAPIDs = stringAPIDs.replaceAll("\\[", "");//removes left bracket
+				stringAPIDs = stringAPIDs.replaceAll("\\]", "");//removes right bracket
+				stringAPIDs = stringAPIDs.replaceAll("\\s+", "");//removes any spaces
+				String stringAUIQs = Arrays.toString(convertedUIQs).replaceAll("\\,", "+");//turns the item quantities array to a String and is the variable used for injecting to Access/MYSQL
+				stringAUIQs = stringAUIQs.replaceAll("\\[", "");//removes left bracket
+				stringAUIQs = stringAUIQs.replaceAll("\\]", "");//removes right bracket
+				stringAUIQs = stringAUIQs.replaceAll("\\s+", "");//removes any spaces
+				//String arUIQs[] = stringAUIQs.substring(1,stringAUIQs.length()-1).split("\\+");//turns the item quantities string to an String array and is the variable used to create an object
+				
+				while(!uniqueOID) {//keeps looping till created order id is unique
+					StringBuilder chars = new StringBuilder();
+					while(chars.length() < 8) {//length of random string
+		                int index = (int) (rnd.nextFloat() * CHARS.length());
+		                        chars.append(CHARS.charAt(index));
+		            }
+		             String CharStr = chars.toString();
+		             newOID = CharStr;
+		              
+		              for(Integer z = 0; z < orders.size(); z++) {
+		            	  if(newOID.equals(orders.get(z).getOrderID())) {
+		            		  uniqueOID = false;
+		            	  }else {
+		            		  uniqueOID = true;
+		            	  }
+		              }
+				}
+				System.out.println("Your OrderID is: " + newOID);
+				if(convertedUIQs.length > 1) {
+					
+					System.out.println("The total price comes down to " + totalPrice + "$");
+					finishedOrdering = true;
+				}else {
+					
+					System.out.println("The total price comes down to " + totalPrice + "$");
+					finishedOrdering = true;
+				}
+
+			}
 			
-			isValidYesOrNo = false;
+			if(addmoreitems.toLowerCase().equals("yes")) {
+				isValidYesOrNo = false;
+				validProductID = false;
+				validProductQuantity = false;
+			}
 			
 		}
 
@@ -582,14 +605,14 @@ public class Store {
 		System.out.println("Enter Your OrderID");
 		oid = Keyboard.next();
 
-		for(int i = 0; i < invoice.size(); i++) {
+		for(int i = 0; i < orders.size(); i++) {
 
-			if( oid.equals(invoice.get(i).getOrderID())) {
+			if( oid.equals(orders.get(i).getOrderID())) {
 				isValid = true;
 				loggedinuser = i;
 
 
-				System.out.println("Order Status for  Order#:" + oid + " " + invoice.get(2) + " " + getSystemDate());
+				System.out.println("Order Status for  Order#:" + oid + " " + orders.get(2) + " " + getSystemDate());
 			}
 		}
 
@@ -622,21 +645,21 @@ public class Store {
 		System.out.println("Enter OrderID To Be Updated: ");
 		uid = Keyboard.next();
 
-		for(int i = 0; i < invoice.size(); i++) {
+		for(int i = 0; i < orders.size(); i++) {
 
-			if( oid.equals(invoice.get(i).getOrderID())) {
+			if( oid.equals(orders.get(i).getOrderID())) {
 				isValid = true;
 
 				System.out.println("Enter New Status To Be Updated: ");
 
 				newStatus = Keyboard.next();
 
-				System.out.println("New Order Status for Order#: " + oid + " is: " + invoice.get(2) + " " +getSystemDate());
+				System.out.println("New Order Status for Order#: " + oid + " is: " + orders.get(2) + " " +getSystemDate());
 			}
 		}
 	}			
 	/***************************************************END Change Status Method **************************************************/							
-	/** *************************************************START search INVOICE****************************************************/
+	/** *************************************************START search orders****************************************************/
 
 	@SuppressWarnings({ "static-access" })
 	void employeeSearch() throws SQLException 
@@ -644,24 +667,24 @@ public class Store {
 		//DISPLAY MENU HEADER
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
-		System.out.println("            Search INVOICE:              ");
+		System.out.println("            Search orders:              ");
 		System.out.println("-------------------------------------------");	
 		Scanner scan = new Scanner(System.in); 
 		System.out.println("Please Enter the OrderID: ");
 		String order = scan.nextLine(); 
 		
-		for(int a=0;a<invoice.size();a++) 
+		for(int a=0;a<orders.size();a++) 
 		 {
-			 if(invoice.get(a).getOrderID() == order)
+			 if(orders.get(a).getOrderID() == order)
 			 {
 		     System.out.println("Here are the results:");
-			 System.out.println(invoice.get(a).getUserID());
-			 System.out.println(invoice.get(a).getOrderStatus());
-			 System.out.println((Date) (invoice.get(a).getOrderDate()));
-			 System.out.println((Date) (invoice.get(a).getCompletedDate()));
-			 System.out.println(invoice.get(a).getOrderItems());
-			 System.out.println(invoice.get(a).getOrderQuantity());
-			 System.out.println(invoice.get(a).getPrice());
+			 System.out.println(orders.get(a).getUserID());
+			 System.out.println(orders.get(a).getOrderStatus());
+			 System.out.println((Date) (orders.get(a).getOrderDate()));
+			 System.out.println((Date) (orders.get(a).getCompletedDate()));
+			 System.out.println(orders.get(a).getOrderItems());
+			 System.out.println(orders.get(a).getOrderQuantity());
+			 System.out.println(orders.get(a).getPrice());
 		
 			 }
 			 else 
@@ -671,7 +694,7 @@ public class Store {
 		 } 
 		
 	}								
-	/*****************************************END search INVOICE *************************************************************/
+	/*****************************************END search orders *************************************************************/
 
 	/****************************************START CREATE ACCOUNT METHOD*******************************************************/
 
@@ -813,18 +836,6 @@ public class Store {
 	/***********************************START VIEW HISTORY METHOD*******************************************************/
 	 //For Employee Menu
 	void viewHistory() throws SQLException {
-			 
-			 for (int i = 0; i < invoice.size(); i++)
-				{	   System.out.println(
-						invoice.get(i).getUserID() + "," +
-						invoice.get(i).getOrderID() + "," + 
-						invoice.get(i).getOrderStatus() + "," +
-						invoice.get(i).getOrderDate()+ "," +
-						invoice.get(i).getCompletedDate() + "," +
-						Arrays.toString(invoice.get(i).getOrderItems()) + "," +
-						Arrays.toString(invoice.get(i).getOrderQuantity()) + "," +
-						invoice.get(i).getPrice()+"$");
-				}
 			 
 			 
 			}
