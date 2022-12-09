@@ -14,9 +14,11 @@ import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +26,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
@@ -42,8 +45,9 @@ public class Store {
 	//Database objects
 	Connection connection;
 	Statement statement;
+	PreparedStatement secureStatement;
 	ResultSet resultSet;
-
+	
 	/************************************* CONNECT TO DATABASE*************************************************/
 	void connectDB() throws ClassNotFoundException, SQLException
 	{
@@ -461,6 +465,7 @@ public class Store {
 
 	@SuppressWarnings("null")
 	void placeOrder() throws SQLException //Done by Johnson Li
+, ParseException
 	{
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
@@ -604,13 +609,26 @@ public class Store {
 				LocalDate date = LocalDate.now();
 				String cDate = date.format(formatter);
 				String defaultStat = "Waiting for Payment";
-		
+				String dDate = "null";
 				Orders newOrder = new Orders(loggedinUserID, newOID, defaultStat, cDate, "null", convertedPIDs, arUIQs, totalPrice);
 				orders.add(newOrder);
 				//End code for adding to orders vector
 				
 				//Start code for adding to Access
-				
+				DateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+				java.util.Date util_StartDate = format.parse( cDate );
+				java.sql.Date sql_StartDate = new java.sql.Date( util_StartDate.getTime()  );
+				String sql = "INSERT INTO Orders VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+				secureStatement = connection.prepareStatement(sql);
+				secureStatement.setString(1, loggedinUserID);
+				secureStatement.setString(2, newOID);
+				secureStatement.setString(3, defaultStat);
+				secureStatement.setDate(4, sql_StartDate);
+				secureStatement.setDate(5, null);
+				secureStatement.setString(6, stringAPIDs);
+				secureStatement.setString(7, stringAUIQs);
+				secureStatement.setDouble(8, totalPrice);
+				secureStatement.executeUpdate();
 				//End code for adding to Access
 				finishedOrdering = true;
 			}
