@@ -6,13 +6,9 @@
 //package
 package boss;
 
-//imports
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -21,10 +17,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 import java.util.Vector;
 
 public class Store {
@@ -34,7 +28,7 @@ public class Store {
 	int numUupdates;
 	int loggedinuser = -1;
 	Scanner Keyboard;
-
+	String loggedinUserID = "";
 	int test = 0;
 
 
@@ -217,7 +211,7 @@ public class Store {
 			for(int i = 0; i < account.size(); i++) {
 				if(username.equals(account.get(i).getUsername()) && password.equals(account.get(i).getPassword())) {
 					isValid = true;
-
+					loggedinUserID = account.get(i).getUserID();
 					loggedinuser = i;
 
 				}
@@ -657,6 +651,7 @@ public class Store {
 	/***************************************************start view invoice
 	 * @throws SQLException *******************************************************/
 	 @SuppressWarnings("unchecked")
+	 	//For Employee Menu
 		void viewInvoice() throws SQLException {
 			 
 			 for (int i = 0; i < invoice.size(); i++)
@@ -718,7 +713,7 @@ public class Store {
 	/************************************************GET TIME STAMP**********************************************************/
 	String getSystemDate()
 	{ 	String timestamp = ""; //Create a string to hold the date
-	String pattern = "MM-dd-yyyy HH:mm:ss"; //Determine the pattern for the date and time fields
+	String pattern = "MM-dd-yyyy"; //Determine the pattern for the date and time fields
 	SimpleDateFormat formatter = new SimpleDateFormat(pattern); //Set your date and time pattern
 	Date date = new Date(0); //Capture the system datetime in milliseconds
 	timestamp = formatter.format(date); //Format the date based on the pattern
