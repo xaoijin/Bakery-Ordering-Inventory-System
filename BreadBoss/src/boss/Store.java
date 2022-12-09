@@ -610,15 +610,15 @@ public class Store {
 				String cDate = date.format(formatter);
 				String defaultStat = "Waiting for Payment";
 				String dDate = "null";
-				Orders newOrder = new Orders(loggedinUserID, newOID, defaultStat, cDate, "null", convertedPIDs, arUIQs, totalPrice);
-				orders.add(newOrder);
+				Orders newOrder = new Orders(loggedinUserID, newOID, defaultStat, cDate, "null", convertedPIDs, arUIQs, totalPrice);//creates a new order object
+				orders.add(newOrder);//adds the order to the vector
 				//End code for adding to orders vector
 				
 				//Start code for adding to Access
 				DateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
-				java.util.Date util_StartDate = format.parse( cDate );
-				java.sql.Date sql_StartDate = new java.sql.Date( util_StartDate.getTime()  );
-				String sql = "INSERT INTO Orders VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+				java.util.Date util_StartDate = format.parse( cDate );//prepares java date holder
+				java.sql.Date sql_StartDate = new java.sql.Date( util_StartDate.getTime()  ); // converts it to sql date holder
+				String sql = "INSERT INTO Orders VALUES (?, ?, ?, ?, ?, ?, ?, ?)";//prepare sql injection
 				secureStatement = connection.prepareStatement(sql);
 				secureStatement.setString(1, loggedinUserID);
 				secureStatement.setString(2, newOID);
@@ -628,7 +628,7 @@ public class Store {
 				secureStatement.setString(6, stringAPIDs);
 				secureStatement.setString(7, stringAUIQs);
 				secureStatement.setDouble(8, totalPrice);
-				secureStatement.executeUpdate();
+				secureStatement.executeUpdate();//adds the order to orders table
 				//End code for adding to Access
 				finishedOrdering = true;
 			}
