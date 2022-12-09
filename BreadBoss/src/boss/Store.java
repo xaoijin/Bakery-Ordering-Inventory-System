@@ -812,7 +812,27 @@ public class Store {
 			 
 			}
 	/************************************END VIEW HISTORY METHOD*******************************************************/
-	
+	/*************************************CONTACT CUSTOMER METHOD******************************************************/							 	
+
+    void contactCustomer() throws SQLException {
+			
+	String fn = "";
+	String e = "";
+	String p = "";
+	int totalrows = 0, index = 0;  
+	resultSet = statement.executeQuery("Select FullName,Email FROM Users WHERE isEmployee = false"); 
+
+	while(resultSet.next()) {
+		
+		totalrows =resultSet.getRow();
+		fn = resultSet.getString("FullName");
+		e = resultSet.getString("Email");
+		
+		
+		System.out.println(fn + ", " + e );
+	}
+	}
+	/*************************************END CONTACT CUSTOMER******************************************************/	
 	
 	 
 
