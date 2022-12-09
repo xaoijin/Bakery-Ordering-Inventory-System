@@ -1,48 +1,33 @@
 package boss;
 
-import java.util.Date;
-
 public class Orders {
 	
-	private static String userID;
+	private String userID;
 	private String orderID;
 	private String orderStatus; //Order Status - Started, In Progress, Completed, Declined
-	private Date orderDate; //Order Placed Date
-	private Date completedDate; //Order Completed Date
+	private String orderDate; //Order Placed Date mm-dd-yyyy
+	private String completedDate; //Order Completed Date
 	private String [] orderItems ; //Array of Ordered Items
 	private String [] orderQuantity;// Array of Ordered Quantity
 	private double price;
 	
-	public Orders(String userID, String orderID, String orderStatus, Date orderDate,
-			Date completedDate, String[] orderItems, String[] orderQuantity, double price) 
 	
 
-	{
-		super();
-		this.userID = userID;
-		this.orderID = orderID;
-		this.orderStatus = orderStatus;
+	
+	
+	public Orders(String loggedinUserID, String newOID, String defaultStat, String cDate, String completedDate, String[] convertedPIDs, String[] arUIQs, double totalPrice) {
+		this.userID = loggedinUserID;
+		this.orderID = newOID;
+		this.orderStatus = defaultStat;
 		
-		this.orderDate = orderDate;
+		this.orderDate = cDate;
 		this.completedDate = completedDate;
-		this.orderItems = orderItems;
-		this.orderQuantity = orderQuantity;
-		this.price = price;
+		this.orderItems = convertedPIDs;
+		this.orderQuantity = arUIQs;
+		this.price = totalPrice;
 	}
 	
-	public Orders() {
-		this.userID = "NULL";
-		this.orderID = "NULL";
-		this.orderStatus = "NULL";
-		
-		this.orderDate = null;
-		this.completedDate = null;
-		this.orderItems = null;
-		this.orderQuantity = null;
-		this.price = 00.00;
-	}
-	
-	public static String getUserID() {
+	public  String getUserID() {
 		return userID;
 	}
 	public void setUserID(String userID) {
@@ -60,16 +45,16 @@ public class Orders {
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
-	public Date getCompletedDate() {
+	public String getCompletedDate() {
 		return completedDate;
 	}
-	public void setCompletedDate(Date completedDate) {
+	public void setCompletedDate(String completedDate) {
 		this.completedDate = completedDate;
 	}
 	public String[] getOrderItems() {

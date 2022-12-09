@@ -17,7 +17,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -73,11 +77,10 @@ public class Store {
 	}
 	/*******************************************************ENDOFCONSTRUCTOR*****************************************************/
 
-	/*******************************************************LOAD METHODS
-	 * @throws SQLException ******************************************************/
+	/*******************************************************LOAD METHODS******************************************************/
 	//this method calls the load methods for each text files
 
-	void loadData() throws IOException, SQLException
+	void loadData() throws IOException, SQLException, ParseException
 	{
 
 
@@ -149,20 +152,21 @@ public class Store {
 
 	/*********************************END OF LOAD PRODUCTS******************************/
 
-	/*********************************START LOAD ORDERS******************************/
+	/*********************************START LOAD ORDERS
+	  ******************************/
 
-	void loadOrders() throws IOException, SQLException
+	void loadOrders() throws IOException, SQLException, ParseException
 	{
 
 		//create the variables for each field in the database
 		String uID = ""; //userID
 		String oID = ""; //orderID
 		String oS = ""; //orderStatus
-		Date oD = null; //orderDate
-		Date cD = null; //completedDate
+		String oD = ""; //orderDate
+		String cD = ""; //completedDate
 		String oI; //array of orderedItems
 		String oQ; //array of ordered Quantity
-
+		
 
 		double p = 0.00;
 		int totalrows = 0, index = 0;
@@ -174,8 +178,8 @@ public class Store {
 		uID = resultSet.getString("UserID"); //userID
 		oID = resultSet.getString("OrderID"); //orderID
 		oS = resultSet.getString("OrderStatus"); //orderStatus
-		oD = resultSet.getDate("OrderDate");
-		cD = resultSet.getDate("CompletedDate");  //completedDate
+		oD = resultSet.getString("OrderDate");
+		cD = resultSet.getString("CompletedDate");  //completedDate
 		oI = resultSet.getString("OrderItems");  //orderID
 		oQ= resultSet.getString("Quantities"); //order quanity
 		p = resultSet.getDouble("Price"); //price
@@ -437,7 +441,7 @@ public class Store {
         }
 		
 		while(!inputValid) {
-			System.out.println("Do you want to place an order?(yes/no)");
+			System.out.println("\nDo you want to place an order?(yes/no)");
 			input = Keyboard.next();
 			if(input.equals("yes")) {
 				placeOrder();
@@ -445,8 +449,9 @@ public class Store {
 			}else if(input.equals("no")){
 				showCustomerMenu();
 				inputValid = true;
+			}else {
+				System.out.println("Invalid Input, Try Again!");
 			}
-			System.out.println("Invalid Input, Try Again!");
 		}
 	}
 	/***************************************************END VIEW BAKERY*******************************************************/		
@@ -481,7 +486,7 @@ public class Store {
 	            
 	        }
 			while(!validProductID) {//input validation
-				System.out.println("Enter Product ID of the product: ");
+				System.out.println("\nEnter Product ID of the product: ");
 				chosenPID = Keyboard.next().toUpperCase();
 				for(Integer x = 0; x < item.size(); x++) {
 					if(chosenPID.equals(item.get(x).getProductID())) {//checks if product id exist
@@ -524,7 +529,7 @@ public class Store {
 				}
 			}
 			while(!isValidYesOrNo) {//input validation
-				System.out.println("Do you want to add more items?(yes/no)");
+				System.out.println("\nDo you want to add more items?(yes/no)");
 				addmoreitems = Keyboard.next();
 				if(addmoreitems.equals("yes") || addmoreitems.equals("no")) {
 					isValidYesOrNo = true;
@@ -547,8 +552,9 @@ public class Store {
 				stringAUIQs = stringAUIQs.replaceAll("\\[", "");//removes left bracket
 				stringAUIQs = stringAUIQs.replaceAll("\\]", "");//removes right bracket
 				stringAUIQs = stringAUIQs.replaceAll("\\s+", "");//removes any spaces
-				//String arUIQs[] = stringAUIQs.substring(1,stringAUIQs.length()-1).split("\\+");//turns the item quantities string to an String array and is the variable used to create an object
+				String arUIQs[] = stringAUIQs.substring(0,stringAUIQs.length()).split("\\+");//turns the item quantities string to an String array and is the variable used to create an object
 				
+				System.out.println(Arrays.toString(arUIQs));
 				while(!uniqueOID) {//keeps looping till created order id is unique
 					StringBuilder chars = new StringBuilder();
 					while(chars.length() < 8) {//length of random string
@@ -567,26 +573,56 @@ public class Store {
 		              }
 				}
 				System.out.println("Your OrderID is: " + newOID);
-				if(convertedUIQs.length > 1) {
+				
+				if(convertedUIQs.length > 1) {//displays an order of multiple items
+					System.out.println("You have: ");
+					for(Integer s = 0; s < convertedPIDs.length; s++) {
+						for(Integer a = 0; a < item.size();a++) {
+							if(convertedPIDs[s].equals(item.get(a).getProductID())) {
+								System.out.println(convertedUIQs[s].toString() + " " + item.get(a).getProductName());
+							}
+						}
+					}
 					
-					System.out.println("The total price comes down to " + totalPrice + "$");
-					finishedOrdering = true;
-				}else {
 					
-					System.out.println("The total price comes down to " + totalPrice + "$");
-					finishedOrdering = true;
+				}else {//displays an order of 1 item
+					for(Integer a = 0; a < item.size();a++) {
+						if(convertedPIDs[0].equals(item.get(a).getProductID())) {
+							System.out.println("You have: ");
+							System.out.println(convertedUIQs[0]+" " + item.get(a).getProductName());
+						}
+					}
+					
+					
 				}
+				
+				System.out.printf("\nOrder Total: $%.2fct",totalPrice);
+				System.out.println("\nSent Email Invoice, requesting payment!");
+				//Start code for adding to orders vector
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
+				LocalDate date = LocalDate.now();
+				String cDate = date.format(formatter);
+				String defaultStat = "Waiting for Payment";
+		
+				Orders newOrder = new Orders(loggedinUserID, newOID, defaultStat, cDate, "null", convertedPIDs, arUIQs, totalPrice);
+				orders.add(newOrder);
+				//End code for adding to orders vector
+				
+				//Start code for adding to Access
+				
+				//End code for adding to Access
+				finishedOrdering = true;
 			}
 			
-			if(addmoreitems.toLowerCase().equals("yes")) {
-				isValidYesOrNo = false;
+			if(addmoreitems.toLowerCase().equals("yes")) {//resets input validation checkers
 				validProductID = false;
 				validProductQuantity = false;
+				isValidYesOrNo = false;
 			}
 			
 		}
-
+		
 	}
 
 	/************************************************END OF PLACE ORDER*******************************************************/	
@@ -595,28 +631,10 @@ public class Store {
 	//For Customer menu
 	void checkStatus ()
 	{
-		String oid = ""; //OrderID
-		String uid = ""; //UserID
-		boolean isValid = false;
-
-		System.out.println("Check Your Order Status:");
-		System.out.println("Enter Your UserID");
-		uid = Keyboard.next();
-		System.out.println("Enter Your OrderID");
-		oid = Keyboard.next();
-
-		for(int i = 0; i < orders.size(); i++) {
-
-			if( oid.equals(orders.get(i).getOrderID())) {
-				isValid = true;
-				loggedinuser = i;
-
-
-				System.out.println("Order Status for  Order#:" + oid + " " + orders.get(2) + " " + getSystemDate());
-			}
-		}
-
-		//Check LOGIC - NOT SURE IF CORRECT OR VALID @Johnson
+		System.out.println("\n\n");
+		System.out.println("-------------------------------------------");
+		System.out.println("           CHECKING ORDER STATUS           ");
+		System.out.println("-------------------------------------------");	
 	}
 
 	/**************************************************END CHECK STATUS METHOD********************************************/
@@ -673,25 +691,7 @@ public class Store {
 		System.out.println("Please Enter the OrderID: ");
 		String order = scan.nextLine(); 
 		
-		for(int a=0;a<orders.size();a++) 
-		 {
-			 if(orders.get(a).getOrderID() == order)
-			 {
-		     System.out.println("Here are the results:");
-			 System.out.println(orders.get(a).getUserID());
-			 System.out.println(orders.get(a).getOrderStatus());
-			 System.out.println((Date) (orders.get(a).getOrderDate()));
-			 System.out.println((Date) (orders.get(a).getCompletedDate()));
-			 System.out.println(orders.get(a).getOrderItems());
-			 System.out.println(orders.get(a).getOrderQuantity());
-			 System.out.println(orders.get(a).getPrice());
 		
-			 }
-			 else 
-			 {
-				 System.out.println(order+" OrderID does not exist.");
-			 }
-		 } 
 		
 	}								
 	/*****************************************END search orders *************************************************************/
@@ -703,7 +703,7 @@ public class Store {
         //DISPLAY MENU HEADER
         System.out.println("\n\n");
         System.out.println("-------------------------------------------");
-        System.out.println("            CREATE NEW USER               ");
+        System.out.println("            CREATE NEW ACCOUNT             ");
         System.out.println("-------------------------------------------");  
 
         Scanner input = new Scanner(System.in);
