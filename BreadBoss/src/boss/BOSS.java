@@ -8,7 +8,7 @@ import java.sql.SQLException;
 //this is where we run the system itself
 public class BOSS {
 
-	public static void main(String[] args) throws Exception, SQLException {
+	public static void main(String[] args) throws Throwable {
 		// TODO Auto-generated method stub
 
 		
