@@ -118,10 +118,7 @@ public class Store {
 	} 
 	/*******************************************************END OF LOAD USER*****************************/
 
-	/*******************************************************LOAD PRODUCTS********************************
-	 * @throws SQLException *****************************/
-
-	//Need to Check this Load Products - Not sure if logic is right
+	/*******************************START LOAD PRODUCTS********************************/
 
 	void loadProducts() throws IOException, SQLException
 	{
@@ -148,9 +145,9 @@ public class Store {
 		System.out.println("Bakery Loaded");
 	} //end of loadProducts() method
 
-	/*******************************************************END OF LOAD PRODUCTS******************************/
+	/*********************************END OF LOAD PRODUCTS******************************/
 
-	/*******************************************************LOAD ORDERS******************************/
+	/*********************************START LOAD ORDERS******************************/
 
 	void loadOrders() throws IOException, SQLException
 	{
@@ -178,19 +175,18 @@ public class Store {
 		oD = resultSet.getDate("OrderDate");
 		cD = resultSet.getDate("CompletedDate");  //completedDate
 		oI = resultSet.getString("OrderItems");  //orderID
-		oQ= resultSet.getString("Quantities"); //orderquanity
+		oQ= resultSet.getString("Quantities"); //order quanity
 		p = resultSet.getDouble("Price"); //price
 		String[] tempoI = oI.split("//+");
 		String[] tempoQ = oQ.split("//+");
-		invoice.add(new Orders(uID,oID,oS,oD,cD, tempoI,tempoQ,p)); //add to the arraylist
+		invoice.add(new Orders(uID,oID,oS,oD,cD, tempoI,tempoQ,p)); //add to the vector
 		index++;
 		}
 		System.out.println("Orders Loaded");
 	} 
 
-	/*******************************************************END OF LOADINVOICE******************************/ 
-	/*******************************************************LOGIN METHOD * @throws IOException 
-	 * @throws Throwable ***************/
+	/*******************************************END OF LOAD ORDERS******************************/ 
+	/***************************************START LOGIN METHOD***************/
 
 	void login() throws Throwable {
 		String username ="", password ="";
@@ -234,9 +230,8 @@ public class Store {
 
 	}
 
-	/*******************************************************END OF LOGIN METHOD***************************************************/			
-	/*******************************************************WELCOME METHOD
-	 * @throws Throwable ******************************************************/
+	/************************************END OF LOGIN METHOD***********************/			
+	/**********************************START WELCOME METHOD***********************/
 
 	//Welcome Menu
 	void welcome() throws Throwable
@@ -306,11 +301,7 @@ public class Store {
 
 	/**************************************************END OF WELCOME METHOD******************************************************/			
 
-	/*******************************************************SHOW USER MENU METHOD * @throws IOException 
-	 * @throws Throwable *********/
-
-	//arrays = 0 (index - 1)
-
+	/**************************************************START CUSTOMER MENU METHOD *****************************************************/
 	//Display Customer Menu
 	void showCustomerMenu() throws Throwable
 	{	
@@ -366,9 +357,9 @@ public class Store {
 	}
 
 
-	/************************************************END OF SHOW USER MENU METHOD***************************************************/			
+	/************************************************END CUSTOMER MENU METHOD***************************************************/			
 
-	/************************************************SHOW EMPLOYEE MENU METHOD******************************************************/
+	/************************************************START EMPLOYEE MENU METHOD******************************************************/
 	
 	//Display Employee Menu
 	void showEmployeeMenu() throws Error, Throwable
@@ -426,10 +417,9 @@ public class Store {
 		// TODO Auto-generated method stub
 		
 	}
-	/************************************************END OF SHOW EMPLOYEE MENU METHOD*******************************************/			
+	/************************************************END EMPLOYEE MENU METHOD*******************************************/			
 
-	/****************************************************START VIEW BAKERY
-	 * @throws Throwable,Error ****************************/
+	/******************************************************START VIEW BAKERY****************************************************/
 	@SuppressWarnings("unchecked")
 	void viewBakery() throws Throwable,Error {
 		System.out.println("\n\n");
@@ -461,17 +451,55 @@ public class Store {
 	/***************************************************END VIEW BAKERY*******************************************************/		
 
 
-	/************************************************CREATE ORDER************************************************************/
+	/************************************************START PLACE ORDER********************************************************/
 
 	void placeOrder() throws SQLException 
 	{
-
+		System.out.println("\n\n");
+		System.out.println("-------------------------------------------");
+		System.out.println("              PLACING ORDER.....           ");
+		System.out.println("-------------------------------------------");	
+	
+		String chosenPID = "";
+		String validPID = "";
+		int userItemQuantity = 0;
+		int validUIQ = 0;
+		String[] userItemsArray;
+		String[] userItemQuantities;
+		boolean finishedOrdering = false;
+		boolean validProductID = false;
+		boolean validProductQuantity = false;
+		while(!finishedOrdering) {
+			for (Integer i = 0; i < item.size(); i++)
+	        {
+	            System.out.println(item.get(i).getProductID()+ " | "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
+	            
+	        }
+			while(!validProductID) {
+				System.out.println("Enter Product ID of the product: ");
+				chosenPID = Keyboard.next();
+				for(Integer x = 0; x < item.size(); x++) {
+					if(chosenPID == item.get(x).getProductID()) {
+						validProductID = true;
+						validPID = chosenPID;
+					}
+				}
+				System.out.println("Invalid Product ID, Try Again!");
+			}
+			System.out.println("How many would you like?");
+			while(!validProductQuantity) {
+				System.out.print("Enter here: ");
+				userItemQuantity = Keyboard.nextInt();
+				
+			}
+			
+		}
 
 	}
 
-	/** *********************************************ENDOFCREATEORDER*******************************************************/	
+	/************************************************END OF PLACE ORDER*******************************************************/	
 
-	/************************************************Check Status METHOD **************************************************/
+	/********************************************START CHECK STATUS METHOD ***********************************************/
 	//For Customer menu
 	void checkStatus ()
 	{
@@ -499,7 +527,7 @@ public class Store {
 		//Check LOGIC - NOT SURE IF CORRECT OR VALID @Johnson
 	}
 
-	/**************************************************END Check Status Method ********************************************/
+	/**************************************************END CHECK STATUS METHOD********************************************/
 	/***************************************************Cancel Order  METHOD *********************************************/
 	//For Customer Menu
 	void cancelOrder() {
@@ -540,7 +568,7 @@ public class Store {
 	/***************************************************END Change Status Method **************************************************/							
 	/** *************************************************START search INVOICE****************************************************/
 
-	@SuppressWarnings({ "static-access", "unchecked" })
+	@SuppressWarnings({ "static-access" })
 	void employeeSearch() throws SQLException 
 	{
 		//DISPLAY MENU HEADER
@@ -575,7 +603,7 @@ public class Store {
 	}								
 	/*****************************************END search INVOICE *************************************************************/
 
-	/*******************************************************ADD NEW USER*******************************************************/
+	/****************************************START CREATE ACCOUNT METHOD*******************************************************/
 
 
     void createAccount() {
@@ -710,11 +738,9 @@ public class Store {
     }   
 
 					
-	/*******************************************************ENDOFADDUSER******************************************************/							 	
+	/*************************************END CREATE ACCOUNT METHOD******************************************************/							 	
 	
-	/***************************************************start view invoice
-	 * @throws SQLException *******************************************************/
-	 @SuppressWarnings("unchecked")
+	/***********************************START VIEW HISTORY METHOD*******************************************************/
 	 //For Employee Menu
 	void viewHistory() throws SQLException {
 			 
@@ -732,15 +758,10 @@ public class Store {
 			 
 			 
 			}
-		 /***************************************************end view invoice*******************************************************/
+	/************************************END VIEW HISTORY METHOD*******************************************************/
 	
-	 /** *********************************************start delete order***************************************************/
-
-	 
-	 
-	 
 	
-	/************************************************CAPTURE DATE*************************************************************/
+	 
 
 	/************************************************GET TIME STAMP**********************************************************/
 	String getSystemDate()
@@ -752,7 +773,7 @@ public class Store {
 	return timestamp;
 	}
 	/***********************************************END GET TIME STAMP*******************************************************/
-	/******************************EXIT SIM SYSTEM**************************************************************************/
+	/******************************EXIT BOSS SYSTEM**************************************************************************/
 	void exitBOSSSystem() throws SQLException
 	{	System.out.println("\n\n--------------------------------------------");
 	System.out.println("Thank you for using BOSS System, Program Ended!");
@@ -760,6 +781,6 @@ public class Store {
 	System.exit(0);
 	connection.close();
 	}
-	/***********************************************END EXIT SIM SYSTEM****************************************************/
+	/***********************************************END EXIT BOSS SYSTEM****************************************************/
 
 }
