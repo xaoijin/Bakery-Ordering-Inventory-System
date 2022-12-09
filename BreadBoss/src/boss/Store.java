@@ -169,7 +169,6 @@ public class Store {
 
 		//Get the total rows in the table to loop through the result set
 		resultSet = statement.executeQuery("SELECT * FROM Orders"); 
-		String delimiters = "\\s+|,\\s*|\\.\\s*";
 		while (resultSet.next()) //tests for the eof
 		{   totalrows = resultSet.getRow();
 		uID = resultSet.getString("UserID"); //userID
@@ -192,9 +191,9 @@ public class Store {
 
 	/*******************************************************END OF LOADINVOICE******************************/ 
 	/*******************************************************LOGIN METHOD * @throws IOException 
-	 * @throws SQLException ***************/
+	 * @throws Throwable ***************/
 
-	void login() throws IOException, SQLException {
+	void login() throws Throwable {
 		String username ="", password ="";
 
 		boolean isValid = false;
@@ -228,21 +227,20 @@ public class Store {
 
 		System.out.println("Welcome "+ account.get(loggedinuser).getUsername() + " Employee: " + account.get(loggedinuser).isEmployee());
 		if(account.get(loggedinuser).isEmployee()) {
-
-			welcome();
 			showEmployeeMenu();
 
 		}else{
-			showMenu();
+			showCustomerMenu();
 		}
 
 	}
 
 	/*******************************************************END OF LOGIN METHOD***************************************************/			
-	/*******************************************************WELCOME METHOD******************************************************/
+	/*******************************************************WELCOME METHOD
+	 * @throws Throwable ******************************************************/
 
 	//Welcome Menu
-	void welcome()
+	void welcome() throws Throwable
 
 	{
 		System.out.println("\n\n");
@@ -279,17 +277,42 @@ public class Store {
 		System.out.println();
 		System.out.println();
 		System.out.println();
+		int option = -1;
+		do {
+			System.out.println("1. Login");
+			System.out.println("2. Create Account");
+			System.out.print("Choose a system process (1-3): ");
+			option = Keyboard.nextInt();
+			switch (option) {
+			case(1):{
+				login();
+				break;
+			}
+			case(2):{
+				createAccount();
+				break;
+			}
+			case(3):{
+				exitBOSSSystem();
+				break;
+			}
+			default:
+			{	System.out.println("Invalid choice, please choose between 1-3"); }
+			
+			}
+		}while(option !=3);
+		
 	}
 
 	/**************************************************END OF WELCOME METHOD******************************************************/			
 
 	/*******************************************************SHOW USER MENU METHOD * @throws IOException 
-	 * @throws SQLException *********/
+	 * @throws Throwable *********/
 
 	//arrays = 0 (index - 1)
 
-	//Display Menu
-	void showMenu() throws IOException, SQLException
+	//Display Customer Menu
+	void showCustomerMenu() throws Throwable
 	{	
 		int option = -1;
 
@@ -297,16 +320,14 @@ public class Store {
 
 			System.out.println("\n\n");
 			System.out.println("-------------------------------------------");
-			System.out.println("             BOSS USER MENU            ");
+			System.out.println("             BOSS CUSTOMER MENU            ");
 			System.out.println("-------------------------------------------");	
 			System.out.println("1. View Bakery");
-			System.out.println("2. Place Order");
-			System.out.println("3. Check Order Status");
-			System.out.println("4. Cancel Order");
-			System.out.println("5. Display Invoice");
-			System.out.println("6. Register New User");
-			System.out.println("7. Exit");
-			System.out.print("Choose a system process (1-6): ");
+			System.out.println("2. Check Order Status");
+			System.out.println("3. Cancel Order");
+			System.out.println("4. View History");
+			System.out.println("5. Exit");
+			System.out.print("Choose a system process (1-5): ");
 			option = Keyboard.nextInt();
 			switch (option)
 			{
@@ -315,32 +336,20 @@ public class Store {
 			break;
 			}
 			case (2):
-			{	createOrder();
+			{	checkStatus();
 			break;
 			}
 			case (3):
-			{	 checkStatus();
+			{	 cancelOrder();
 			break;
 			}
-			//	case 4):  - Needs to be written
-			//	{	//cancelOrder);
-			//		break;
-			//	}
-
+			case (4):
+			{	viewHistory();
+			break;
+			}
 			case (5):
-			{	viewInvoice();
-			break;
-			}
-			case (6):
-			{	addNewUser();
-			break;
-			}
-			case (7):
 			{	
-
-				updateRecords();
 				exitBOSSSystem();
-
 				System.out.println("\n\n");
 				System.out.println("****************************************************************************");	
 				System.out.println("Thank you for using BOSS - Program Terminated!");
@@ -348,23 +357,21 @@ public class Store {
 				System.exit(0);
 			}
 			default:
-			{	System.out.println("Invalid choice, please choose between 1-7"); }
+			{	System.out.println("Invalid choice, please choose between 1-5"); }
 
 			} //end of switch
-		}while (option != 7);
+		}while (option != 5);
 
 
 	}
 
 
-	/************************************************END OF SHOW USER MENU METHOD********************
-	 * @throws IOException ******************************************************/			
+	/************************************************END OF SHOW USER MENU METHOD***************************************************/			
 
-	/************************************************SHOW EMPLOYEE MENU METHOD************************
-	 * @throws IOException 
-	 * @throws SQLException ******************************************************/
-	//Display Menu
-	void showEmployeeMenu() throws IOException, SQLException
+	/************************************************SHOW EMPLOYEE MENU METHOD******************************************************/
+	
+	//Display Employee Menu
+	void showEmployeeMenu() throws Error, Throwable
 	{	
 		int option = -1;
 
@@ -372,15 +379,13 @@ public class Store {
 			//DISPLAY MENU HEADER
 			System.out.println("\n\n");
 			System.out.println("-------------------------------------------");
-			System.out.println("                BOSS EMPLOYEE MENU               ");
+			System.out.println("                BOSS EMPLOYEE MENU         ");
 			System.out.println("-------------------------------------------");	
 			System.out.println("1. View Bakery");
-			System.out.println("2. Update Order Status");
+			System.out.println("2. View Orders");
 			System.out.println("3. Contact Customer");
-			System.out.println("4. Delete Order");
-			System.out.println("5. Search Invoice");
-			System.out.println("6. Eit");
-			System.out.print("Choose a system process (1-6): ");
+			System.out.println("4. Exit");
+			System.out.print("Choose a system process (1-4): ");
 			option = Keyboard.nextInt();
 			switch (option)
 			{
@@ -389,24 +394,16 @@ public class Store {
 				break;
 			}
 			case (2):
-			{	 changeStatus();
+			{	 viewOrders();
 			break;
 			}
 			case (3):
-			{	 //contactUser(); Needs to be completed
+			{	 contactUser();
 				break;
 			}
 			case (4):
-			{	 deleteOrder();
-				break;
-			}
-			case (5):
-			{	 viewSearch();
-				break;
-			}
-			case (6):
-			{	updateRecords();
-			exitBOSSSystem();
+			{	
+				exitBOSSSystem();
 
 			System.out.println("Thank you for using BOSS System, - Program Terminated!");
 			System.out.println("****************************************************************************\n\n");	
@@ -416,65 +413,66 @@ public class Store {
 			{	System.out.println("Invalid choice, please choose between 1-6"); }
 
 			} //end of switch
-		}while (option != 6);
+		}while (option != 4);
 
 
 	}
 
+	private void contactUser() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void viewOrders() {
+		// TODO Auto-generated method stub
+		
+	}
 	/************************************************END OF SHOW EMPLOYEE MENU METHOD*******************************************/			
 
-	/****************************************************START VIEW BAKERY****************************/
+	/****************************************************START VIEW BAKERY
+	 * @throws Throwable,Error ****************************/
 	@SuppressWarnings("unchecked")
-
-
-	void viewBakery() {
-		System.out.println("View BOSS Bakery:");
-		System.out.println();
+	void viewBakery() throws Throwable,Error {
+		System.out.println("\n\n");
+		System.out.println("-------------------------------------------");
+		System.out.println("              Bakery Products              ");
+		System.out.println("-------------------------------------------");	
+		String input = "";
+		boolean inputValid = false;
+		Integer x = 1;
 		for (Integer i = 0; i < item.size(); i++)
         {
-            System.out.println(item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
+            System.out.println(x+". "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
+            x++;
         }
+		System.out.println("Do you want to place an order?");
+		input = Keyboard.next().toString().toLowerCase();
+		while(!inputValid) {
+			if(input == "yes") {
+				placeOrder();
+				inputValid = true;
+			}else if(input == "no"){
+				showCustomerMenu();
+				inputValid = true;
+			}else {
+				showCustomerMenu();
+			}
+		}
 	}
 	/***************************************************END VIEW BAKERY*******************************************************/		
 
 
 	/************************************************CREATE ORDER************************************************************/
 
-	void createOrder() throws SQLException 
+	void placeOrder() throws SQLException 
 	{
-		Scanner scan = new Scanner(System.in); 
 
-		System.out.println("Please enter the userID: ");
-		String tempuserID = scan.nextLine();
-		System.out.println("Please enter the orderId: ");
-		String temporderID = scan.nextLine();
-		System.out.println("Please enter the order Status: ");
-		String temporderStatus = scan.nextLine();
-		System.out.println("Please enter the order Date: ");
-		String temporderDate = scan.nextLine();
-		System.out.println("Please enter the order completed date: ");
-		String tempcompletedDate = scan.nextLine();
-		System.out.println("Please enter the order items: ");
-		String temporderItems = scan.nextLine();
-		System.out.println("Please enter the order quantity: ");
-		String temporderQuantity = scan.nextLine();
-		System.out.println("Please enter the order price: ");
-		double tempprice = scan.nextDouble();
-
-
-		//johnson please check next three lines	- Needs Review/Check Logic/Implementation
-
-		//	 Orders newOrder = new Orders (tempuserID,temporderID, temporderStatus, temporderDate, 
-		//			 tempcompletedDate,temporderItems[],temporderQuantity[],tempprice);
-
-		//	 invoice.add(newOrder);
 
 	}
 
 	/** *********************************************ENDOFCREATEORDER*******************************************************/	
 
 	/************************************************Check Status METHOD **************************************************/
-
+	//For Customer menu
 	void checkStatus ()
 	{
 		String oid = ""; //OrderID
@@ -502,10 +500,15 @@ public class Store {
 	}
 
 	/**************************************************END Check Status Method ********************************************/
-
+	/***************************************************Cancel Order  METHOD *********************************************/
+	//For Customer Menu
+	void cancelOrder() {
+		
+	}
+	/**************************************************END Cancel Order Method ********************************************/
 	/***************************************************Change Status METHOD *********************************************/
 
-
+	//For Employee menu
 	void changeStatus ()
 	{
 		String oid = ""; //OrderID
@@ -514,7 +517,10 @@ public class Store {
 
 		boolean isValid = false;
 
-		System.out.println("Update Order Status: ");
+		System.out.println("\n\n");
+		System.out.println("-------------------------------------------");
+		System.out.println("            Update Order Status            ");
+		System.out.println("-------------------------------------------");	
 
 		System.out.println("Enter OrderID To Be Updated: ");
 		uid = Keyboard.next();
@@ -523,23 +529,19 @@ public class Store {
 
 			if( oid.equals(invoice.get(i).getOrderID())) {
 				isValid = true;
-				loggedinuser = i;
 
 				System.out.println("Enter New Status To Be Updated: ");
 
 				newStatus = Keyboard.next();
 
-				// ((Orders) invoice).setOrderStatus(newStatus); //issues on this line - @Johnson - Also Check Logic
-
 				System.out.println("New Order Status for Order#: " + oid + " is: " + invoice.get(2) + " " +getSystemDate());
-
 			}
 		}}			
 	/***************************************************END Change Status Method **************************************************/							
 	/** *************************************************START search INVOICE****************************************************/
 
 	@SuppressWarnings({ "static-access", "unchecked" })
-	void viewSearch() throws SQLException 
+	void employeeSearch() throws SQLException 
 	{
 		//DISPLAY MENU HEADER
 		System.out.println("\n\n");
@@ -575,7 +577,7 @@ public class Store {
 
 	/*******************************************************ADD NEW USER*******************************************************/
 
-	void addNewUser() {
+	void createAccount() {
 		//DISPLAY MENU HEADER
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
@@ -616,43 +618,12 @@ public class Store {
 
 	}							
 	/*******************************************************ENDOFADDUSER******************************************************/							 	
-	/********************************************************UPDATE RECORDS* @throws IOException ****************************/
-	void updateRecords() throws IOException
-	{
-		//update Employee records
-		if (numUupdates >0)
-		{
-			FileWriter fw=new FileWriter("users2.dat", true); //check if this is still valid @Johnson since were using DB
-			BufferedWriter bw = new BufferedWriter(fw);
-			String em = "false";
-
-			for (int i = 0; i < account.size(); i++)
-			{	 bw.write(account.get(i).getUserID() + "," +
-					account.get(i).getUsername() + "," + 
-					account.get(i).getPassword() + "," +
-					account.get(i).getPhone()+ "," +
-					account.get(i).getEmail() + "," +
-					account.get(i).getName() + "," );
-
-			if (account.get(i).isEmployee()) em = "true";
-			bw.write(em +  "\n");
-			em = "false"; //reset manager
-			} //write each line separated by the enter key
-
-			System.out.println("User File Update Successfully " + getSystemDate());
-			bw.close();
-
-
-		}
-
-	}
-	/************************************************ END OFUPDATE RECORDS****************************************************/
 	
 	/***************************************************start view invoice
 	 * @throws SQLException *******************************************************/
 	 @SuppressWarnings("unchecked")
-	 	//For Employee Menu
-		void viewInvoice() throws SQLException {
+	 //For Employee Menu
+	void viewHistory() throws SQLException {
 			 
 			 for (int i = 0; i < invoice.size(); i++)
 				{	   System.out.println(
@@ -663,7 +634,7 @@ public class Store {
 						invoice.get(i).getCompletedDate() + "," +
 						Arrays.toString(invoice.get(i).getOrderItems()) + "," +
 						Arrays.toString(invoice.get(i).getOrderQuantity()) + "," +
-						invoice.get(i).getPrice());
+						invoice.get(i).getPrice()+"$");
 				}
 			 
 			 
@@ -671,39 +642,7 @@ public class Store {
 		 /***************************************************end view invoice*******************************************************/
 	
 	 /** *********************************************start delete order***************************************************/
-	 
-	 void deleteOrder() throws SQLException 
-	 {
-		 Scanner scan = new Scanner(System.in); 
-		 int result=-1;
-		 
-		 System.out.println("Please enter the orderID you want to delete: ");
-		 String temporderID = scan.nextLine();
-		 for(int a=0;a<invoice.size();a++) 
-		 {
-			 if(invoice.get(a).getOrderID() == temporderID)
-			 {
-			 result=((List<Products>) invoice.get(a)).indexOf(temporderID);  //logic check
-		 
-			 String tempuserID = (invoice.get(result).getUserID());
-			 String temporderStatus = (invoice.get(result).getOrderStatus());
-			 Date temporderDate = (Date) (invoice.get(result).getOrderDate());
-			 Date tempcompletedDate = (Date) (invoice.get(result).getCompletedDate());
-			 String[] temporderItems = (invoice.get(result).getOrderItems());
-			 String[] temporderQuantity = (invoice.get(result).getOrderQuantity());
-			 double tempprice = (invoice.get(result).getPrice());
-		 
-		//	 invoice.erase(tempuserID, temporderID, temporderStatus, temporderDate, 
-		//			 tempcompletedDate,temporderItems[],temporderQuantity[],tempprice);
-		 
-			 }			 				 
-		 }                                                                //johnson please check next three lines	
-		 
-	
-		 				 
-	 }
-	 
-	 /** *********************************************end delete order***************************************************/
+
 	 
 	 
 	 
