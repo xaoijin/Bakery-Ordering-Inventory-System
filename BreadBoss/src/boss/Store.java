@@ -176,9 +176,7 @@ public class Store {
 		oID = resultSet.getString("OrderID"); //orderID
 		oS = resultSet.getString("OrderStatus"); //orderStatus
 		oD = resultSet.getDate("OrderDate");
-		System.out.println(oD);
 		cD = resultSet.getDate("CompletedDate");  //completedDate
-		System.out.println(cD);
 		oI = resultSet.getString("OrderItems");  //orderID
 		oQ= resultSet.getString("Quantities"); //orderquanity
 		p = resultSet.getDouble("Price"); //price
@@ -282,6 +280,7 @@ public class Store {
 		do {
 			System.out.println("1. Login");
 			System.out.println("2. Create Account");
+			System.out.println("3. Exit");
 			System.out.print("Choose a system process (1-3): ");
 			option = Keyboard.nextInt();
 			switch (option) {
