@@ -9,6 +9,8 @@ package boss;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -207,10 +209,11 @@ public class Store {
 					isValid = true;
 					loggedinUserID = account.get(i).getUserID();
 					loggedinuser = i;
-
 				}
 			}
-			System.out.println("Invalid Username or Password!");
+			if(!isValid) {
+				System.out.println("Invalid Username or Password!");
+			}
 		} while(counter < 3 && !isValid);
 
 		if(!isValid) {
@@ -220,7 +223,7 @@ public class Store {
 		}
 		//Welcome the Logged In User
 
-		System.out.println("Welcome "+ account.get(loggedinuser).getUsername() + " Employee: " + account.get(loggedinuser).isEmployee());
+		System.out.println("Welcome "+ account.get(loggedinuser).getUsername());
 		if(account.get(loggedinuser).isEmployee()) {
 			showEmployeeMenu();
 
@@ -420,7 +423,6 @@ public class Store {
 	/************************************************END EMPLOYEE MENU METHOD*******************************************/			
 
 	/******************************************************START VIEW BAKERY****************************************************/
-	@SuppressWarnings("unchecked")
 	void viewBakery() throws Throwable,Error {
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
@@ -434,18 +436,18 @@ public class Store {
             System.out.println(item.get(i).getProductID()+ " | "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
             
         }
-		System.out.println("Do you want to place an order?");
-		input = Keyboard.next().toString().toLowerCase();
+		
 		while(!inputValid) {
-			if(input == "yes") {
+			System.out.println("Do you want to place an order?(yes/no)");
+			input = Keyboard.next();
+			if(input.equals("yes")) {
 				placeOrder();
 				inputValid = true;
-			}else if(input == "no"){
+			}else if(input.equals("no")){
 				showCustomerMenu();
 				inputValid = true;
-			}else {
-				showCustomerMenu();
 			}
+			System.out.println("Invalid Input, Try Again!");
 		}
 	}
 	/***************************************************END VIEW BAKERY*******************************************************/		
@@ -453,24 +455,28 @@ public class Store {
 
 	/************************************************START PLACE ORDER********************************************************/
 
+	@SuppressWarnings("null")
 	void placeOrder() throws SQLException 
 	{
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
 		System.out.println("              PLACING ORDER.....           ");
 		System.out.println("-------------------------------------------");	
-	
+		
 		String chosenPID = "";
 		String validPID = "";
-		int userItemQuantity = 0;
+		String userItemQuantity = "";
 		int validUIQ = 0;
-		String[] userItemsArray;
-		String[] userItemQuantities;
+		Vector<String> userItems = new Vector<String>();
+		Vector<Integer> userItemQuantities= new Vector<Integer>();
 		boolean finishedOrdering = false;
 		boolean validProductID = false;
 		boolean validProductQuantity = false;
+		double totalPrice = 0.00;
+		String addmoreitems = "";
+		boolean isValidYesOrNo = false;
 		while(!finishedOrdering) {
-			for (Integer i = 0; i < item.size(); i++)
+			for (Integer i = 0; i < item.size(); i++)//displays all products
 	        {
 	            System.out.println(item.get(i).getProductID()+ " | "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
 	            
@@ -479,20 +485,66 @@ public class Store {
 				System.out.println("Enter Product ID of the product: ");
 				chosenPID = Keyboard.next();
 				for(Integer x = 0; x < item.size(); x++) {
-					if(chosenPID == item.get(x).getProductID()) {
+					if(chosenPID.equals(item.get(x).getProductID())) {//checks if product id exist
+						validPID = item.get(x).getProductID();
+						userItems.add(validPID);
 						validProductID = true;
-						validPID = chosenPID;
 					}
 				}
-				System.out.println("Invalid Product ID, Try Again!");
+				if(!validProductID) {
+					System.out.println("Invalid Product ID, Try Again!");
+				}
 			}
 			System.out.println("How many would you like?");
 			while(!validProductQuantity) {
 				System.out.print("Enter here: ");
-				userItemQuantity = Keyboard.nextInt();
+				userItemQuantity = Keyboard.next();
+				try 
+				{ 
+					Integer.parseInt(userItemQuantity); 
+					validUIQ = Integer.parseInt(userItemQuantity);
+					userItemQuantities.add(validUIQ);
+					validProductQuantity = true;
 				
+				}  
+				catch (NumberFormatException e)  
+				{ 
+					 
+				} 
+				if(!validProductQuantity) {
+					System.out.println(userItemQuantity + " is a invalid Item Quantity, Try Again!");
+				}
+	
+			}
+			for(Integer y = 0; y < item.size(); y++) {//runs a loop through products
+				if(validPID.equals(item.get(y).getProductID())) {//finds the position of the price of the product ID
+					double PIDprice = item.get(y).getPrice();
+					totalPrice = totalPrice + (PIDprice * validUIQ);//adds to the total price of the items
+					BigDecimal bd = new BigDecimal(totalPrice).setScale(2, RoundingMode.HALF_UP);//converts it to be within 2 decimal places
+					totalPrice = bd.doubleValue();
+				}
+			}
+			System.out.println("Do you want to add more items?(yes/no)");
+			addmoreitems = Keyboard.next();
+			while(!isValidYesOrNo) {
+				if(addmoreitems.equals("yes") || addmoreitems.equals("no")) {
+					isValidYesOrNo = true;
+				}else {
+					System.out.println("Invalid Input, Try Again!");
+				}
+			}
+			if(addmoreitems.toLowerCase().equals("no")){
+				String[] convertedPIDs = userItems.toArray(new String[userItems.size()]);
+				Integer[] convertedUIQs = userItemQuantities.toArray(new Integer[userItemQuantities.size()]);
+
+				if(convertedUIQs.length > 1) {
+					System.out.println(Arrays.toString(convertedUIQs).replaceAll("\\,", "+").strip());
+				}
+				System.out.println("The total price comes down to " + totalPrice + "$");
 			}
 			
+			validProductID = false;
+			validProductQuantity = false;
 		}
 
 	}
@@ -564,7 +616,8 @@ public class Store {
 
 				System.out.println("New Order Status for Order#: " + oid + " is: " + invoice.get(2) + " " +getSystemDate());
 			}
-		}}			
+		}
+	}			
 	/***************************************************END Change Status Method **************************************************/							
 	/** *************************************************START search INVOICE****************************************************/
 
