@@ -433,8 +433,7 @@ public class Store {
 		
 		for (Integer i = 0; i < item.size(); i++)
         {
-            System.out.println(item.get(i).getProductID()+ " | "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
-            
+            System.out.println(item.get(i).getProductID()+ " | "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice()+ "$");
         }
 		
 		while(!inputValid) {
@@ -456,7 +455,7 @@ public class Store {
 	/************************************************START PLACE ORDER********************************************************/
 
 	@SuppressWarnings("null")
-	void placeOrder() throws SQLException 
+	void placeOrder() throws SQLException //Done by Johnson Li
 	{
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
@@ -481,9 +480,9 @@ public class Store {
 	            System.out.println(item.get(i).getProductID()+ " | "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice());
 	            
 	        }
-			while(!validProductID) {
+			while(!validProductID) {//input validation
 				System.out.println("Enter Product ID of the product: ");
-				chosenPID = Keyboard.next();
+				chosenPID = Keyboard.next().toUpperCase();
 				for(Integer x = 0; x < item.size(); x++) {
 					if(chosenPID.equals(item.get(x).getProductID())) {//checks if product id exist
 						validPID = item.get(x).getProductID();
@@ -496,7 +495,7 @@ public class Store {
 				}
 			}
 			System.out.println("How many would you like?");
-			while(!validProductQuantity) {
+			while(!validProductQuantity) {//input validation
 				System.out.print("Enter here: ");
 				userItemQuantity = Keyboard.next();
 				try 
@@ -524,27 +523,45 @@ public class Store {
 					totalPrice = bd.doubleValue();
 				}
 			}
-			System.out.println("Do you want to add more items?(yes/no)");
-			addmoreitems = Keyboard.next();
-			while(!isValidYesOrNo) {
+			while(!isValidYesOrNo) {//input validation
+				System.out.println("Do you want to add more items?(yes/no)");
+				addmoreitems = Keyboard.next();
 				if(addmoreitems.equals("yes") || addmoreitems.equals("no")) {
-					isValidYesOrNo = true;
+					if(addmoreitems.toLowerCase().equals("no")){
+						String[] convertedPIDs = userItems.toArray(new String[userItems.size()]);//converts the user items from a vector to an String array and is the variable used to create an object
+						Integer[] convertedUIQs = userItemQuantities.toArray(new Integer[userItemQuantities.size()]);// converts the item quantities from a vector to an array 
+						String stringAPIDs = Arrays.toString(convertedPIDs).replaceAll("\\,", "+");//turns the user items array to a String and is the variable used for injecting to Access/MYSQL
+						stringAPIDs = stringAPIDs.replaceAll("\\[", "");//removes left bracket
+						stringAPIDs = stringAPIDs.replaceAll("\\]", "");//removes right bracket
+						stringAPIDs = stringAPIDs.replaceAll("\\s+", "");//removes any spaces
+						System.out.println(stringAPIDs);
+						String stringAUIQs = Arrays.toString(convertedUIQs).replaceAll("\\,", "+");//turns the item quantities array to a String and is the variable used for injecting to Access/MYSQL
+						stringAUIQs = stringAUIQs.replaceAll("\\[", "");//removes left bracket
+						stringAUIQs = stringAUIQs.replaceAll("\\]", "");//removes right bracket
+						stringAUIQs = stringAUIQs.replaceAll("\\s+", "");//removes any spaces
+						System.out.println(stringAUIQs);
+						String arUIQs[] = stringAUIQs.substring(1,stringAUIQs.length()-1).split("\\+");//turns the item quantities string to an String array and is the variable used to create an object
+						if(convertedUIQs.length > 1) {
+	
+							finishedOrdering = true;
+						}
+						System.out.println("The total price comes down to " + totalPrice + "$");
+						
+						finishedOrdering = true;
+					}
+					
+					if(addmoreitems.toLowerCase().equals("yes")) {
+						isValidYesOrNo = true;
+						validProductID = false;
+						validProductQuantity = false;
+					}
 				}else {
 					System.out.println("Invalid Input, Try Again!");
 				}
 			}
-			if(addmoreitems.toLowerCase().equals("no")){
-				String[] convertedPIDs = userItems.toArray(new String[userItems.size()]);
-				Integer[] convertedUIQs = userItemQuantities.toArray(new Integer[userItemQuantities.size()]);
-
-				if(convertedUIQs.length > 1) {
-					System.out.println(Arrays.toString(convertedUIQs).replaceAll("\\,", "+").strip());
-				}
-				System.out.println("The total price comes down to " + totalPrice + "$");
-			}
 			
-			validProductID = false;
-			validProductQuantity = false;
+			isValidYesOrNo = false;
+			
 		}
 
 	}
