@@ -26,5 +26,7 @@
 	<classpathentry kind="lib" path="BreadBoss/ucanaccess-5.0.1.jar"/>
 	<classpathentry kind="lib" path="BreadBoss/httpclient-4.3-beta1.jar"/>
 	<classpathentry kind="lib" path="BreadBoss/validator/EmailValidator.java"/>
+	<classpathentry kind="lib" path="BreadBoss/validator/routines/EmailValidator.java"/>
+	<classpathentry kind="lib" path="BreadBoss/validator/util/ValidatorUtils.java"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

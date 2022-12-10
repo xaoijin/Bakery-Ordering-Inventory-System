@@ -27,7 +27,6 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
-
 public class Store {
 	Vector <Products> item; // Vector to Hold Products
 	Vector <Users> account; //Vector to Hold All Users
@@ -37,7 +36,7 @@ public class Store {
 	Scanner Keyboard;
 	String loggedinUserID = "";
 	int test = 0;
-
+	
 
 	//Database objects
 	Connection connection;
