@@ -705,21 +705,7 @@ public class Store {
 		System.out.println("            Update Order Status            ");
 		System.out.println("-------------------------------------------");	
 
-		System.out.println("Enter OrderID To Be Updated: ");
-		uid = Keyboard.next();
 
-		for(int i = 0; i < orders.size(); i++) {
-
-			if( oid.equals(orders.get(i).getOrderID())) {
-				isValid = true;
-
-				System.out.println("Enter New Status To Be Updated: ");
-
-				newStatus = Keyboard.next();
-
-				System.out.println("New Order Status for Order#: " + oid + " is: " + orders.get(2) + " " +getSystemDate());
-			}
-		}
 	}			
 	/***************************************************END Change Status Method **************************************************/							
 
