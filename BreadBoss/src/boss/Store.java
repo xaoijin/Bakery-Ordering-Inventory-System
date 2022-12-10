@@ -298,7 +298,7 @@ public class Store {
 				break;
 			}
 			case("3"):{
-				exitBOSSSystem();
+				exitBOSS();
 				validOption = false;
 				break;
 			}
@@ -351,7 +351,7 @@ public class Store {
 			}
 			case (5):
 			{	
-				exitBOSSSystem();
+				exitBOSS();
 				System.out.println("\n\n");
 				System.out.println("****************************************************************************");	
 				System.out.println("Thank you for using BOSS - Program Terminated!");
@@ -409,7 +409,7 @@ public class Store {
 			}
 			case (4):
 			{	
-				exitBOSSSystem();
+				exitBOSS();
 
 			System.out.println("Thank you for using BOSS System, - Program Terminated!");
 			System.out.println("****************************************************************************\n\n");	
@@ -709,10 +709,11 @@ public class Store {
 	}			
 	/***************************************************END Change Status Method **************************************************/							
 
-	/****************************************START CREATE ACCOUNT METHOD*******************************************************/
+	/****************************************START CREATE ACCOUNT METHOD
+ *******************************************************/
 
 
-    void createAccount() {
+    void createAccount() throws SQLException {
         //DISPLAY MENU HEADER
         System.out.println("\n\n");
         System.out.println("-------------------------------------------");
@@ -720,8 +721,9 @@ public class Store {
         System.out.println("-------------------------------------------");  
 
         Scanner input = new Scanner(System.in);
-        
-
+        boolean idValid = false;
+        String userID = "";
+        while(!idValid) {
              String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
              StringBuilder id = new StringBuilder();
              Random rnd = new Random();
@@ -738,25 +740,30 @@ public class Store {
              Random rnd1 = new Random();
              
             while(id2.length() < 1) {//length of random string
-                int index = (int) (rnd.nextFloat() * CHARS.length());
-                        id2.append(CHARS.charAt(index));
+                int index = (int) (rnd.nextFloat() * ALPHA.length());
+                        id2.append(ALPHA.charAt(index));
             }
              String AlphaStr = id2.toString();
         
-             String userID = CharStr + AlphaStr;        
-        
+             userID = CharStr + AlphaStr; 
+             for(Integer x = 0; x < account.size();x++) {
+            	 if(!userID.equals(account.get(x).getUserID())){
+            		 idValid = true;
+            	 }
+             }
+        }
         /*****************************************************************/
     
-        System.out.print("Enter New UserName: ");
-        String username = input.nextLine();
+        System.out.println("Enter New UserName: ");
+        String username = input.next();
         Boolean usernameValid = false;
         
         while(!usernameValid) {
          for (int i = 0; i < account.size(); i++)
             {
-               if(account.get(i).getUsername() == username) 
+               if(username.equals(account.get(i).getUsername())) 
                {
-                   System.out.print("Invalid UserName Entry - UserName Already Exists");
+                   System.out.println("Invalid UserName Entry - UserName Already Exists");
                   
                }
                else
@@ -767,19 +774,22 @@ public class Store {
             }
         }   
 /**********************************************************************************/
-        System.out.print("Enter New Password ");
-        String password = input.nextLine();
+        System.out.println("Enter New Password ");
+        String password = input.next();
 
-        System.out.print("Enter Phone: ");
-        String phone = input.nextLine();
+        System.out.println("Enter Phone(xxx-xxx-xxxx): ");
+        String phone = input.next();
         Boolean phoneValid = false;
         
         while(!phoneValid) {
              for (int i = 0; i < account.size(); i++)
                 {
-                   if(account.get(i).getPhone() ==phone) 
+            	   if(phone.length() != account.get(i).getPhone().length() ) {
+            		   System.out.println("Invalid Phone Number format");
+            	   }
+                   if(phone.equals(account.get(i).getPhone()) ) 
                    {
-                       System.out.print("Invalid Phone Number Entry - Phone Number Already Exists");
+                       System.out.println("Invalid Phone Number Entry - Phone Number Already Exists");
                       
                    }
                    else
@@ -790,16 +800,20 @@ public class Store {
                 }
         }
 /*****************************************************************************************/     
-        System.out.print("Enter Email: ");
-        String email = input.nextLine();
+       
         Boolean emailValid = false;
         
         while(!emailValid) {
+        	 System.out.println("Enter Email: ");
+             String email = input.next();
              for (int i = 0; i < account.size(); i++)
                 {
+            	   String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" 
+            		        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+            	   
                    if(account.get(i).getEmail() ==email) 
                    {
-                       System.out.print("Invalid Email Entry - Email Already Exists");
+                       System.out.println("Invalid Email Entry - Email Already Exists");
                       
                    }
                    else
@@ -811,34 +825,41 @@ public class Store {
         }
         
 /******************************************************************************************/        
-        System.out.print("Enter Name: ");
-        String name= input.nextLine();
-
-        //Employee Pin A2XVM232:
+        System.out.println("Enter First Name: ");
+        String fname= input.next();
+        System.out.println("Enter Last Name: ");
+        String lname= input.next();
         
-        System.out.print("Is User an Employee(Enter Employee Access Code Otherwise Enter Any Four Digits): ");
-        String code = input.nextLine();
+        String name = fname + " " + lname;
+        //Employee Pin A2XVM232:
+        int maxTime = 3;
+        int counter = 0;
+        String employeeCode = "A2XVM232";
+        System.out.println("Is the account an employee?(yes/no)");
+        String inputEMP = input.next().toLowerCase();
         Boolean employee = false;
-    
-        while(!employee) {
-            if(code == "A2XVM232") { 
-                 employee = true;
-                
-            }
-            else {
-                employee = false;
-                
-            }
+       
+        if(inputEMP.equals("yes")) {
+        	 while(counter < maxTime) {
+        		System.out.println("Enter Security Code");
+        		String inputCode = input.next().toUpperCase();
+        		if(inputCode.equals(employeeCode)) {
+        			employee = true;
+        		}else {
+        			counter++;
+        			System.out.print("Wrong Code!, Try Again!");
+        		}
+        	}
+        	if(counter == maxTime) {
+        		System.out.println("Max Attempts Exceeded! Exiting System!");
+        		exitBOSS();
+        	}
         }
+       
         
 /*****************************************************************************************************************/     
-        Users nUser = new Users (userID,username, password, phone, email,name,
-                employee);
-
-
-        account.add(nUser);
-
-
+       //adds new user to account vector
+        
         numUupdates++;  //update the User flag  
 
     }   
@@ -879,7 +900,7 @@ public class Store {
 	}
 	/***********************************************END GET TIME STAMP*******************************************************/
 	/******************************EXIT BOSS SYSTEM**************************************************************************/
-	void exitBOSSSystem() throws SQLException
+	void exitBOSS() throws SQLException
 	{	System.out.println("\n\n--------------------------------------------");
 	System.out.println("Thank you for using BOSS System, Program Ended!");
 	System.out.println("-----------------------------------------------");
