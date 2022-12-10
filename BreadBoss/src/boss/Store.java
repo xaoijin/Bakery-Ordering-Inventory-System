@@ -6,8 +6,6 @@
 //package
 package boss;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,17 +17,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 public class Store {
 	Vector <Products> item; // Vector to Hold Products
@@ -40,7 +40,8 @@ public class Store {
 	Scanner Keyboard;
 	String loggedinUserID = "";
 	int test = 0;
-
+	public static final String ACCOUNT_SID = "AC4180b85d756a05941ed58e3bb5320073";
+	public static final String AUTH_TOKEN = "adbeb581decd50be761d8037395f3f62";
 
 	//Database objects
 	Connection connection;
@@ -282,31 +283,34 @@ public class Store {
 		System.out.println();
 		System.out.println();
 		System.out.println();
-		int option = -1;
+		boolean validOption = false;
 		do {
 			System.out.println("1. Login");
 			System.out.println("2. Create Account");
 			System.out.println("3. Exit");
 			System.out.print("Choose a system process (1-3): ");
-			option = Keyboard.nextInt();
+			String option = Keyboard.next();
 			switch (option) {
-			case(1):{
+			case("1"):{
 				login();
+				validOption = false;
 				break;
 			}
-			case(2):{
+			case("2"):{
 				createAccount();
+				validOption = false;
 				break;
 			}
-			case(3):{
+			case("3"):{
 				exitBOSSSystem();
+				validOption = false;
 				break;
 			}
 			default:
 			{	System.out.println("Invalid choice, please choose between 1-3"); }
 			
 			}
-		}while(option !=3);
+		}while(!validOption );
 		
 	}
 
@@ -346,7 +350,7 @@ public class Store {
 			break;
 			}
 			case (4):
-			{	viewHistory();
+			{	viewHistory();//shows orders fulfilled
 			break;
 			}
 			case (5):
@@ -370,6 +374,10 @@ public class Store {
 
 	/************************************************END CUSTOMER MENU METHOD***************************************************/			
 
+	private void viewHistory() {
+		// TODO Auto-generated method stub
+		
+	}
 	/************************************************START EMPLOYEE MENU METHOD******************************************************/
 	
 	//Display Employee Menu
@@ -400,7 +408,7 @@ public class Store {
 			break;
 			}
 			case (3):
-			{	 contactUser();
+			{	 contactCustomer();
 				break;
 			}
 			case (4):
@@ -420,10 +428,6 @@ public class Store {
 
 	}
 
-	private void contactUser() {
-		// TODO Auto-generated method stub
-		
-	}
 	private void viewOrders() {
 		// TODO Auto-generated method stub
 		
@@ -860,33 +864,28 @@ public class Store {
 					
 	/*************************************END CREATE ACCOUNT METHOD******************************************************/							 	
 	
-	/***********************************START VIEW HISTORY METHOD*******************************************************/
-	 //For Employee Menu
-	void viewHistory() throws SQLException {
-			 
-			 
-			}
-	/************************************END VIEW HISTORY METHOD*******************************************************/
+	
 	/*************************************CONTACT CUSTOMER METHOD******************************************************/							 	
 
     void contactCustomer() throws SQLException {
-			
-	String fn = "";
-	String e = "";
-	String p = "";
-	int totalrows = 0, index = 0;  
-	resultSet = statement.executeQuery("Select FullName,Email FROM Users WHERE isEmployee = false"); 
-
-	while(resultSet.next()) {
-		
-		totalrows =resultSet.getRow();
-		fn = resultSet.getString("FullName");
-		e = resultSet.getString("Email");
-		
-		
-		System.out.println(fn + ", " + e );
+	System.out.println("Showing all Customers: ");
+	System.out.println("____________________________________________");
+	for(Integer b = 0; b < account.size(); b++) {
+		if(!account.get(b).isEmployee()) {
+			System.out.println("Customer Name: " + account.get(b).getName());
+			System.out.println("Customer Email: " + account.get(b).getEmail());
+			System.out.println("____________________________________________");
+		}
 	}
+	
+	Twilio.init(ACCOUNT_SID,AUTH_TOKEN);
+	Message.creator(
+		    new PhoneNumber("+15167846338"),
+		    new PhoneNumber("+18057495675"),
+		    "Watch YOuafoubaosfb")
+		  .create();
 	}
+    
 	/*************************************END CONTACT CUSTOMER******************************************************/	
 	
 	 
