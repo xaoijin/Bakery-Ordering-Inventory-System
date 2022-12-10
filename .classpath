@@ -24,12 +24,6 @@
 	<classpathentry kind="lib" path="BreadBoss/hsqldb-2.5.0.jar"/>
 	<classpathentry kind="lib" path="BreadBoss/jackcess-3.0.1.jar"/>
 	<classpathentry kind="lib" path="BreadBoss/ucanaccess-5.0.1.jar"/>
-	<classpathentry kind="lib" path="BreadBoss/mail-1.5.0-b01.jar"/>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="BreadBoss/httpclient-4.3-beta1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -27,9 +27,6 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
 
 public class Store {
 	Vector <Products> item; // Vector to Hold Products
@@ -40,8 +37,7 @@ public class Store {
 	Scanner Keyboard;
 	String loggedinUserID = "";
 	int test = 0;
-	public static final String ACCOUNT_SID = "AC4180b85d756a05941ed58e3bb5320073";
-	public static final String AUTH_TOKEN = "adbeb581decd50be761d8037395f3f62";
+
 
 	//Database objects
 	Connection connection;
@@ -873,18 +869,14 @@ public class Store {
 	for(Integer b = 0; b < account.size(); b++) {
 		if(!account.get(b).isEmployee()) {
 			System.out.println("Customer Name: " + account.get(b).getName());
+			System.out.println("Customer Phone Number: " + account.get(b).getPhone());
 			System.out.println("Customer Email: " + account.get(b).getEmail());
 			System.out.println("____________________________________________");
 		}
 	}
+    }
 	
-	Twilio.init(ACCOUNT_SID,AUTH_TOKEN);
-	Message.creator(
-		    new PhoneNumber("+15167846338"),
-		    new PhoneNumber("+18057495675"),
-		    "Watch YOuafoubaosfb")
-		  .create();
-	}
+	
     
 	/*************************************END CONTACT CUSTOMER******************************************************/	
 	
@@ -909,5 +901,5 @@ public class Store {
 	connection.close();
 	}
 	/***********************************************END EXIT BOSS SYSTEM****************************************************/
-
+    
 }
