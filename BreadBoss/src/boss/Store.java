@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 public class Store {
 	Vector <Products> item; // Vector to Hold Products
@@ -718,143 +719,103 @@ public class Store {
         System.out.println("-------------------------------------------");
         System.out.println("            CREATE NEW ACCOUNT             ");
         System.out.println("-------------------------------------------");  
+		boolean idValid = false;
+		boolean usernameValid = false;
+		boolean phoneValid = false;
+		boolean emailValid = false;
+		boolean employee = false;
+		String userID = "";
+		String cUsername = "";
+		String cPassword = "";
+		String cPhone = "";
+		String uEmail = "";
+		String regex = "^(.+)@(.+)$";
+		String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+				+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+		Pattern pattern = Pattern.compile(regexPattern);
+		
+		while (!idValid) {// loops till it is a unique user ID
+			String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			StringBuilder id = new StringBuilder();
+			Random rnd = new Random();
 
-        Scanner input = new Scanner(System.in);
-        boolean idValid = false;
-        String userID = "";
-        while(!idValid) {
-             String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-             StringBuilder id = new StringBuilder();
-             Random rnd = new Random();
-             
-            while(id.length() < 3) {//length of random string
-                int index = (int) (rnd.nextFloat() * CHARS.length());
-                        id.append(CHARS.charAt(index));
-            }
-             String CharStr = id.toString();
-             
-             
-             String ALPHA = "1234567890";
-             StringBuilder id2 = new StringBuilder();
-             Random rnd1 = new Random();
-             
-            while(id2.length() < 1) {//length of random string
-                int index = (int) (rnd.nextFloat() * ALPHA.length());
-                        id2.append(ALPHA.charAt(index));
-            }
-             String AlphaStr = id2.toString();
-        
-             userID = CharStr + AlphaStr; 
-             for(Integer x = 0; x < account.size();x++) {
-            	 if(!userID.equals(account.get(x).getUserID())){
-            		 idValid = true;
-            	 }
-             }
-        }
-        /*****************************************************************/
-    
-        System.out.println("Enter New UserName: ");
-        String username = input.next();
-        Boolean usernameValid = false;
-        
-        while(!usernameValid) {
-         for (int i = 0; i < account.size(); i++)
-            {
-               if(username.equals(account.get(i).getUsername())) 
-               {
-                   System.out.println("Invalid UserName Entry - UserName Already Exists");
-                  
-               }
-               else
-               {
-                   username = input.next();
-                   usernameValid = true;
-               }
-            }
-        }   
-/**********************************************************************************/
-        System.out.println("Enter New Password ");
-        String password = input.next();
+			while (id.length() < 3) {// length of random string
+				int index = (int) (rnd.nextFloat() * CHARS.length());
+				id.append(CHARS.charAt(index));
+			}
+			String CharStr = id.toString();
 
-        System.out.println("Enter Phone(xxx-xxx-xxxx): ");
-        String phone = input.next();
-        Boolean phoneValid = false;
+			String ALPHA = "1234567890";
+			StringBuilder id2 = new StringBuilder();
+			Random rnd1 = new Random();
+
+			while (id2.length() < 1) {// length of random string
+				int index = (int) (rnd.nextFloat() * ALPHA.length());
+				id2.append(ALPHA.charAt(index));
+			}
+			String AlphaStr = id2.toString();
+
+			userID = CharStr + AlphaStr;
+			for (Integer x = 0; x < account.size(); x++) {
+				if (!userID.equals(account.get(x).getUserID())) {
+					idValid = true;
+				}
+			}
+		}
+		
+		while(!usernameValid) {//loops till it is a unique username
+			 System.out.println("Enter New UserName: ");
+			 cUsername = Keyboard.next();
+	         for (int i = 0; i < account.size(); i++)
+	            {
+	               if(cUsername.equals(account.get(i).getUsername())) 
+	               {
+	                   System.out.println("Invalid UserName Entry - UserName Already Exists");
+	                  
+	               }
+	               else
+	               {
+	        
+	                   usernameValid = true;
+	               }
+	            }
+	        }   
+		
+		System.out.println("Enter New Password ");//creates user password
+        cPassword = Keyboard.next();
         
-        while(!phoneValid) {
-             for (int i = 0; i < account.size(); i++)
-                {
-            	   if(phone.length() != account.get(i).getPhone().length() ) {
-            		   System.out.println("Invalid Phone Number format");
-            	   }
-                   if(phone.equals(account.get(i).getPhone()) ) 
-                   {
-                       System.out.println("Invalid Phone Number Entry - Phone Number Already Exists");
-                      
-                   }
-                   else
-                   {
-                       phone = input.next();
-                       phoneValid = true;
-                   }
-                }
-        }
-/*****************************************************************************************/     
-       
-        Boolean emailValid = false;
-        
-        while(!emailValid) {
-        	 System.out.println("Enter Email: ");
-             String email = input.next();
-             for (int i = 0; i < account.size(); i++)
-                {
-            	   String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" 
-            		        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-            	   
-                   if(account.get(i).getEmail() ==email) 
-                   {
-                       System.out.println("Invalid Email Entry - Email Already Exists");
-                      
-                   }
-                   else
-                   {
-                       email = input.next();
-                      emailValid = true;
-                   }
-                }
-        }
-        
-/******************************************************************************************/        
-        System.out.println("Enter First Name: ");
-        String fname= input.next();
-        System.out.println("Enter Last Name: ");
-        String lname= input.next();
-        
-        String name = fname + " " + lname;
-        //Employee Pin A2XVM232:
-        int maxTime = 3;
-        int counter = 0;
-        String employeeCode = "A2XVM232";
-        System.out.println("Is the account an employee?(yes/no)");
-        String inputEMP = input.next().toLowerCase();
-        Boolean employee = false;
-       
-        if(inputEMP.equals("yes")) {
-        	 while(counter < maxTime) {
-        		System.out.println("Enter Security Code");
-        		String inputCode = input.next().toUpperCase();
-        		if(inputCode.equals(employeeCode)) {
-        			employee = true;
-        		}else {
-        			counter++;
-        			System.out.print("Wrong Code!, Try Again!");
-        		}
-        	}
-        	if(counter == maxTime) {
-        		System.out.println("Max Attempts Exceeded! Exiting System!");
-        		exitBOSS();
-        	}
-        }
-       
+		while (!phoneValid) {//loops till unique phone number and is valid format
+			System.out.println("Enter Phone Number(xxx-xxx-xxxx): ");
+			cPhone = Keyboard.next();
+			for (int i = 0; i < account.size(); i++) {
+				if (cPhone.length() != account.get(i).getPhone().length()) {
+					System.out.println("Invalid Phone Number format");
+				}
+				if (cPhone.equals(account.get(i).getPhone())) {
+					System.out.println("Invalid Phone Number Entry - Phone Number Already Exists");
+
+				} 
+				else {
+					phoneValid = true;
+				}
+			}
+		}
+		
+		while (!emailValid) {
+			System.out.println("Enter Email: ");
+			uEmail = Keyboard.next();
+			for (int i = 0; i < account.size(); i++) {
+				
+
+				if (uEmail.equals(account.get(i).getEmail())) {
+					System.out.println("Invalid Email Entry - Email Already Exists");
+
+				} else {
+			
+					emailValid = true;
+				}
+			}
+		}
         
 /*****************************************************************************************************************/     
        //adds new user to account vector
