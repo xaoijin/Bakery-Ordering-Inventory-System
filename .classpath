@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="BreadBoss/hsqldb-2.5.0.jar"/>
 	<classpathentry kind="lib" path="BreadBoss/jackcess-3.0.1.jar"/>
 	<classpathentry kind="lib" path="BreadBoss/ucanaccess-5.0.1.jar"/>
+	<classpathentry kind="lib" path="BreadBoss/mail-1.5.0-b01.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
