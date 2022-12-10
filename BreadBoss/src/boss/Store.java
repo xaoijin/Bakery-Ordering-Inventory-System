@@ -597,8 +597,6 @@ public class Store {
 							System.out.println(convertedUIQs[0]+" " + item.get(a).getProductName());
 						}
 					}
-					
-					
 				}
 				
 				System.out.printf("\nOrder Total: $%.2fct",totalPrice);
@@ -653,6 +651,35 @@ public class Store {
 		System.out.println("-------------------------------------------");
 		System.out.println("           CHECKING ORDER STATUS           ");
 		System.out.println("-------------------------------------------");	
+		for(Integer x = 0; x < orders.size(); x++) {
+			if(loggedinUserID.equals(orders.get(x).getUserID())) {
+				System.out.println("Status for OrderID "+ orders.get(x).getOrderID() + ": " + orders.get(x).getOrderStatus());
+				System.out.println("Listing order items...");
+				String convertOIarr = Arrays.toString(orders.get(x).getOrderItems());
+				convertOIarr = convertOIarr.replaceAll("\\[", "");//removes left bracket
+				convertOIarr = convertOIarr.replaceAll("\\]", "");//removes right bracket
+				convertOIarr = convertOIarr.replaceAll("\\s+", "");//removes any spaces
+				String convertOQarr = Arrays.toString(orders.get(x).getOrderQuantity());
+				convertOQarr = convertOQarr.replaceAll("\\[", "");//removes left bracket
+				convertOQarr = convertOQarr.replaceAll("\\]", "");//removes right bracket
+				convertOQarr = convertOQarr.replaceAll("\\s+", "");//removes any spaces
+				String convertOIstr[] = convertOIarr.substring(0,convertOIarr.length()).split("\\+");//turns the string back to an array with delimiter of "+"
+				String convertOQstr[] = convertOQarr.substring(0,convertOQarr.length()).split("\\+");//turns the string back to an array with delimiter of "+"
+					System.out.println("You have: ");
+					for(Integer s = 0; s < convertOIstr.length; s++) {
+						for(Integer a = 0; a < item.size();a++) {
+							if(convertOIstr[s].equals(item.get(a).getProductID())) {
+								System.out.println(convertOQstr[s] + " " + item.get(a).getProductName());
+							}
+						}
+					}
+				double getTotalPrice = orders.get(x).getPrice();
+				System.out.printf("Total Price of Order ID" + orders.get(x).getOrderID() + ": $%.2fct \n", getTotalPrice);
+				
+			}
+		}
+		
+		
 	}
 
 	/**************************************************END CHECK STATUS METHOD********************************************/
@@ -695,24 +722,6 @@ public class Store {
 		}
 	}			
 	/***************************************************END Change Status Method **************************************************/							
-	/** *************************************************START search orders****************************************************/
-
-	@SuppressWarnings({ "static-access" })
-	void employeeSearch() throws SQLException 
-	{
-		//DISPLAY MENU HEADER
-		System.out.println("\n\n");
-		System.out.println("-------------------------------------------");
-		System.out.println("            Search orders:              ");
-		System.out.println("-------------------------------------------");	
-		Scanner scan = new Scanner(System.in); 
-		System.out.println("Please Enter the OrderID: ");
-		String order = scan.nextLine(); 
-		
-		
-		
-	}								
-	/*****************************************END search orders *************************************************************/
 
 	/****************************************START CREATE ACCOUNT METHOD*******************************************************/
 
