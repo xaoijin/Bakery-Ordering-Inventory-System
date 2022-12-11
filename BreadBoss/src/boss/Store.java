@@ -284,8 +284,11 @@ public class Store {
 		System.out.println();
 		System.out.println();
 		System.out.println();
-		boolean validOption = false;
+		
+		
+		boolean validOption = false; //boolean trigger checking case option choice
 		do {
+			//Initial Menu
 			System.out.println("1. Login");
 			System.out.println("2. Create Account");
 			System.out.println("3. Exit");
@@ -339,28 +342,28 @@ public class Store {
 			option = Keyboard.nextInt();
 			switch (option) {
 			case (1): {
-				viewBakery();
+				viewBakery(); //View Bakery Products
 				break;
 			}
 			case (2): {
-				checkStatus();
+				checkStatus(); //Check Status of Existing Orders
 				break;
 			}
 			case (3): {
-				cancelOrder();
+				cancelOrder(); //Changes Order Status to Canceled
 				break;
 			}
 			case (4): {
 				viewHistory();// shows orders fulfilled
 				break;
 			}
-			case (5): {
+			case (5): { //LogOut
 				System.out.println("Successfully logged out!");
 				loggedinUserID = "";
 				welcome();// shows orders fulfilled
 				break;
 			}
-			case (6): {
+			case (6): { //Exits System
 				exitBOSS();
 			}
 			default: {
