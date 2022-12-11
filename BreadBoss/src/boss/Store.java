@@ -476,7 +476,7 @@ public class Store {
 
 
 	}
-
+//view Order Method - Employee Menu
 	private void viewOrders() {
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
