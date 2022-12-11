@@ -274,7 +274,7 @@ public class Store {
 		System.out.println("     @...;......+........@.....#...@        | |    |  __'.   | || |  | |    | |  || ||   '.___`-.   | |||   '.___`-.   | |");
 		System.out.println("      @...,.....@.......;......@...,        | |   _| |__) |  | || |  \\ `--'  /  || ||  |`\\____) | | |||  |`\\____) | | |");
 		System.out.println("      ;...@.....;.......;.....,....         | |  |_______/   | || |   `.____.'   || ||  |_______.'  | |||  |_______.'  | |");
-		System.out.println("       ;..;.....;.......@.....'...@         | |              | || |              || ||              | |||              | |");
+		System.out.println("       ;..;.....;.......@.....'...@         | |              | || |              || ||              | |||              | 2|");
 		System.out.println("         @+.....,.......#......@@           | '--------------' || '--------------'|  '--------------' || '--------------'|");
 		System.out.println("               @@#';,;;+@@@                 '----------------'  '----------------'  '----------------'  '----------------' ");
 
@@ -1172,6 +1172,7 @@ public class Store {
         
         
         boolean phFormat = false;
+        
 		while (!phoneValid) {// loops till unique phone number
 			System.out.println("Enter Phone Number(xxx-xxx-xxxx): ");
 			cPhone = Keyboard.next();
@@ -1184,6 +1185,7 @@ public class Store {
 					cPhone = Keyboard.next();
 				}
 			}
+			
 			for (int i = 0; i < account.size(); i++) {
 				if (cPhone.equals(account.get(i).getPhone())) {
 					System.out.println("Invalid Phone Number Entry - Phone Number Already Exists");
@@ -1213,6 +1215,7 @@ public class Store {
 					uEmail = Keyboard.next();
 				}
 			}
+			
 			for (int i = 0; i < account.size(); i++) {
 				
 
@@ -1226,6 +1229,7 @@ public class Store {
 			}
 		}
 		
+		
 		System.out.println("Enter First Name: ");
         fName= Keyboard.next();
         System.out.println("Enter Last Name: ");
@@ -1235,6 +1239,7 @@ public class Store {
         
         
         boolean validYesOrNo = false;
+        
         
         System.out.println("Is the account an employee?(yes/no)");
         inputEmpCode = Keyboard.next();
@@ -1253,7 +1258,7 @@ public class Store {
         if(inputEmpCode.equals("yes")) {//making account to be employee type
         	System.out.println("Enter Security Code: ");
     		inputEmpCode = Keyboard.next().toUpperCase();
-        	while(counter < 3 || employee) {//loops till 3 times or correct code
+        	while(counter < 4 || employee) {//loops till 3 times or correct code
         		if(inputEmpCode.equals(employeeCode)) {
         			employee = true;
         		}
