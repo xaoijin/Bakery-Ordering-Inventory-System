@@ -56,7 +56,7 @@ public class Store {
 		Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 
 		// Step 2: Opening database connection
-		String msAccDB = "bossdatabase.accdb"; //Check if this correct - merged and might have messed this comnnect
+		String msAccDB = "bossdatabase.accdb"; 
 		String dbURL = "jdbc:ucanaccess://" + msAccDB; 
 
 		// Step 3: Create and get connection using DriverManager class
@@ -104,7 +104,7 @@ public class Store {
 		String pn = ""; //phone
 		String em = ""; //email
 		String n = ""; //Full Name
-		Boolean isEm = false;
+		Boolean isEm = false; //Checks if Employee
 
 		int totalrows = 0, index = 0;
 
