@@ -446,11 +446,11 @@ public class Store {
 				break;
 			}
 			case (2):
-			{	 viewOrders();
+			{	 viewOrders(); //View All Existing Orders
 			break;
 			}
 			case (3):
-			{	 changeStatus();
+			{	 changeStatus(); //Change The Status of Order using case
 				break;
 			}
 			case (4):
@@ -466,7 +466,7 @@ public class Store {
 			}
 			case (6):
 			{	
-				exitBOSS();
+				exitBOSS(); //Exits System
 			}
 			default:
 			{	System.out.println("Invalid choice, please choose between 1-6"); }
