@@ -1295,6 +1295,8 @@ public class Store {
 	
 	/*************************************CONTACT CUSTOMER METHOD******************************************************/							 	
 
+    //EmployeeMethod @ shows - Contact Information Like Rolodex for Employee to Contact Customer
+    
     void contactCustomer() throws SQLException {
 	System.out.println("Showing all Customers: ");
 	System.out.println("____________________________________________");
