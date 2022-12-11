@@ -441,35 +441,41 @@ public class Store {
 		System.out.println("-------------------------------------------");
 		
 		
-		for (Integer i = 0; i < orders.size(); i++)
-        {
-			System.out.println("___________________________________________________________");	
-			System.out.println("OrderID: "+ orders.get(i).getOrderID());
-			System.out.println("Order Status: "+ orders.get(i).getOrderStatus());
-			System.out.println("Order Started On: "+ StringUtils.left(orders.get(i).getOrderDate(), 10));
-			System.out.println("Order Pick-uped On: "+ StringUtils.left(orders.get(i).getCompletedDate(), 10));
+		for (Integer i = 0; i < orders.size(); i++) {
+			System.out.println("___________________________________________________________");
+			System.out.println("OrderID: " + orders.get(i).getOrderID());
+			System.out.println("Order Status: " + orders.get(i).getOrderStatus());
+			System.out.println("Order Started On: " + StringUtils.left(orders.get(i).getOrderDate(), 10));
+			System.out.println("Order Pick-uped On: " + StringUtils.left(orders.get(i).getCompletedDate(), 10));
 			System.out.println("Listing order items...");
 			String convertOIarr = Arrays.toString(orders.get(i).getOrderItems());
-			convertOIarr = convertOIarr.replaceAll("\\[", "");//removes left bracket
-			convertOIarr = convertOIarr.replaceAll("\\]", "");//removes right bracket
-			convertOIarr = convertOIarr.replaceAll("\\s+", "");//removes any spaces
+			convertOIarr = convertOIarr.replaceAll("\\[", "");// removes left bracket
+			convertOIarr = convertOIarr.replaceAll("\\]", "");// removes right bracket
+			convertOIarr = convertOIarr.replaceAll("\\s+", "");// removes any spaces
 			String convertOQarr = Arrays.toString(orders.get(i).getOrderQuantity());
-			convertOQarr = convertOQarr.replaceAll("\\[", "");//removes left bracket
-			convertOQarr = convertOQarr.replaceAll("\\]", "");//removes right bracket
-			convertOQarr = convertOQarr.replaceAll("\\s+", "");//removes any spaces
-			String convertOIstr[] = convertOIarr.substring(0,convertOIarr.length()).split("\\+");//turns the string back to an array with delimiter of "+"
-			String convertOQstr[] = convertOQarr.substring(0,convertOQarr.length()).split("\\+");//turns the string back to an array with delimiter of "+"
-				System.out.println("You have: ");
-				for(Integer s = 0; s < convertOIstr.length; s++) {
-					for(Integer a = 0; a < item.size();a++) {
-						if(convertOIstr[s].equals(item.get(a).getProductID())) {
-							System.out.println(convertOQstr[s] + " " + item.get(a).getProductName());
-						}
+			convertOQarr = convertOQarr.replaceAll("\\[", "");// removes left bracket
+			convertOQarr = convertOQarr.replaceAll("\\]", "");// removes right bracket
+			convertOQarr = convertOQarr.replaceAll("\\s+", "");// removes any spaces
+			String convertOIstr[] = convertOIarr.substring(0, convertOIarr.length()).split("\\+");// turns the string
+																									// back to an array
+																									// with delimiter of
+																									// "+"
+			String convertOQstr[] = convertOQarr.substring(0, convertOQarr.length()).split("\\+");// turns the string
+																									// back to an array
+																									// with delimiter of
+																									// "+"
+			System.out.println("You have: ");
+			for (Integer s = 0; s < convertOIstr.length; s++) {
+				for (Integer a = 0; a < item.size(); a++) {
+					if (convertOIstr[s].equals(item.get(a).getProductID())) {
+						System.out.println(convertOQstr[s] + " " + item.get(a).getProductName());
 					}
 				}
+			}
 			double getTotalPrice = orders.get(i).getPrice();
-			System.out.printf("Total Price of Order ID: " + orders.get(i).getOrderID() + ": $%.2f \n", getTotalPrice);        }
-			System.out.println("___________________________________________________________");	
+			System.out.printf("Total Price of Order ID: " + orders.get(i).getOrderID() + ": $%.2f \n", getTotalPrice);
+		}
+		System.out.println("___________________________________________________________");
 	}
 	/************************************************END EMPLOYEE MENU METHOD*******************************************/			
 
@@ -748,7 +754,12 @@ public class Store {
 		System.out.println("            Update Order Status            ");
 		System.out.println("-------------------------------------------");	
 		viewOrders();
+		boolean validYesOrNo = false;
+		String empInput = "";
 		
+		while(!validYesOrNo || !empInput.equals("exit")) {
+			
+		}
 		
 
 	}			
@@ -821,7 +832,8 @@ public class Store {
 	               if(cUsername.equals(account.get(i).getUsername())) 
 	               {
 	                   System.out.println("Invalid UserName Entry - UserName Already Exists");
-	                  
+	                   System.out.println("Enter New Username: ");
+	      			   cUsername = Keyboard.next();
 	               }
 	               else
 	               {
