@@ -1117,7 +1117,7 @@ public class Store {
 		String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
 				+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 		Pattern pattern = Pattern.compile(regexPattern);
-		
+		//Creating unique userID
 		while (!idValid) {// loops till it is a unique user ID
 			String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			StringBuilder id = new StringBuilder();
@@ -1139,7 +1139,7 @@ public class Store {
 			}
 			String AlphaStr = id2.toString();
 
-			userID = CharStr + AlphaStr;
+			userID = CharStr + AlphaStr; //unique
 			for (Integer x = 0; x < account.size(); x++) {
 				if (!userID.equals(account.get(x).getUserID())) {
 					idValid = true;
