@@ -888,19 +888,22 @@ public class Store {
         		}
         	}
         }
-        System.out.print("Account Created Successfully!");
+        System.out.println("Account Created Successfully!");
         
         
         Users nUser = new Users (userID,cUsername, cPassword, cPhone, uEmail,fullName,employee); // creates a new user object
         account.add(nUser);//adds the created user to the vector
         
-        
-        
-        
-        
-        
-/*****************************************************************************************************************/     
-       //adds new user to account vector
+        String sql = "INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?, ?)";//prepare sql injection
+		secureStatement = connection.prepareStatement(sql);
+		secureStatement.setString(1, userID);
+		secureStatement.setString(2, cUsername);
+		secureStatement.setString(3, cPassword);
+		secureStatement.setString(4, cPhone);
+		secureStatement.setString(5, uEmail);
+		secureStatement.setString(6, fullName);
+		secureStatement.setBoolean(7, employee);
+		secureStatement.executeUpdate();//executes the sql injection
         
         numUupdates++;  //update the User flag  
 
