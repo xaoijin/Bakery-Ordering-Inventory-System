@@ -744,10 +744,10 @@ public class Store {
 		
 	}
 	/**************************************************END Cancel Order Method ********************************************/
-	/***************************************************Change Status METHOD *********************************************/
+	/***************************************************Change Status METHOD  *********************************************/
 
 	//For Employee menu
-	void changeStatus ()
+	void changeStatus () throws Throwable
 	{
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
@@ -756,14 +756,191 @@ public class Store {
 		viewOrders();
 		boolean validYesOrNo = false;
 		String empInput = "";
-		
-		while(!validYesOrNo) {
-			System.out.println("Do you want to change an order status?(yes/no)");
-			if(empInput)
-		}
-		
+		System.out.println("Do you want to change an order status?(yes/no)");
+		empInput = Keyboard.next().toLowerCase();
+		while (!validYesOrNo) {
 
-	}			
+			if (empInput.equals("yes") || empInput.equals("no")) {
+				validYesOrNo = true;
+			} else {
+				System.out.println("Incorrect Input, Try Again!");
+				System.out.println("Do you want to change an order status?(yes/no)");
+				empInput = Keyboard.next().toLowerCase();
+			}
+		}
+
+		boolean validOrderID = false;
+		String selectedOrderID = "";
+		String sql = "update Orders set OrderStatus = ? where OrderID = ?";
+		boolean changeAnother = true;
+		if (empInput.equals("yes")) {
+			while (changeAnother) {
+				System.out.println("Enter Order ID: ");
+				empInput = Keyboard.next().toUpperCase();
+				while (!validOrderID) {
+					for (Integer x = 0; x < orders.size(); x++) {
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							selectedOrderID = empInput;
+							validOrderID = true;
+						}
+					}
+					if (!validOrderID) {
+						System.out.println("Order does not exist, Try Again!");
+						System.out.print("Enter Order ID: ");
+						empInput = Keyboard.next().toUpperCase();
+					}
+				}
+
+				System.out.println("Enter New Status");
+				System.out.println("1: Waiting for Payment");
+				System.out.println("2: In-Progress");
+				System.out.println("3: Waiting for Pick-Up");
+				System.out.println("4: Delayed");
+				System.out.println("5: Fulfilled");
+				System.out.println("6: Cancelled");
+				System.out.println("Choose new Status: 1-5");
+				empInput = Keyboard.next();
+				switch (empInput) {
+				case "1":
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							orders.get(x).setOrderStatus("Waiting for Payment");
+						}
+					}
+
+					secureStatement = connection.prepareStatement(sql);
+					secureStatement.setString(1, "Waiting for Payment");
+					secureStatement.setString(2, selectedOrderID);
+					secureStatement.executeUpdate();
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							System.out.print("OrderID: " + orders.get(x).getOrderID() + " | Status Changed To: " + "Waiting for Payment" );
+						}
+					}
+					break;
+				case "2":
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							orders.get(x).setOrderStatus("In-Progress");
+						}
+					}
+
+					secureStatement = connection.prepareStatement(sql);
+					secureStatement.setString(1, "In-Progress");
+					secureStatement.setString(2, selectedOrderID);
+					secureStatement.executeUpdate();
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							System.out.print("OrderID: " + orders.get(x).getOrderID() + " | Status Changed To: " + "In-Progress" );
+						}
+					}
+					break;
+				case "3":
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							orders.get(x).setOrderStatus("Waiting for Pick-Up");
+						}
+					}
+
+					secureStatement = connection.prepareStatement(sql);
+					secureStatement.setString(1, "Waiting for Pick-Up");
+					secureStatement.setString(2, selectedOrderID);
+					secureStatement.executeUpdate();
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							System.out.print("OrderID: " + orders.get(x).getOrderID() + " | Status Changed To: " + "Waiting for Pick-Up" );
+						}
+					}
+					break;
+				case "4":
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							orders.get(x).setOrderStatus("Delayed");
+						}
+					}
+
+					secureStatement = connection.prepareStatement(sql);
+					secureStatement.setString(1, "Delayed");
+					secureStatement.setString(2, selectedOrderID);
+					secureStatement.executeUpdate();
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							System.out.print("OrderID: " + orders.get(x).getOrderID() + " | Status Changed To: " + "Delayed" );
+						}
+					}
+					break;
+				case "5":
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+					LocalDate date = LocalDate.now();
+					String cDate = date.format(formatter);
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							orders.get(x).setOrderStatus("Fulfilled");
+						}
+					}
+					secureStatement = connection.prepareStatement(sql);
+					secureStatement.setString(1, "Fulfilled");
+					secureStatement.setString(2, selectedOrderID);
+					secureStatement.executeUpdate();
+					String sqlCompletedDate = "update Orders set CompletedDate = ? where OrderID = ?";
+					secureStatement = connection.prepareStatement(sqlCompletedDate);
+					DateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+					java.util.Date util_CompletedDate = format.parse( cDate );//prepares java date holder
+					java.sql.Date sql_CompletedDate = new java.sql.Date( util_CompletedDate.getTime()  ); // converts it to sql date holder
+					
+					
+					secureStatement.setDate(1, sql_CompletedDate);
+					secureStatement.setString(2, selectedOrderID);
+					secureStatement.executeUpdate();
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							System.out.print("OrderID: " + orders.get(x).getOrderID() + " | Status Changed To: " + "Fulfilled" );
+						}
+					}
+					break;
+				case "6":
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							orders.get(x).setOrderStatus("Cancelled");
+						}
+					}
+					secureStatement = connection.prepareStatement(sql);
+					secureStatement.setString(1, "Cancelled");
+					secureStatement.setString(2, selectedOrderID);
+					secureStatement.executeUpdate();
+					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
+						if (empInput.equals(orders.get(x).getOrderID())) {
+							System.out.print("OrderID: " + orders.get(x).getOrderID() + " | Status Changed To: " + "Cancelled" );
+						}
+					}
+					break;
+				default:
+					System.out.println("Invalid input! Choose between 1-5");
+
+					break;
+				}
+				System.out.println("Do you want to change another order's status?(yes/no)");
+				empInput = Keyboard.next();
+				validYesOrNo = false;
+				while (!validYesOrNo) {
+
+					if (empInput.equals("yes") || empInput.equals("no")) {
+						validYesOrNo = true;
+					} else {
+						System.out.println("Incorrect Input, Try Again!");
+						System.out.println("Do you want to change another order's status?(yes/no)");
+						empInput = Keyboard.next().toLowerCase();
+					}
+				}
+				if(empInput.equals("no")) {
+					changeAnother = false;
+					showEmployeeMenu();
+				}
+				
+			}
+		}
+	}
+	
 	/***************************************************END Change Status Method **************************************************/							
 
 	/****************************************START CREATE ACCOUNT METHOD
