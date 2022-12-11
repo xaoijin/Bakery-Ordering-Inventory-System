@@ -761,7 +761,7 @@ public class Store {
 		System.out.println("-------------------------------------------");	
 		boolean empty = true;
 		for(Integer x = 0; x < orders.size(); x++) {
-			if(loggedinUserID.equals(orders.get(x).getUserID()) && orders.get(x).getOrderStatus().equals("Cancelled") && orders.get(x).getOrderStatus().equals("Fulfilled")) {
+			if(loggedinUserID.equals(orders.get(x).getUserID()) && !orders.get(x).getOrderStatus().equals("Cancelled") && !orders.get(x).getOrderStatus().equals("Fulfilled")) {
 				empty = false;
 				System.out.println("___________________________________________________________");	
 				System.out.println("Status for OrderID "+ orders.get(x).getOrderID() + ": " + orders.get(x).getOrderStatus());
