@@ -575,7 +575,7 @@ public class Store {
 	/************************************************START PLACE ORDER********************************************************/
 
 	@SuppressWarnings("null")
-	void placeOrder() throws SQLException //Done by Johnson Li
+	void placeOrder() throws SQLException 
 , ParseException
 	{
 		System.out.println("\n\n");
@@ -583,12 +583,12 @@ public class Store {
 		System.out.println("              PLACING ORDER.....           ");
 		System.out.println("-------------------------------------------");	
 		
-		String chosenPID = "";
-		String validPID = "";
-		String userItemQuantity = "";
+		String chosenPID = ""; //chosen ProductID
+		String validPID = ""; //valid ProductID
+		String userItemQuantity = ""; //Quantity of Product
 		int validUIQ = 0;
-		Vector<String> userItems = new Vector<String>();
-		Vector<Integer> userItemQuantities= new Vector<Integer>();
+		Vector<String> userItems = new Vector<String>(); //vector to store items
+		Vector<Integer> userItemQuantities= new Vector<Integer>(); //vector to store quantities
 		boolean finishedOrdering = false;
 		boolean validProductID = false;
 		boolean validProductQuantity = false;
@@ -611,7 +611,7 @@ public class Store {
 						validProductID = true;
 					}
 				}
-				if(!validProductID) {
+				if(!validProductID) { 
 					System.out.println("Invalid Product ID, Try Again!");
 				}
 			}
@@ -639,7 +639,7 @@ public class Store {
 			for(Integer y = 0; y < item.size(); y++) {//runs a loop through products
 				if(validPID.equals(item.get(y).getProductID())) {//finds the position of the price of the product ID
 					double PIDprice = item.get(y).getPrice();
-					totalPrice = totalPrice + (PIDprice * validUIQ);//adds to the total price of the items
+					totalPrice = totalPrice + (PIDprice * validUIQ);//adds to the total price of the items [Calculation}
 					BigDecimal bd = new BigDecimal(totalPrice).setScale(2, RoundingMode.HALF_UP);//converts it to be within 2 decimal places
 					totalPrice = bd.doubleValue();
 				}
@@ -715,7 +715,7 @@ public class Store {
 				//Start code for adding to orders vector
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
-				LocalDate date = LocalDate.now();
+				LocalDate date = LocalDate.now(); //Captures Local Date
 				String cDate = date.format(formatter);
 				String defaultStat = "Waiting for Payment";
 				String dDate = "null";
