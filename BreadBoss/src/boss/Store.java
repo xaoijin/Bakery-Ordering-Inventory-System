@@ -757,8 +757,9 @@ public class Store {
 		boolean validYesOrNo = false;
 		String empInput = "";
 		
-		while(!validYesOrNo || !empInput.equals("exit")) {
-			
+		while(!validYesOrNo) {
+			System.out.println("Do you want to change an order status?(yes/no)");
+			if(empInput)
 		}
 		
 
@@ -863,7 +864,8 @@ public class Store {
 			for (int i = 0; i < account.size(); i++) {
 				if (cPhone.equals(account.get(i).getPhone())) {
 					System.out.println("Invalid Phone Number Entry - Phone Number Already Exists");
-
+					System.out.println("Enter Phone Number(xxx-xxx-xxxx): ");
+					cPhone = Keyboard.next();
 				}
 
 				else {
