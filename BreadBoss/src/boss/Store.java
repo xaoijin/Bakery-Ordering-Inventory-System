@@ -247,6 +247,7 @@ public class Store {
 	/**********************************START WELCOME METHOD***********************/
 
 	//Welcome Menu
+	//HardCoded Graphic
 	void welcome() throws Throwable
 
 	{
