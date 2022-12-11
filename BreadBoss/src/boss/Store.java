@@ -835,7 +835,7 @@ public class Store {
 				System.out.println("___________________________________________________________");	
 			}
 		}
-		boolean doAnother = true;
+		boolean doAnother = true; //boolean trigger to cancel additional order
 		String custInput = "";
 		while(doAnother) {
 			System.out.println("Enter OrderID: ");
@@ -916,7 +916,7 @@ public class Store {
 
 		boolean validOrderID = false;
 		String selectedOrderID = "";
-		String sql = "update Orders set OrderStatus = ? where OrderID = ?";
+		String sql = "update Orders set OrderStatus = ? where OrderID = ?"; //SQL STATEMENT
 		boolean changeAnother = true;
 		if (empInput.equals("yes")) {
 			while (changeAnother) {
@@ -935,7 +935,7 @@ public class Store {
 						empInput = Keyboard.next().toUpperCase();
 					}
 				}
-
+				//Case Choices for Updating Status
 				System.out.println("Enter New Status");
 				System.out.println("1: Waiting for Payment");
 				System.out.println("2: In-Progress");
@@ -1079,7 +1079,7 @@ public class Store {
 				}
 				if(empInput.equals("no")) {
 					changeAnother = false;
-					showEmployeeMenu();
+					showEmployeeMenu(); //returns to employee menu
 				}
 				validOrderID = false;
 			}
