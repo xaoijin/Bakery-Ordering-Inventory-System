@@ -29,6 +29,8 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Store {
 	Vector <Products> item; // Vector to Hold Products
 	Vector <Users> account; //Vector to Hold All Users
@@ -201,8 +203,10 @@ public class Store {
 
 		boolean isValid = false;
 		int counter = 0;
-		System.out.println("*********************************************************************LOGIN SCREEN*********************************************");
-
+		System.out.println("\n\n");
+        System.out.println("-------------------------------------------");
+        System.out.println("            Login to Account               ");
+        System.out.println("-------------------------------------------");
 		do {
 			counter++;
 			System.out.print("Enter UserName: ");
@@ -390,9 +394,10 @@ public class Store {
 			System.out.println("-------------------------------------------");	
 			System.out.println("1. View Bakery");
 			System.out.println("2. View Orders");
-			System.out.println("3. Contact Customer");
-			System.out.println("4. Exit");
-			System.out.print("Choose a system process (1-4): ");
+			System.out.println("3. Update Order Status");
+			System.out.println("4. Contact Customer");
+			System.out.println("5. Exit");
+			System.out.print("Choose a system process (1-5): ");
 			option = Keyboard.nextInt();
 			switch (option)
 			{
@@ -405,10 +410,14 @@ public class Store {
 			break;
 			}
 			case (3):
-			{	 contactCustomer();
+			{	 changeStatus();
 				break;
 			}
 			case (4):
+			{	contactCustomer();//shows orders fulfilled
+			break;
+			}
+			case (5):
 			{	
 				exitBOSS();
 
@@ -417,17 +426,50 @@ public class Store {
 			System.exit(0);
 			}
 			default:
-			{	System.out.println("Invalid choice, please choose between 1-6"); }
+			{	System.out.println("Invalid choice, please choose between 1-5"); }
 
 			} //end of switch
-		}while (option != 4);
+		}while (option != 5);
 
 
 	}
 
 	private void viewOrders() {
-		// TODO Auto-generated method stub
+		System.out.println("\n\n");
+		System.out.println("-------------------------------------------");
+		System.out.println("             Viewing All Orders            ");
+		System.out.println("-------------------------------------------");
 		
+		
+		for (Integer i = 0; i < orders.size(); i++)
+        {
+			System.out.println("___________________________________________________________");	
+			System.out.println("OrderID: "+ orders.get(i).getOrderID());
+			System.out.println("Order Status: "+ orders.get(i).getOrderStatus());
+			System.out.println("Order Started On: "+ StringUtils.left(orders.get(i).getOrderDate(), 10));
+			System.out.println("Order Pick-uped On: "+ StringUtils.left(orders.get(i).getCompletedDate(), 10));
+			System.out.println("Listing order items...");
+			String convertOIarr = Arrays.toString(orders.get(i).getOrderItems());
+			convertOIarr = convertOIarr.replaceAll("\\[", "");//removes left bracket
+			convertOIarr = convertOIarr.replaceAll("\\]", "");//removes right bracket
+			convertOIarr = convertOIarr.replaceAll("\\s+", "");//removes any spaces
+			String convertOQarr = Arrays.toString(orders.get(i).getOrderQuantity());
+			convertOQarr = convertOQarr.replaceAll("\\[", "");//removes left bracket
+			convertOQarr = convertOQarr.replaceAll("\\]", "");//removes right bracket
+			convertOQarr = convertOQarr.replaceAll("\\s+", "");//removes any spaces
+			String convertOIstr[] = convertOIarr.substring(0,convertOIarr.length()).split("\\+");//turns the string back to an array with delimiter of "+"
+			String convertOQstr[] = convertOQarr.substring(0,convertOQarr.length()).split("\\+");//turns the string back to an array with delimiter of "+"
+				System.out.println("You have: ");
+				for(Integer s = 0; s < convertOIstr.length; s++) {
+					for(Integer a = 0; a < item.size();a++) {
+						if(convertOIstr[s].equals(item.get(a).getProductID())) {
+							System.out.println(convertOQstr[s] + " " + item.get(a).getProductName());
+						}
+					}
+				}
+			double getTotalPrice = orders.get(i).getPrice();
+			System.out.printf("Total Price of Order ID: " + orders.get(i).getOrderID() + ": $%.2f \n", getTotalPrice);        }
+			System.out.println("___________________________________________________________");	
 	}
 	/************************************************END EMPLOYEE MENU METHOD*******************************************/			
 
@@ -600,7 +642,7 @@ public class Store {
 					}
 				}
 				
-				System.out.printf("\nOrder Total: $%.2fct",totalPrice);
+				System.out.printf("\nOrder Total: $%.2f",totalPrice);
 				System.out.println("\nSent Email Invoice, requesting payment!");
 				//Start code for adding to orders vector
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
@@ -654,6 +696,7 @@ public class Store {
 		System.out.println("-------------------------------------------");	
 		for(Integer x = 0; x < orders.size(); x++) {
 			if(loggedinUserID.equals(orders.get(x).getUserID())) {
+				System.out.println("___________________________________________________________");	
 				System.out.println("Status for OrderID "+ orders.get(x).getOrderID() + ": " + orders.get(x).getOrderStatus());
 				System.out.println("Listing order items...");
 				String convertOIarr = Arrays.toString(orders.get(x).getOrderItems());
@@ -675,8 +718,8 @@ public class Store {
 						}
 					}
 				double getTotalPrice = orders.get(x).getPrice();
-				System.out.printf("Total Price of Order ID" + orders.get(x).getOrderID() + ": $%.2fct \n", getTotalPrice);
-				
+				System.out.printf("Total Price of Order ID: " + orders.get(x).getOrderID() + ": $%.2f \n", getTotalPrice);
+				System.out.println("___________________________________________________________");	
 			}
 		}
 		
@@ -695,17 +738,13 @@ public class Store {
 	//For Employee menu
 	void changeStatus ()
 	{
-		String oid = ""; //OrderID
-		String uid = ""; //UserID//
-		String newStatus = ""; //UserInput for Status Change
-
-		boolean isValid = false;
-
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
 		System.out.println("            Update Order Status            ");
 		System.out.println("-------------------------------------------");	
-
+		viewOrders();
+		
+		
 
 	}			
 	/***************************************************END Change Status Method **************************************************/							
