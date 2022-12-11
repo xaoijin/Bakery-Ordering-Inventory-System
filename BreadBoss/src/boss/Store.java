@@ -1111,7 +1111,7 @@ public class Store {
 		String fName = "";
 		String lName = "";
 		String fullName = "";
-		String employeeCode = "A2XVM232";
+		String employeeCode = "A2XVM232"; //Hard Code To Prove If Employee - Employee would need this!
 		String inputEmpCode = "";
 		String regex = "^(.+)@(.+)$";
 		String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
