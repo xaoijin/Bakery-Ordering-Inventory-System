@@ -547,7 +547,7 @@ public class Store {
 			System.out.println("_______________________________________");
 		}
 		for (Integer k = 0; k < account.size(); k++) {
-			if (loggedinUserID.equals(account.get(k).getUserID())) {
+			if (loggedinUserID.equals(account.get(k).getUserID())) { //Checks if viewBakery is called on Employee or Customer - Customer gets asked to place order
 				if (account.get(k).isEmployee()) {
 					Customer = false;
 				}
