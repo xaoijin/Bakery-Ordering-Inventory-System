@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Store {
@@ -729,6 +730,11 @@ public class Store {
 		String cPassword = "";
 		String cPhone = "";
 		String uEmail = "";
+		String fName = "";
+		String lName = "";
+		String fullName = "";
+		String employeeCode = "A2XVM232";
+		String inputEmpCode = "";
 		String regex = "^(.+)@(.+)$";
 		String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
 				+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -764,7 +770,7 @@ public class Store {
 		}
 		
 		while(!usernameValid) {//loops till it is a unique username
-			 System.out.println("Enter New UserName: ");
+			 System.out.println("Enter New Username: ");
 			 cUsername = Keyboard.next();
 	         for (int i = 0; i < account.size(); i++)
 	            {
@@ -781,29 +787,51 @@ public class Store {
 	            }
 	        }   
 		
-		System.out.println("Enter New Password ");//creates user password
+		System.out.println("Enter New Password: ");//creates user password
         cPassword = Keyboard.next();
         
-		while (!phoneValid) {//loops till unique phone number and is valid format
+        
+        boolean phFormat = false;
+		while (!phoneValid) {// loops till unique phone number
 			System.out.println("Enter Phone Number(xxx-xxx-xxxx): ");
 			cPhone = Keyboard.next();
-			for (int i = 0; i < account.size(); i++) {
-				if (cPhone.length() != account.get(i).getPhone().length()) {
-					System.out.println("Invalid Phone Number format");
+			while (!phFormat) {//loops till phone number is correct format
+				if (cPhone.length() == 12) {
+					phFormat = true;
+				}else {
+					System.out.println("Invalid Phone Number Format");
+					System.out.println("Enter Phone Number(xxx-xxx-xxxx): ");
+					cPhone = Keyboard.next();
 				}
+			}
+			for (int i = 0; i < account.size(); i++) {
 				if (cPhone.equals(account.get(i).getPhone())) {
 					System.out.println("Invalid Phone Number Entry - Phone Number Already Exists");
 
-				} 
+				}
+
 				else {
 					phoneValid = true;
 				}
 			}
 		}
 		
-		while (!emailValid) {
+		
+		boolean emailExist = false;
+		while (!emailValid) {//loops till email is unique in database
 			System.out.println("Enter Email: ");
 			uEmail = Keyboard.next();
+			
+			while(!emailExist) {//loops till email exists in a correct format
+				Matcher matcher = pattern.matcher(uEmail);
+				if(matcher.matches()) {
+					emailExist = true;
+				}else {
+					System.out.println("Email does not exist! Try Again!");
+					System.out.println("Enter Email: ");
+					uEmail = Keyboard.next();
+				}
+			}
 			for (int i = 0; i < account.size(); i++) {
 				
 
@@ -816,6 +844,60 @@ public class Store {
 				}
 			}
 		}
+		
+		System.out.println("Enter First Name: ");
+        fName= Keyboard.next();
+        System.out.println("Enter Last Name: ");
+        lName= Keyboard.next();
+		
+        fullName = fName + " " + lName;
+        
+        
+        boolean validYesOrNo = false;
+        
+        System.out.println("Is the account an employee?(yes/no)");
+        inputEmpCode = Keyboard.next();
+        while(!validYesOrNo) {
+        	if(inputEmpCode.equals("yes") || inputEmpCode.equals("no") ) {
+        		validYesOrNo = true;
+        	}else {
+        		System.out.println("Please type yes or no, Try Again!");
+        		System.out.println("Is the account an employee?(yes/no)");
+                inputEmpCode = Keyboard.next();
+        	}
+        }
+		
+        int counter = 1;
+        //A2XVM232 
+        if(inputEmpCode.equals("yes")) {//making account to be employee type
+        	System.out.println("Enter Security Code: ");
+    		inputEmpCode = Keyboard.next().toUpperCase();
+        	while(counter < 3 || employee) {//loops till 3 times or correct code
+        		if(inputEmpCode.equals(employeeCode)) {
+        			employee = true;
+        		}
+        		else{
+        			System.out.println("Incorrect Security Code, Try Again! ");
+        			System.out.println("Enter Security Code: ");
+            		inputEmpCode = Keyboard.next().toUpperCase();
+            		counter++;
+            		if(counter == 3 && !inputEmpCode.equals(employeeCode)) {
+                    	System.out.println("Max attempts exceeded! Shutting Down System!");
+                    	exitBOSS();
+                    }
+        		}
+        	}
+        }
+        System.out.print("Account Created Successfully!");
+        
+        
+        Users nUser = new Users (userID,cUsername, cPassword, cPhone, uEmail,fullName,employee); // creates a new user object
+        account.add(nUser);//adds the created user to the vector
+        
+        
+        
+        
+        
         
 /*****************************************************************************************************************/     
        //adds new user to account vector
