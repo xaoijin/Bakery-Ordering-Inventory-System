@@ -20,7 +20,7 @@ public class BOSS {
 		{
 			boss.connectDB();
 			boss.loadData();
-			boss.welcome(); //@Johnson check algorithm 1.load data 2.login or 3. welcome screen first? //code in login and welcome might need to be adjusted
+			boss.welcome(); 
 		}
 		catch (IOException e)
 		{

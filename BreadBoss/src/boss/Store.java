@@ -56,7 +56,7 @@ public class Store {
 		Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 
 		// Step 2: Opening database connection
-		String msAccDB = "bossdatabase.accdb"; //Check if this correct - merged and might have messed this comnnect
+		String msAccDB = "bossdatabase.accdb"; 
 		String dbURL = "jdbc:ucanaccess://" + msAccDB; 
 
 		// Step 3: Create and get connection using DriverManager class
@@ -104,15 +104,15 @@ public class Store {
 		String pn = ""; //phone
 		String em = ""; //email
 		String n = ""; //Full Name
-		Boolean isEm = false;
+		Boolean isEm = false; //Checks if Employee
 
 		int totalrows = 0, index = 0;
 
 		resultSet = statement.executeQuery("SELECT * FROM Users");
-		while (resultSet.next()) //tests for the eof
+		while (resultSet.next()) 
 		{   totalrows = resultSet.getRow();
 
-		i = resultSet.getString("UserID"); // or 	i = resultSet.getString(1);
+		i = resultSet.getString("UserID"); 
 		en = resultSet.getString("UserName");
 		psw = resultSet.getString("Password");
 		pn = resultSet.getString("Phone");
@@ -139,7 +139,7 @@ public class Store {
 		int totalrows = 0, index = 0;
 
 		resultSet = statement.executeQuery("SELECT * FROM Products"); 
-		while (resultSet.next()) //tests for the eof
+		while (resultSet.next()) 
 		{   totalrows = resultSet.getRow();
 		pi = resultSet.getString("ProductID");
 		pn = resultSet.getString("Name");
@@ -152,7 +152,7 @@ public class Store {
 		index++;
 		}
 		System.out.println("Bakery Loaded");
-	} //end of loadProducts() method
+	} 
 
 	/*********************************END OF LOAD PRODUCTS******************************/
 
@@ -221,13 +221,13 @@ public class Store {
 					loggedinuser = i;
 				}
 			}
-			if(!isValid) {
+			if(!isValid) { //Checks of Valid Username or Password
 				System.out.println("Invalid Username or Password!");
 			}
 		} while(counter < 3 && !isValid);
 
 		if(!isValid) {
-			System.out.println("Max Attempts Exceeded, Shutting Down System");
+			System.out.println("Max Attempts Exceeded, Shutting Down System"); //Gives user 3 Attempts
 			System.exit(0);
 
 		}
@@ -247,6 +247,7 @@ public class Store {
 	/**********************************START WELCOME METHOD***********************/
 
 	//Welcome Menu
+	//HardCoded Graphic
 	void welcome() throws Throwable
 
 	{
@@ -273,7 +274,7 @@ public class Store {
 		System.out.println("     @...;......+........@.....#...@        | |    |  __'.   | || |  | |    | |  || ||   '.___`-.   | |||   '.___`-.   | |");
 		System.out.println("      @...,.....@.......;......@...,        | |   _| |__) |  | || |  \\ `--'  /  || ||  |`\\____) | | |||  |`\\____) | | |");
 		System.out.println("      ;...@.....;.......;.....,....         | |  |_______/   | || |   `.____.'   || ||  |_______.'  | |||  |_______.'  | |");
-		System.out.println("       ;..;.....;.......@.....'...@         | |              | || |              || ||              | |||              | |");
+		System.out.println("       ;..;.....;.......@.....'...@         | |              | || |              || ||              | |||              | 2|");
 		System.out.println("         @+.....,.......#......@@           | '--------------' || '--------------'|  '--------------' || '--------------'|");
 		System.out.println("               @@#';,;;+@@@                 '----------------'  '----------------'  '----------------'  '----------------' ");
 
@@ -284,8 +285,11 @@ public class Store {
 		System.out.println();
 		System.out.println();
 		System.out.println();
-		boolean validOption = false;
+		
+		
+		boolean validOption = false; //boolean trigger checking case option choice
 		do {
+			//Initial Menu
 			System.out.println("1. Login");
 			System.out.println("2. Create Account");
 			System.out.println("3. Exit");
@@ -339,28 +343,28 @@ public class Store {
 			option = Keyboard.nextInt();
 			switch (option) {
 			case (1): {
-				viewBakery();
+				viewBakery(); //View Bakery Products
 				break;
 			}
 			case (2): {
-				checkStatus();
+				checkStatus(); //Check Status of Existing Orders
 				break;
 			}
 			case (3): {
-				cancelOrder();
+				cancelOrder(); //Changes Order Status to Canceled
 				break;
 			}
 			case (4): {
 				viewHistory();// shows orders fulfilled
 				break;
 			}
-			case (5): {
+			case (5): { //LogOut
 				System.out.println("Successfully logged out!");
 				loggedinUserID = "";
 				welcome();// shows orders fulfilled
 				break;
 			}
-			case (6): {
+			case (6): { //Exits System
 				exitBOSS();
 			}
 			default: {
@@ -411,7 +415,7 @@ public class Store {
 			}
 		}
 		if(empty) {
-			System.out.println("No orders found.......");
+			System.out.println("No orders found......."); //If No Orders Returned
 		}
 		
 	}
@@ -443,11 +447,11 @@ public class Store {
 				break;
 			}
 			case (2):
-			{	 viewOrders();
+			{	 viewOrders(); //View All Existing Orders
 			break;
 			}
 			case (3):
-			{	 changeStatus();
+			{	 changeStatus(); //Change The Status of Order using case
 				break;
 			}
 			case (4):
@@ -463,7 +467,7 @@ public class Store {
 			}
 			case (6):
 			{	
-				exitBOSS();
+				exitBOSS(); //Exits System
 			}
 			default:
 			{	System.out.println("Invalid choice, please choose between 1-6"); }
@@ -473,7 +477,7 @@ public class Store {
 
 
 	}
-
+//view Order Method - Employee Menu
 	private void viewOrders() {
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
@@ -544,7 +548,7 @@ public class Store {
 			System.out.println("_______________________________________");
 		}
 		for (Integer k = 0; k < account.size(); k++) {
-			if (loggedinUserID.equals(account.get(k).getUserID())) {
+			if (loggedinUserID.equals(account.get(k).getUserID())) { //Checks if viewBakery is called on Employee or Customer - Customer gets asked to place order
 				if (account.get(k).isEmployee()) {
 					Customer = false;
 				}
@@ -572,7 +576,7 @@ public class Store {
 	/************************************************START PLACE ORDER********************************************************/
 
 	@SuppressWarnings("null")
-	void placeOrder() throws SQLException //Done by Johnson Li
+	void placeOrder() throws SQLException 
 , ParseException
 	{
 		System.out.println("\n\n");
@@ -580,12 +584,12 @@ public class Store {
 		System.out.println("              PLACING ORDER.....           ");
 		System.out.println("-------------------------------------------");	
 		
-		String chosenPID = "";
-		String validPID = "";
-		String userItemQuantity = "";
+		String chosenPID = ""; //chosen ProductID
+		String validPID = ""; //valid ProductID
+		String userItemQuantity = ""; //Quantity of Product
 		int validUIQ = 0;
-		Vector<String> userItems = new Vector<String>();
-		Vector<Integer> userItemQuantities= new Vector<Integer>();
+		Vector<String> userItems = new Vector<String>(); //vector to store items
+		Vector<Integer> userItemQuantities= new Vector<Integer>(); //vector to store quantities
 		boolean finishedOrdering = false;
 		boolean validProductID = false;
 		boolean validProductQuantity = false;
@@ -608,7 +612,7 @@ public class Store {
 						validProductID = true;
 					}
 				}
-				if(!validProductID) {
+				if(!validProductID) { 
 					System.out.println("Invalid Product ID, Try Again!");
 				}
 			}
@@ -636,7 +640,7 @@ public class Store {
 			for(Integer y = 0; y < item.size(); y++) {//runs a loop through products
 				if(validPID.equals(item.get(y).getProductID())) {//finds the position of the price of the product ID
 					double PIDprice = item.get(y).getPrice();
-					totalPrice = totalPrice + (PIDprice * validUIQ);//adds to the total price of the items
+					totalPrice = totalPrice + (PIDprice * validUIQ);//adds to the total price of the items [Calculation}
 					BigDecimal bd = new BigDecimal(totalPrice).setScale(2, RoundingMode.HALF_UP);//converts it to be within 2 decimal places
 					totalPrice = bd.doubleValue();
 				}
@@ -712,7 +716,7 @@ public class Store {
 				//Start code for adding to orders vector
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
-				LocalDate date = LocalDate.now();
+				LocalDate date = LocalDate.now(); //Captures Local Date
 				String cDate = date.format(formatter);
 				String defaultStat = "Waiting for Payment";
 				String dDate = "null";
@@ -789,7 +793,7 @@ public class Store {
 				System.out.println("___________________________________________________________");	
 			}
 		}
-		if(empty) {
+		if(empty) { //Checks if any orders are returned based on if conditional
 			System.out.println("No orders found.......");
 		}
 		
@@ -832,7 +836,7 @@ public class Store {
 				System.out.println("___________________________________________________________");	
 			}
 		}
-		boolean doAnother = true;
+		boolean doAnother = true; //boolean trigger to cancel additional order
 		String custInput = "";
 		while(doAnother) {
 			System.out.println("Enter OrderID: ");
@@ -913,7 +917,7 @@ public class Store {
 
 		boolean validOrderID = false;
 		String selectedOrderID = "";
-		String sql = "update Orders set OrderStatus = ? where OrderID = ?";
+		String sql = "update Orders set OrderStatus = ? where OrderID = ?"; //SQL STATEMENT
 		boolean changeAnother = true;
 		if (empInput.equals("yes")) {
 			while (changeAnother) {
@@ -932,7 +936,7 @@ public class Store {
 						empInput = Keyboard.next().toUpperCase();
 					}
 				}
-
+				//Case Choices for Updating Status
 				System.out.println("Enter New Status");
 				System.out.println("1: Waiting for Payment");
 				System.out.println("2: In-Progress");
@@ -1076,7 +1080,7 @@ public class Store {
 				}
 				if(empInput.equals("no")) {
 					changeAnother = false;
-					showEmployeeMenu();
+					showEmployeeMenu(); //returns to employee menu
 				}
 				validOrderID = false;
 			}
@@ -1107,13 +1111,13 @@ public class Store {
 		String fName = "";
 		String lName = "";
 		String fullName = "";
-		String employeeCode = "A2XVM232";
+		String employeeCode = "A2XVM232"; //Hard Code To Prove If Employee - Employee would need this!
 		String inputEmpCode = "";
 		String regex = "^(.+)@(.+)$";
 		String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
 				+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 		Pattern pattern = Pattern.compile(regexPattern);
-		
+		//Creating unique userID
 		while (!idValid) {// loops till it is a unique user ID
 			String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			StringBuilder id = new StringBuilder();
@@ -1135,7 +1139,7 @@ public class Store {
 			}
 			String AlphaStr = id2.toString();
 
-			userID = CharStr + AlphaStr;
+			userID = CharStr + AlphaStr; //unique
 			for (Integer x = 0; x < account.size(); x++) {
 				if (!userID.equals(account.get(x).getUserID())) {
 					idValid = true;
@@ -1167,6 +1171,7 @@ public class Store {
         
         
         boolean phFormat = false;
+        
 		while (!phoneValid) {// loops till unique phone number
 			System.out.println("Enter Phone Number(xxx-xxx-xxxx): ");
 			cPhone = Keyboard.next();
@@ -1179,6 +1184,7 @@ public class Store {
 					cPhone = Keyboard.next();
 				}
 			}
+			
 			for (int i = 0; i < account.size(); i++) {
 				if (cPhone.equals(account.get(i).getPhone())) {
 					System.out.println("Invalid Phone Number Entry - Phone Number Already Exists");
@@ -1208,6 +1214,7 @@ public class Store {
 					uEmail = Keyboard.next();
 				}
 			}
+			
 			for (int i = 0; i < account.size(); i++) {
 				
 
@@ -1221,6 +1228,7 @@ public class Store {
 			}
 		}
 		
+		
 		System.out.println("Enter First Name: ");
         fName= Keyboard.next();
         System.out.println("Enter Last Name: ");
@@ -1230,6 +1238,7 @@ public class Store {
         
         
         boolean validYesOrNo = false;
+        
         
         System.out.println("Is the account an employee?(yes/no)");
         inputEmpCode = Keyboard.next();
@@ -1248,7 +1257,7 @@ public class Store {
         if(inputEmpCode.equals("yes")) {//making account to be employee type
         	System.out.println("Enter Security Code: ");
     		inputEmpCode = Keyboard.next().toUpperCase();
-        	while(counter < 3 || employee) {//loops till 3 times or correct code
+        	while(counter < 4 || employee) {//loops till 3 times or correct code
         		if(inputEmpCode.equals(employeeCode)) {
         			employee = true;
         		}
@@ -1292,6 +1301,8 @@ public class Store {
 	
 	/*************************************CONTACT CUSTOMER METHOD******************************************************/							 	
 
+    //EmployeeMethod @ shows - Contact Information Like Rolodex for Employee to Contact Customer
+    
     void contactCustomer() throws SQLException {
 	System.out.println("Showing all Customers: ");
 	System.out.println("____________________________________________");
