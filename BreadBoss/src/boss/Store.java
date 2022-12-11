@@ -745,9 +745,65 @@ public class Store {
 	}
 
 	/**************************************************END CHECK STATUS METHOD********************************************/
-	/***************************************************Cancel Order  METHOD *********************************************/
+	/***************************************************Cancel Order  METHOD  *********************************************/
 	//For Customer Menu
-	void cancelOrder() {
+	void cancelOrder() throws Throwable {
+		System.out.println("\n\n");
+		System.out.println("-------------------------------------------");
+		System.out.println("            Cancelling Order...            ");
+		System.out.println("-------------------------------------------");	
+		checkStatus();
+		boolean doAnother = true;
+		String custInput = "";
+		while(doAnother) {
+			System.out.println("Enter OrderID: ");
+			custInput = Keyboard.next();
+			boolean validOrderID = false;
+			while(!validOrderID) {
+				for(Integer x = 0; x < orders.size(); x++) {
+					if(custInput.equals(orders.get(x).getOrderID()) && orders.get(x).getUserID().equals(loggedinUserID)) {
+						validOrderID = true;
+					}
+				}
+				if(!validOrderID) {
+					System.out.println("Invalid OrderID, Try Again!");
+					System.out.println("Enter OrderID: ");
+					custInput = Keyboard.next();
+				}
+			}
+			
+			for(Integer x = 0; x < orders.size();x++) {
+				if(custInput.equals(orders.get(x).getOrderID())) {
+					String orderSelected = orders.get(x).getOrderID();
+					String sql = "update Orders set OrderStatus = ? where OrderID = ?";
+					orders.get(x).setOrderStatus("Cancelled");
+					secureStatement = connection.prepareStatement(sql);
+					secureStatement.setString(1, "Cancelled");
+					secureStatement.setString(2, orderSelected);
+					secureStatement.executeUpdate();
+					System.out.println("Order " + orderSelected + " has been Cancelled!");
+					
+				}
+			}
+			System.out.println("Do you want to cancel another order?(yes/no)");
+			custInput = Keyboard.next().toLowerCase();
+			boolean validYesOrNo = false;
+			while (!validYesOrNo) {
+
+				if (custInput.equals("yes") || custInput.equals("no")) {
+					validYesOrNo = true;
+				} else {
+					System.out.println("Incorrect Input, Try Again!");
+					System.out.println("Do you want to change an order status?(yes/no)");
+					custInput = Keyboard.next().toLowerCase();
+				}
+			}
+			if(custInput.equals("no")) {
+				doAnother = false;
+				showCustomerMenu();
+			}
+		}
+		
 		
 	}
 	/**************************************************END Cancel Order Method ********************************************/
@@ -801,7 +857,7 @@ public class Store {
 				System.out.println("Enter New Status");
 				System.out.println("1: Waiting for Payment");
 				System.out.println("2: In-Progress");
-				System.out.println("3: Waiting for Pick-Up");
+				System.out.println("3: Ready for Pick-Up");
 				System.out.println("4: Delayed");
 				System.out.println("5: Fulfilled");
 				System.out.println("6: Cancelled");
@@ -845,17 +901,17 @@ public class Store {
 				case "3":
 					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
 						if (empInput.equals(orders.get(x).getOrderID())) {
-							orders.get(x).setOrderStatus("Waiting for Pick-Up");
+							orders.get(x).setOrderStatus("Ready for Pick-Up");
 						}
 					}
 
 					secureStatement = connection.prepareStatement(sql);
-					secureStatement.setString(1, "Waiting for Pick-Up");
+					secureStatement.setString(1, "Ready for Pick-Up");
 					secureStatement.setString(2, selectedOrderID);
 					secureStatement.executeUpdate();
 					for (Integer x = 0; x < orders.size(); x++) {// sets vector of order status by orderID position
 						if (empInput.equals(orders.get(x).getOrderID())) {
-							System.out.print("OrderID: " + orders.get(x).getOrderID() + " | Status Changed To: " + "Waiting for Pick-Up" );
+							System.out.print("OrderID: " + orders.get(x).getOrderID() + " | Status Changed To: " + "Ready for Pick-Up" );
 						}
 					}
 					break;
@@ -943,7 +999,7 @@ public class Store {
 					changeAnother = false;
 					showEmployeeMenu();
 				}
-				
+				validOrderID = false;
 			}
 		}
 	}
