@@ -221,13 +221,13 @@ public class Store {
 					loggedinuser = i;
 				}
 			}
-			if(!isValid) {
+			if(!isValid) { //Checks of Valid Username or Password
 				System.out.println("Invalid Username or Password!");
 			}
 		} while(counter < 3 && !isValid);
 
 		if(!isValid) {
-			System.out.println("Max Attempts Exceeded, Shutting Down System");
+			System.out.println("Max Attempts Exceeded, Shutting Down System"); //Gives user 3 Attempts
 			System.exit(0);
 
 		}
