@@ -328,47 +328,47 @@ public class Store {
 			System.out.println("\n\n");
 			System.out.println("-------------------------------------------");
 			System.out.println("             BOSS CUSTOMER MENU            ");
-			System.out.println("-------------------------------------------");	
+			System.out.println("-------------------------------------------");
 			System.out.println("1. View Bakery");
 			System.out.println("2. Check Order Status");
 			System.out.println("3. Cancel Order");
 			System.out.println("4. View History");
-			System.out.println("5. Exit");
-			System.out.print("Choose a system process (1-5): ");
+			System.out.println("5. Logout");
+			System.out.println("6. Exit System");
+			System.out.print("Choose a system process (1-6): ");
 			option = Keyboard.nextInt();
-			switch (option)
-			{
-			case (1):
-			{	 viewBakery();
-			break;
+			switch (option) {
+			case (1): {
+				viewBakery();
+				break;
 			}
-			case (2):
-			{	checkStatus();
-			break;
+			case (2): {
+				checkStatus();
+				break;
 			}
-			case (3):
-			{	 cancelOrder();
-			break;
+			case (3): {
+				cancelOrder();
+				break;
 			}
-			case (4):
-			{	viewHistory();//shows orders fulfilled
-			break;
+			case (4): {
+				viewHistory();// shows orders fulfilled
+				break;
 			}
-			case (5):
-			{	
+			case (5): {
+				System.out.println("Successfully logged out!");
+				loggedinUserID = "";
+				welcome();// shows orders fulfilled
+				break;
+			}
+			case (6): {
 				exitBOSS();
-				System.out.println("\n\n");
-				System.out.println("****************************************************************************");	
-				System.out.println("Thank you for using BOSS - Program Terminated!");
-				System.out.println("****************************************************************************");	
-				System.exit(0);
 			}
-			default:
-			{	System.out.println("Invalid choice, please choose between 1-5"); }
+			default: {
+				System.out.println("Invalid choice, please choose between 1-6");
+			}
 
-			} //end of switch
-		}while (option != 5);
-
+			} // end of switch
+		} while (option != 6);
 
 	}
 
@@ -432,8 +432,9 @@ public class Store {
 			System.out.println("2. View Orders");
 			System.out.println("3. Update Order Status");
 			System.out.println("4. Contact Customer");
-			System.out.println("5. Exit");
-			System.out.print("Choose a system process (1-5): ");
+			System.out.println("5. Logout");
+			System.out.println("6. Exit System");
+			System.out.print("Choose a system process (1-6): ");
 			option = Keyboard.nextInt();
 			switch (option)
 			{
@@ -455,17 +456,20 @@ public class Store {
 			}
 			case (5):
 			{	
+				System.out.println("Successfully logged out!");
+				loggedinUserID = "";
+				welcome();//shows orders fulfilled
+			break;
+			}
+			case (6):
+			{	
 				exitBOSS();
-
-			System.out.println("Thank you for using BOSS System, - Program Terminated!");
-			System.out.println("****************************************************************************\n\n");	
-			System.exit(0);
 			}
 			default:
-			{	System.out.println("Invalid choice, please choose between 1-5"); }
+			{	System.out.println("Invalid choice, please choose between 1-6"); }
 
 			} //end of switch
-		}while (option != 5);
+		}while (option != 6);
 
 
 	}
@@ -530,28 +534,35 @@ public class Store {
 		System.out.println("-------------------------------------------");	
 		String input = "";
 		boolean inputValid = false;
-		
-		for (Integer i = 0; i < item.size(); i++)
-        {
+		boolean Customer = true;
+		for (Integer i = 0; i < item.size(); i++) {
 			System.out.println("_______________________________________");
-            System.out.println("Product ID: "+item.get(i).getProductID());
-            System.out.println("Product Name: " + item.get(i).getProductName());
-            System.out.println("Product Description: " + item.get(i).getDescription());
-            System.out.println("Product Price: " + item.get(i).getPrice()+ "$");
-            System.out.println("_______________________________________");
-        }
-		
-		while(!inputValid) {
-			System.out.println("\nDo you want to place an order?(yes/no)");
-			input = Keyboard.next();
-			if(input.equals("yes")) {
-				placeOrder();
-				inputValid = true;
-			}else if(input.equals("no")){
-				showCustomerMenu();
-				inputValid = true;
-			}else {
-				System.out.println("Invalid Input, Try Again!");
+			System.out.println("Product ID: " + item.get(i).getProductID());
+			System.out.println("Product Name: " + item.get(i).getProductName());
+			System.out.println("Product Description: " + item.get(i).getDescription());
+			System.out.println("Product Price: " + item.get(i).getPrice() + "$");
+			System.out.println("_______________________________________");
+		}
+		for (Integer k = 0; k < account.size(); k++) {
+			if (loggedinUserID.equals(account.get(k).getUserID())) {
+				if (account.get(k).isEmployee()) {
+					Customer = false;
+				}
+			}
+		}
+		if (Customer) {
+			while (!inputValid) {
+				System.out.println("\nDo you want to place an order?(yes/no)");
+				input = Keyboard.next();
+				if (input.equals("yes")) {
+					placeOrder();
+					inputValid = true;
+				} else if (input.equals("no")) {
+					showCustomerMenu();
+					inputValid = true;
+				} else {
+					System.out.println("Invalid Input, Try Again!");
+				}
 			}
 		}
 	}
