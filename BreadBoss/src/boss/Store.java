@@ -792,7 +792,7 @@ public class Store {
 				System.out.println("___________________________________________________________");	
 			}
 		}
-		if(empty) {
+		if(empty) { //Checks if any orders are returned based on if conditional
 			System.out.println("No orders found.......");
 		}
 		
