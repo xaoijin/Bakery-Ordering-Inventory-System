@@ -484,7 +484,12 @@ public class Store {
 		
 		for (Integer i = 0; i < item.size(); i++)
         {
-            System.out.println(item.get(i).getProductID()+ " | "+ item.get(i).getProductName() + " | " + item.get(i).getDescription() + " | " + item.get(i).getPrice()+ "$");
+			System.out.println("_______________________________________");
+            System.out.println("Product ID: "+item.get(i).getProductID());
+            System.out.println("Product Name: " + item.get(i).getProductName());
+            System.out.println("Product Description: " + item.get(i).getDescription());
+            System.out.println("Product Price: " + item.get(i).getPrice()+ "$");
+            System.out.println("_______________________________________");
         }
 		
 		while(!inputValid) {
