@@ -1085,11 +1085,10 @@ public class Store {
 	
 	/***************************************************END Change Status Method **************************************************/							
 
-	/****************************************START CREATE ACCOUNT METHOD
- *******************************************************/
+	/****************************************START CREATE ACCOUNT METHOD*******************************************************/
 
 
-    void createAccount() throws SQLException {
+    void createAccount() throws Throwable {
         //DISPLAY MENU HEADER
         System.out.println("\n\n");
         System.out.println("-------------------------------------------");
@@ -1282,6 +1281,7 @@ public class Store {
 		secureStatement.setBoolean(7, employee);
 		secureStatement.executeUpdate();//executes the sql injection
         
+		welcome();
         numUupdates++;  //update the User flag  
 
     }   
