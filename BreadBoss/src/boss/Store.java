@@ -442,7 +442,14 @@ public class Store {
 		
 		
 		for (Integer i = 0; i < orders.size(); i++) {
+			String orderName = "";
 			System.out.println("___________________________________________________________");
+			for(Integer a = 0; a < account.size();a++) {
+				if(orders.get(i).getUserID().equals(account.get(a).getUserID())) {
+					orderName = account.get(a).getName();
+				}
+			}
+			System.out.println("Order For: " + orderName);
 			System.out.println("OrderID: " + orders.get(i).getOrderID());
 			System.out.println("Order Status: " + orders.get(i).getOrderStatus());
 			System.out.println("Order Started On: " + StringUtils.left(orders.get(i).getOrderDate(), 10));
