@@ -710,7 +710,7 @@ public class Store {
 	{
 		System.out.println("\n\n");
 		System.out.println("-------------------------------------------");
-		System.out.println("           CHECKING ORDER STATUS           ");
+		System.out.println("         CHECKING ORDER'S STATUS...        ");
 		System.out.println("-------------------------------------------");	
 		for(Integer x = 0; x < orders.size(); x++) {
 			if(loggedinUserID.equals(orders.get(x).getUserID())) {
@@ -752,7 +752,34 @@ public class Store {
 		System.out.println("-------------------------------------------");
 		System.out.println("            Cancelling Order...            ");
 		System.out.println("-------------------------------------------");	
-		checkStatus();
+		for(Integer x = 0; x < orders.size(); x++) {
+			if(loggedinUserID.equals(orders.get(x).getUserID()) && !orders.get(x).getOrderStatus().equals("Cancelled") && !orders.get(x).getOrderStatus().equals("Fulfilled")) {
+				System.out.println("___________________________________________________________");	
+				System.out.println("Status for OrderID "+ orders.get(x).getOrderID() + ": " + orders.get(x).getOrderStatus());
+				System.out.println("Listing order items...");
+				String convertOIarr = Arrays.toString(orders.get(x).getOrderItems());
+				convertOIarr = convertOIarr.replaceAll("\\[", "");//removes left bracket
+				convertOIarr = convertOIarr.replaceAll("\\]", "");//removes right bracket
+				convertOIarr = convertOIarr.replaceAll("\\s+", "");//removes any spaces
+				String convertOQarr = Arrays.toString(orders.get(x).getOrderQuantity());
+				convertOQarr = convertOQarr.replaceAll("\\[", "");//removes left bracket
+				convertOQarr = convertOQarr.replaceAll("\\]", "");//removes right bracket
+				convertOQarr = convertOQarr.replaceAll("\\s+", "");//removes any spaces
+				String convertOIstr[] = convertOIarr.substring(0,convertOIarr.length()).split("\\+");//turns the string back to an array with delimiter of "+"
+				String convertOQstr[] = convertOQarr.substring(0,convertOQarr.length()).split("\\+");//turns the string back to an array with delimiter of "+"
+					System.out.println("You have: ");
+					for(Integer s = 0; s < convertOIstr.length; s++) {
+						for(Integer a = 0; a < item.size();a++) {
+							if(convertOIstr[s].equals(item.get(a).getProductID())) {
+								System.out.println(convertOQstr[s] + " " + item.get(a).getProductName());
+							}
+						}
+					}
+				double getTotalPrice = orders.get(x).getPrice();
+				System.out.printf("Total Price of Order ID: " + orders.get(x).getOrderID() + ": $%.2f \n", getTotalPrice);
+				System.out.println("___________________________________________________________");	
+			}
+		}
 		boolean doAnother = true;
 		String custInput = "";
 		while(doAnother) {
@@ -1230,18 +1257,6 @@ public class Store {
     
 	/*************************************END CONTACT CUSTOMER******************************************************/	
 	
-	 
-
-	/************************************************GET TIME STAMP**********************************************************/
-	String getSystemDate()
-	{ 	String timestamp = ""; //Create a string to hold the date
-	String pattern = "MM-dd-yyyy"; //Determine the pattern for the date and time fields
-	SimpleDateFormat formatter = new SimpleDateFormat(pattern); //Set your date and time pattern
-	Date date = new Date(0); //Capture the system datetime in milliseconds
-	timestamp = formatter.format(date); //Format the date based on the pattern
-	return timestamp;
-	}
-	/***********************************************END GET TIME STAMP*******************************************************/
 	/******************************EXIT BOSS SYSTEM**************************************************************************/
 	void exitBOSS() throws SQLException
 	{	System.out.println("\n\n--------------------------------------------");
