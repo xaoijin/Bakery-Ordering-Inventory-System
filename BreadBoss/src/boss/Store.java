@@ -1113,7 +1113,6 @@ public class Store {
 		String fullName = "";
 		String employeeCode = "A2XVM232"; //Hard Code To Prove If Employee - Employee would need this!
 		String inputEmpCode = "";
-		String regex = "^(.+)@(.+)$";
 		String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
 				+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 		Pattern pattern = Pattern.compile(regexPattern);
@@ -1257,7 +1256,7 @@ public class Store {
         if(inputEmpCode.equals("yes")) {//making account to be employee type
         	System.out.println("Enter Security Code: ");
     		inputEmpCode = Keyboard.next().toUpperCase();
-        	while(counter < 4 || employee) {//loops till 3 times or correct code
+        	while(counter != 3 && !employee) {//loops till 3 times or correct code
         		if(inputEmpCode.equals(employeeCode)) {
         			employee = true;
         		}
@@ -1289,8 +1288,7 @@ public class Store {
 		secureStatement.setString(6, fullName);
 		secureStatement.setBoolean(7, employee);
 		secureStatement.executeUpdate();//executes the sql injection
-        
-		welcome();
+        welcome();
         numUupdates++;  //update the User flag  
 
     }   
