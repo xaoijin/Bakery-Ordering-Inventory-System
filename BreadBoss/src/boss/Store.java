@@ -109,10 +109,10 @@ public class Store {
 		int totalrows = 0, index = 0;
 
 		resultSet = statement.executeQuery("SELECT * FROM Users");
-		while (resultSet.next()) //tests for the eof
+		while (resultSet.next()) 
 		{   totalrows = resultSet.getRow();
 
-		i = resultSet.getString("UserID"); // or 	i = resultSet.getString(1);
+		i = resultSet.getString("UserID"); 
 		en = resultSet.getString("UserName");
 		psw = resultSet.getString("Password");
 		pn = resultSet.getString("Phone");
@@ -139,7 +139,7 @@ public class Store {
 		int totalrows = 0, index = 0;
 
 		resultSet = statement.executeQuery("SELECT * FROM Products"); 
-		while (resultSet.next()) //tests for the eof
+		while (resultSet.next()) 
 		{   totalrows = resultSet.getRow();
 		pi = resultSet.getString("ProductID");
 		pn = resultSet.getString("Name");
@@ -152,7 +152,7 @@ public class Store {
 		index++;
 		}
 		System.out.println("Bakery Loaded");
-	} //end of loadProducts() method
+	} 
 
 	/*********************************END OF LOAD PRODUCTS******************************/
 
