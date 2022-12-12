@@ -67,7 +67,7 @@ public class Store {
 		statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
 
-		System.out.println("Database Connected!");
+		//System.out.println("Database Connected!");
 	}
 	/************************************************ END OF DATABASE CONNECT******************************************************/	 
 	/*******************************************************CONSTRUCTOR*****************************************************/
@@ -123,7 +123,7 @@ public class Store {
 		account.add(new Users(i,en,psw,pn,em,n,isEm));
 		index++;
 		}
-		System.out.println("Employees Loaded");
+		//System.out.println("Employees Loaded");
 	} 
 	/*******************************************************END OF LOAD USER*****************************/
 
@@ -151,7 +151,7 @@ public class Store {
 
 		index++;
 		}
-		System.out.println("Bakery Loaded");
+		//System.out.println("Bakery Loaded");
 	} 
 
 	/*********************************END OF LOAD PRODUCTS******************************/
@@ -192,7 +192,7 @@ public class Store {
 		orders.add(new Orders(uID,oID,oS,oD,cD, tempoI,tempoQ,p)); //add to the vector
 		index++;
 		}
-		System.out.println("Orders Loaded");
+		//System.out.println("Orders Loaded");
 	} 
 
 	/*******************************************END OF LOAD ORDERS******************************/ 
@@ -252,9 +252,6 @@ public class Store {
 
 	{
 		System.out.println("\n\n");
-		System.out.println();
-		System.out.println();
-		System.out.println();
 		System.out.println("                    \\                     ");
 		System.out.println("                     @                    ");
 		System.out.println("                 #;;;;;;;#                 ");
