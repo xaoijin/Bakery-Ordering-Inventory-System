@@ -3,11 +3,11 @@ Using Microsoft Access as Database<br />
 Capstone Project Making A Database<br />
 Code Contributors: Johnson Li-FullStack Developer Role and Cyril Thomas-FrontEnd Developer Role<br />
 
+Code Displays on Console<br />
 
 The BOSS system is a comprehensive software solution intended for bakeries to allow ordering
 to be done on a system. The days of paper and pencil or over. The BOSS systems help bakeries
 manage their orders, invoices, and customer data. Customers are allowed to access the system
-
 through a login menu and are presented options to view the bakery, create an order, check an
 order’s status, cancel an order, and view their order history. The Employees view of the system
 allows the employee to view the current offerings of the bakery, views the orders, change the
