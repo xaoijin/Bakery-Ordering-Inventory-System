@@ -1,7 +1,7 @@
 # BreadBOSS
-Using Microsoft Access as Database
-Capstone Project Making A Database
-Code Contributors: Johnson Li-FullStack Developer Role and Cyril Thomas-FrontEnd Developer Role
+Using Microsoft Access as Database<br />
+Capstone Project Making A Database<br />
+Code Contributors: Johnson Li-FullStack Developer Role and Cyril Thomas-FrontEnd Developer Role<br />
 
 
 The BOSS system is a comprehensive software solution intended for bakeries to allow ordering
