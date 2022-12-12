@@ -944,7 +944,7 @@ public class Store {
 				System.out.println("4: Delayed");
 				System.out.println("5: Fulfilled");
 				System.out.println("6: Cancelled");
-				System.out.println("Choose new Status: 1-5");
+				System.out.println("Choose new Status: 1-6");
 				empInput = Keyboard.next();
 				switch (empInput) {
 				case "1":
@@ -1061,7 +1061,7 @@ public class Store {
 					}
 					break;
 				default:
-					System.out.println("Invalid input! Choose between 1-5");
+					System.out.println("Invalid input! Choose between 1-6");
 
 					break;
 				}
