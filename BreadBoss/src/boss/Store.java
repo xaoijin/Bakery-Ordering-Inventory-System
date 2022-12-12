@@ -252,9 +252,9 @@ public class Store {
 
 	{
 		System.out.println("\n\n");
-		System.out.println("--------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("                                                                         WELCOME!!!                                       ");
-		System.out.println("---------------------------------------------------------------------------------------------------------------------------");	
+		System.out.println();
+		System.out.println();
+		System.out.println();
 		System.out.println("                    \\                     ");
 		System.out.println("                     @                    ");
 		System.out.println("                 #;;;;;;;#                 ");
