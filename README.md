@@ -1,4 +1,4 @@
-# BreadBOSS
+# Bakery Ordering/Inventory System
 Using Microsoft Access as Database<br />
 Capstone Project Making A Database<br />
 Code Contributors: Johnson Li-FullStack Developer Role and Cyril Thomas-FrontEnd Developer Role<br />
